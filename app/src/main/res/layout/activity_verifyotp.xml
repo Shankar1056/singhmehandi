@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <EditText
+            android:id="@+id/otpET"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="30dp"
+            android:hint="Enter OTP"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:background="@drawable/rounded_corner_text"/>
+    <TextView
+            android:id="@+id/changeMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/otpET"
+            app:layout_constraintTop_toBottomOf="@+id/otpET"
+            android:text="@string/app_change_mobile"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_medium"/>
+    <TextView
+            android:id="@+id/resendOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="@+id/otpET"
+            app:layout_constraintTop_toBottomOf="@+id/otpET"
+            android:text="@string/app_resend_otp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            android:padding="10dp"/>
+
+    <Button
+            android:id="@+id/verifyOtpBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeMobile"
+            android:text="@string/title_verifyotp"
+            android:layout_marginTop="20dp"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/round_corner_filled"
+            android:fontFamily="@font/roboto_medium"/>
+</android.support.constraint.ConstraintLayout>

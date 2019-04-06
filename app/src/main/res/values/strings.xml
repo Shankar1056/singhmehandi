@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SinghMehandi</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_get_otp">Get OTP</string>
+    <string name="title_verify_otp">Verify OTP</string>
+    <string name="wrong_user_id">Please enter correct userId</string>
+    <string name="okBtm">Ok</string>
+    <string name="app_change_mobile">Change User Id</string>
+    <string name="app_resend_otp">Resend OTP</string>
+    <string name="title_verifyotp">Verify OTP</string>
+    <string name="invalid_user">User not found in our database, please try with differebt user.</string>
+    <string name="invalid_otp">Invalid OTP, please enter correct OTP.</string>
+</resources>
