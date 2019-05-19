@@ -1,7 +1,7 @@
-package apextechies.singhmehandi.login.virew
+package apextechies.singhmehandi.component.activity.login.virew
 
-import apextechies.singhmehandi.login.model.LoginModel
-import apextechies.singhmehandi.login.model.LoginModelVerifyModel
+import apextechies.singhmehandi.component.activity.login.model.LoginModel
+import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel
 
 interface LoginView {
 
@@ -26,4 +26,5 @@ interface LoginView {
     fun invalidUser()
 
     fun invalidOtp()
+    fun setOtp(code: String)
 }

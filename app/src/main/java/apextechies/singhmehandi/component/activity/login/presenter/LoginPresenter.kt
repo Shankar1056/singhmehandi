@@ -1,20 +1,23 @@
-package apextechies.singhmehandi.login.presenter
+package apextechies.singhmehandi.component.activity.login.presenter
 
 import android.support.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
-import apextechies.singhmehandi.login.model.LoginModel
-import apextechies.singhmehandi.login.model.LoginModelVerifyModel
-import apextechies.singhmehandi.login.model.OtpRequest
-import apextechies.singhmehandi.login.model.OtpValidate
-import apextechies.singhmehandi.login.virew.LoginView
+import apextechies.singhmehandi.AppController
+import apextechies.singhmehandi.component.activity.login.model.LoginModel
+import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel
+import apextechies.singhmehandi.component.activity.login.model.OtpRequest
+import apextechies.singhmehandi.component.activity.login.model.OtpValidate
+import apextechies.singhmehandi.component.activity.login.virew.LoginView
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
+import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import java.util.regex.Pattern
 
 
 object LoginPresenter {
@@ -64,6 +67,16 @@ object LoginPresenter {
             verifyOtpFromServer()
         }
 
+    }
+
+    fun parseCode(message: String?) {
+        val p = Pattern.compile("\\b\\d{6}\\b")
+        val m = p.matcher(message)
+        var code = ""
+        while (m.find()) {
+            code = m.group(0)
+        }
+        loginView!!.setOtp(code)
     }
 
     val getOtpObservable: Observable<LoginModel>
@@ -127,6 +140,15 @@ object LoginPresenter {
                 if (movieResponse.status.equals(Constants.FAIL)){
                     loginView!!.invalidOtp()
                 }else {
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.DB, movieResponse.data!!.db)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.USER, movieResponse.data!!.user)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.CLIENT, movieResponse.data!!.client)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.PHONE, movieResponse.data!!.phone)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.REGION, movieResponse.data!!.region)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST, movieResponse.data!!.superstockist)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.STATE, movieResponse.data!!.state)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEENAME, movieResponse.data!!.employeename)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEEID, movieResponse.data!!.employeeid)
                     loginView!!.loginSuccess(movieResponse)
                 }
 

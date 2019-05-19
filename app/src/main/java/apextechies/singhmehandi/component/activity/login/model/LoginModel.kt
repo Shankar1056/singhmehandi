@@ -1,4 +1,4 @@
-package apextechies.singhmehandi.login.model
+package apextechies.singhmehandi.component.activity.login.model
 
 import com.google.gson.annotations.SerializedName
 

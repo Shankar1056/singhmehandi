@@ -3,6 +3,9 @@ package apextechies.singhmehandi.util
 import android.app.AlertDialog
 import android.content.Context
 import apextechies.singhmehandi.R
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 object Utils {
 
@@ -23,5 +26,14 @@ object Utils {
         val dialog: AlertDialog = builder.create()
         // Display the alert dialog on app interface
         dialog.show()
+    }
+
+    fun getCurrentDate(): String{
+        val c = Calendar.getInstance().getTime()
+        println("Current time => $c")
+
+        val df = SimpleDateFormat("MM-dd-yyyy")
+        val formattedDate = df.format(c)
+        return formattedDate
     }
 }

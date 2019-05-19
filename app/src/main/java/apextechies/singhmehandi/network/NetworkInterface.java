@@ -1,10 +1,15 @@
 package apextechies.singhmehandi.network;
 
 
-import apextechies.singhmehandi.login.model.LoginModel;
-import apextechies.singhmehandi.login.model.LoginModelVerifyModel;
-import apextechies.singhmehandi.login.model.OtpRequest;
-import apextechies.singhmehandi.login.model.OtpValidate;
+import apextechies.singhmehandi.component.activity.CommonRequest;
+import apextechies.singhmehandi.component.activity.CommonRequestWithDate;
+import apextechies.singhmehandi.component.activity.login.model.LoginModel;
+import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel;
+import apextechies.singhmehandi.component.activity.login.model.OtpRequest;
+import apextechies.singhmehandi.component.activity.login.model.OtpValidate;
+import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerList;
+import apextechies.singhmehandi.component.activity.order.model.ItemListResponse;
+import apextechies.singhmehandi.component.activity.shop.model.*;
 import io.reactivex.Observable;
 import retrofit2.http.*;
 
@@ -20,10 +25,32 @@ public interface NetworkInterface {
     @POST(BaseUrl.LOGINVALIDATEAPI)
     Observable<LoginModelVerifyModel> verifyOtp(@Body OtpValidate request);
 
-    @GET("search/movie")
-    Observable<LoginModel> getMoviesBasedOnQuery(@Query("api_key") String api_key, @Query("query") String q);
+    @POST(BaseUrl.AREA_LIST)
+    Observable<AreaListResponse> getAreaList(@Body CommonRequest  request);
 
-    @Headers("x-api-key:1a!2b@3c#4d$5e%6f^")
-    @POST("search/movie")
-    Observable<LoginModel> getMoviesBasedOnQuery(@Field("user_id") String user_id, @Field("password") String password, @Field("school_id") String school_id, @Field("user_type") String user_type);
+    @POST(BaseUrl.ROUTE_LIST)
+    Observable<RouteListResponse> getRouteList(@Body RouteListRequest request);
+
+    @POST(BaseUrl.DISTRIBUT_LIST)
+    Observable<DistributorListResponse> getDistributorList(@Body CommonRequest request);
+
+    @POST(BaseUrl.ADDSHOP)
+    Observable<SaveShopResponse> addShop(@Body SaveShopDetailsRequest request);
+
+    @POST(BaseUrl.RETAILERLIST_SHOP)
+    Observable<ShopRetailerList> getRetailerList(@Body CommonRequestWithDate request);
+
+    @POST(BaseUrl.AUTHORISED_RETAILERS_LIST)
+    Observable<AuthorizedRetailerList> getAuthorisedRetailer(@Body CommonRequest request);
+
+    @POST(BaseUrl.ITEMLIST)
+    Observable<ItemListResponse> getItemList(@Body CommonRequest request);
+
+    @POST(BaseUrl.SHOP_LIST)
+    Observable<ShopListResponse> getShopList(@Body CommonRequestWithDate request);
+
+
+
+
+
 }

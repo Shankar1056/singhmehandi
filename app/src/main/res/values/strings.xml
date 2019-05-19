@@ -15,4 +15,5 @@
     <string name="title_verifyotp">Verify OTP</string>
     <string name="invalid_user">User not found in our database, please try with differebt user.</string>
     <string name="invalid_otp">Invalid OTP, please enter correct OTP.</string>
+    <string name="otp_filter_message">TM-SinghM</string>
 </resources>

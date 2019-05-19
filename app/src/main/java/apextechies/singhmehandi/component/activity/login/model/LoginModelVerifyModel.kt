@@ -1,4 +1,4 @@
-package apextechies.singhmehandi.login.model
+package apextechies.singhmehandi.component.activity.login.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,7 +9,7 @@ class LoginModelVerifyModel {
     @SerializedName("message")
     var message: String?=null
     @SerializedName("data")
-    var data: ArrayList<LoginModelData>?=null
+    var data: LoginModelData?=null
 }
 
 class LoginModelData {
@@ -21,4 +21,14 @@ class LoginModelData {
     var client: String?=null
     @SerializedName("phone")
     var phone: String?=null
+    @SerializedName("region")
+    var region: String?=null
+    @SerializedName("superstockist")
+    var superstockist: String?=null
+    @SerializedName("state")
+    var state: String?=null
+    @SerializedName("employeename")
+    var employeename: String?=null
+    @SerializedName("employeeid")
+    var employeeid: String?=null
 }
