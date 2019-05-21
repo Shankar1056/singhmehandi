@@ -2,24 +2,24 @@ package apextechies.singhmehandi.component.activity.shop.model
 
 import com.google.gson.annotations.SerializedName
 
-class RouteListRequest {
+class RouteListRequest(
 
     @SerializedName("areaname")
-    var areaname: String?=null
+    var areaname: String?=null,
     @SerializedName("areacode")
-    var areacode: String?=null
+    var areacode: String?=null,
     @SerializedName("user")
-    var user : String?=null
+    var user : String?=null,
     @SerializedName("db")
-    var db : String?=null
+    var db : String?=null,
     @SerializedName("region")
-    var region : String?=null
+    var region : String?=null,
     @SerializedName("superstockist")
-    var superstockist : String?=null
+    var superstockist : String?=null,
     @SerializedName("state")
-    var state : String?=null
+    var state : String?=null,
     @SerializedName("employeename")
-    var employeename : String?=null
+    var employeename : String?=null,
     @SerializedName("employeeid")
     var employeeid : String?=null
-}
+)

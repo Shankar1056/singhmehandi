@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import apextechies.singhmehandi.MainActivity
+import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.login.model.LoginModel
 import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel
 import apextechies.singhmehandi.component.activity.login.presenter.LoginPresenter
+import apextechies.singhmehandi.component.activity.shop.view.ShopActivity
 import apextechies.singhmehandi.util.Utils
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
@@ -23,7 +25,7 @@ class LoginActivity : AppCompatActivity(), LoginView, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(apextechies.singhmehandi.R.layout.activity_getotp)
+        setContentView(R.layout.activity_getotp)
         loginPresentor!!.LoginPresenter(this)
         smsVerifyCatcher = SmsVerifyCatcher(this,
             OnSmsCatchListener { message ->
@@ -102,14 +104,14 @@ class LoginActivity : AppCompatActivity(), LoginView, View.OnClickListener {
 
     override fun loginSuccess(movieResponse: LoginModelVerifyModel) {
 
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, ShopActivity::class.java))
         finish()
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            apextechies.singhmehandi.R.id.changeMobile -> loginPresentor.onViewCreated()
-            apextechies.singhmehandi.R.id.getOtpBTN -> {
+            R.id.changeMobile -> loginPresentor.onViewCreated()
+            R.id.getOtpBTN -> {
                 if (getOtpBTN.text.toString().trim().equals(resources.getString(apextechies.singhmehandi.R.string.title_get_otp))) {
                     loginPresentor!!.getOtp(userIdET.text.toString().trim())
                 } else {

@@ -16,4 +16,5 @@
     <string name="invalid_user">User not found in our database, please try with differebt user.</string>
     <string name="invalid_otp">Invalid OTP, please enter correct OTP.</string>
     <string name="otp_filter_message">TM-SinghM</string>
+    <string name="title_shop_list">Shop List</string>
 </resources>

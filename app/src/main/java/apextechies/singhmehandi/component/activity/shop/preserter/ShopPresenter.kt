@@ -27,7 +27,7 @@ object ShopPresenter {
     }
 
     fun getShopList() {
-
+        view!!.showProgress()
         getOtpObservable.subscribeWith(getOtpOobserver)
     }
 
@@ -78,6 +78,7 @@ object ShopPresenter {
                 Log.d(TAG, "Error$e")
                 e.printStackTrace()
                 view!!.displayError("Error fetching Movie Data")
+                view!!.hideProgress()
             }
 
             override fun onComplete() {

@@ -9,7 +9,7 @@ class LoginModelVerifyModel {
     @SerializedName("message")
     var message: String?=null
     @SerializedName("data")
-    var data: LoginModelData?=null
+    var data: ArrayList<LoginModelData>?=null
 }
 
 class LoginModelData {

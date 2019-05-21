@@ -3,10 +3,13 @@ package apextechies.singhmehandi.component.activity.shop.view.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.shop.model.ShopListData
 import com.bumptech.glide.Glide
@@ -24,14 +27,45 @@ class ShopListAdapter(private val context: Context, private val shopList: ArrayL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.shopName.setText(shopList[position].shop)
+        holder.shopName.setText(shopList[position].addempname)
+        holder.locationName.setText(shopList[position].shop)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             //clickListener.onClick(position)
         })
+
+        holder.textViewOptions.setOnClickListener {
+            var popup = PopupMenu(context, holder.textViewOptions);
+            //inflating menu from xml resource
+            popup.inflate(R.menu.shop_item_menu)
+
+
+            holder.textViewOptions.setOnClickListener {
+                //creating a popup menu
+                val popup = PopupMenu(context, holder.textViewOptions)
+                //inflating menu from xml resource
+                popup.inflate(R.menu.shop_item_menu)
+                //adding click listener
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.update -> {
+                            Toast.makeText(context, "Update" ,  Toast.LENGTH_SHORT).show()
+                        }
+                        R.id.delete -> {
+                            Toast.makeText(context, "Delete" ,  Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    false
+                }
+                //displaying the popup
+                popup.show()
+            }
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val shopName: TextView = itemView.findViewById(R.id.shopName)
+        val locationName: TextView = itemView.findViewById(R.id.locationName)
+        val textViewOptions: TextView = itemView.findViewById(R.id.textViewOptions)
     }
 }

@@ -122,10 +122,10 @@ object LoginPresenter {
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .verifyOtp(
                 OtpValidate(
-                    Constants.TOKEN,
                     Constants.VALIDATE,
-                    loginModel!!.mobile,
-                    otp
+                    loginModel?.data?.get(0)?.mobile,
+                    otp,
+                    userId
                 )
             )
             .subscribeOn(Schedulers.io())
@@ -140,15 +140,15 @@ object LoginPresenter {
                 if (movieResponse.status.equals(Constants.FAIL)){
                     loginView!!.invalidOtp()
                 }else {
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.DB, movieResponse.data!!.db)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.USER, movieResponse.data!!.user)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.CLIENT, movieResponse.data!!.client)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.PHONE, movieResponse.data!!.phone)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.REGION, movieResponse.data!!.region)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST, movieResponse.data!!.superstockist)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.STATE, movieResponse.data!!.state)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEENAME, movieResponse.data!!.employeename)
-                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEEID, movieResponse.data!!.employeeid)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.DB, movieResponse.data?.get(0)?.db)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.USER, movieResponse.data?.get(0)?.user)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.CLIENT, movieResponse.data?.get(0)?.client)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.PHONE, movieResponse.data?.get(0)?.phone)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.REGION, movieResponse.data?.get(0)?.region)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST, movieResponse.data?.get(0)?.superstockist)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.STATE, movieResponse.data?.get(0)?.state)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEENAME, movieResponse.data?.get(0)?.employeename)
+                    ClsGeneral.setPreferences(AppController.getInstance(), Constants.EMPLOYEEID, movieResponse.data?.get(0)?.employeeid)
                     loginView!!.loginSuccess(movieResponse)
                 }
 

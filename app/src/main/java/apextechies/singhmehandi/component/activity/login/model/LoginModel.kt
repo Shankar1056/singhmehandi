@@ -8,7 +8,13 @@ class LoginModel {
     var status: String?=null
     @SerializedName("message")
     var message: String?=null
-    @SerializedName("mobile")
-    var mobile: String?=null
+    @SerializedName("data")
+    var data: ArrayList<LoginData>?=null
 
+}
+
+class LoginData {
+
+    @SerializedName("mobile")
+    var mobile: String ?= null
 }

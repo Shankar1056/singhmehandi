@@ -2,20 +2,20 @@ package apextechies.singhmehandi.component.activity
 
 import com.google.gson.annotations.SerializedName
 
-class CommonRequest {
+class CommonRequest(
 
     @SerializedName("user")
-    var user : String?=null
+    var user : String?=null,
     @SerializedName("db")
-    var db : String?=null
+    var db : String?=null,
     @SerializedName("region")
-    var region : String?=null
+    var region : String?=null,
     @SerializedName("superstockist")
-    var superstockist : String?=null
+    var superstockist : String?=null,
     @SerializedName("state")
-    var state : String?=null
+    var state : String?=null,
     @SerializedName("employeename")
-    var employeename : String?=null
+    var employeename : String?=null,
     @SerializedName("employeeid")
     var employeeid : String?=null
-}
+)

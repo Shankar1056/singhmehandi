@@ -17,13 +17,15 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         Handler().postDelayed({
-            /*if (ClsGeneral.getStrPreferences(Constants.USER).equals("")) {
+            if (ClsGeneral.getStrPreferences(Constants.USER).equals("")) {
                 startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             } else {
-                startActivity(Intent(this, MainActivity::class.java))
-            }*/
-            startActivity(Intent(this, ShopActivity::class.java))
-            finish()
+                startActivity(Intent(this, ShopActivity::class.java))
+                finish()
+            }
+           // startActivity(Intent(this, ShopActivity::class.java))
+
         }, 3000)
     }
 }

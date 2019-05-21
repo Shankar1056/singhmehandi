@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_shop.*
 
 class ShopActivity : AppCompatActivity(), ShopView {
 
-
     var shopPresenter = ShopPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,16 +23,19 @@ class ShopActivity : AppCompatActivity(), ShopView {
     override fun initWidgit() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         shopRV.layoutManager = LinearLayoutManager(this)
     }
 
     override fun getShopList() {
-
         shopPresenter.getShopList()
     }
 
+    override fun showProgress() {
+        progressAVL.show()
+    }
     override fun hideProgress() {
-
+        progressAVL.hide()
     }
 
     override fun displayError(s: String) {
