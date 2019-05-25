@@ -3,7 +3,6 @@ package apextechies.singhmehandi.component.activity
 import com.google.gson.annotations.SerializedName
 
 class CommonRequest(
-
     @SerializedName("user")
     var user : String?=null,
     @SerializedName("db")

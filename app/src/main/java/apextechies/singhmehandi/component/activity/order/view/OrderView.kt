@@ -16,4 +16,6 @@ interface OrderView {
     fun noDataAvailable()
     fun onDistributerResponse(movieResponse: DistributorListResponse)
     fun onItemResponse(movieResponse: ItemListResponse)
+    fun addAreaListInSpinner(areaList: ArrayList<String>)
+    fun addRouteListInSpinner(areaList: ArrayList<String>)
 }

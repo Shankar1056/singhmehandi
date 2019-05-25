@@ -17,11 +17,11 @@
             android:theme="@style/AppTheme">
         <activity android:name=".component.activity.SplashActivity"
         android:theme="@style/AppTheme.customtheme">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
                 android:name="apextechies.singhmehandi.component.activity.login.virew.LoginActivity"
@@ -32,6 +32,18 @@
         <activity android:name=".component.activity.shop.view.ShopActivity"
         android:theme="@style/AppTheme.NoActionBar"
         android:label="@string/title_shop_list"/>
+        <activity android:name=".component.activity.order.view.AddOrderActivity"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:label="@string/title_order">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+
+        </activity>
+
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
 

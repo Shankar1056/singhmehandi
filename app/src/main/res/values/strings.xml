@@ -17,4 +17,27 @@
     <string name="invalid_otp">Invalid OTP, please enter correct OTP.</string>
     <string name="otp_filter_message">TM-SinghM</string>
     <string name="title_shop_list">Shop List</string>
+    <string name="area_code">Area Code</string>
+    <string name="title_retailer">Retailer</string>
+    <string name="title_wholesale">Wholesale</string>
+    <string name="title_mobileoutlet">MobileOutlet</string>
+    <string name="area_name">Area Name</string>
+    <string name="route_code">Route Code</string>
+    <string name="route_name">Route Name</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="hint_shop_name">Enter shop name</string>
+    <string name="title_place">Place</string>
+    <string name="hint_place">Place</string>
+    <string name="title_mobile">Mobile</string>
+    <string name="hint_mobile">Enter 10 digit mobile number</string>
+    <string name="title_gst">GST</string>
+    <string name="hint_gst">Enter GST number</string>
+    <string name="shop_type">Shop Type</string>
+    <string name="title_address">Address</string>
+    <string name="hint_address">Enter shop address</string>
+    <string name="title_pan_tan">PAN-TIN</string>
+    <string name="hint_pan_tin">Enter PAN TAN number</string>
+    <string name="title_note">Note</string>
+    <string name="hint_note">Enter your Note</string>
+    <string name="title_order">Add Order</string>
 </resources>

@@ -1,5 +1,6 @@
 package apextechies.singhmehandi.component.activity.order.presenter
 
+import android.content.Context
 import android.support.annotation.NonNull
 import android.util.Log
 import apextechies.singhmehandi.component.activity.CommonRequest
@@ -7,9 +8,9 @@ import apextechies.singhmehandi.component.activity.CommonRequestWithDate
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 import apextechies.singhmehandi.component.activity.order.view.OrderView
 import apextechies.singhmehandi.component.activity.shop.model.*
-import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter.view
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
+import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,12 +20,20 @@ import io.reactivex.schedulers.Schedulers
 object OrderPresenter {
     val TAG = "OrderPresenter"
     var orderView: OrderView? = null
+    var context: Context? = null
 
-    fun OrderPresenter(orderView: OrderView) {
+    fun OrderPresenter(context: Context, orderView: OrderView) {
+        this.context = context
         this.orderView = orderView
     }
 
+    fun onCreated() {
+        orderView!!.initWidgit()
+    }
+
+
     fun getAreaList() {
+        var usr =  ClsGeneral.getPreferences(context, Constants.USER)
         getAreaObservable.subscribeWith(getAreaObserver)
     }
 
@@ -40,11 +49,29 @@ object OrderPresenter {
         getItemObservable.subscribeWith(getItemObserver)
     }
 
+    fun onAreaResponceReceived(areaList: ArrayList<AreaListData>?) {
+        var area_List = ArrayList<String>()
+        for (name in areaList!!){
+            name.areaname?.let { area_List.add(it) }
+        }
+        orderView!!.addAreaListInSpinner(area_List)
+    }
+
+    fun onRouteResponceReceived(routeList: ArrayList<RouteListdata>?) {
+        var route_List = ArrayList<String>()
+        for (name in routeList!!){
+            name.routename?.let { route_List.add(it) }
+        }
+        orderView!!.addRouteListInSpinner(route_List)
+
+    }
+
 
     val getAreaObservable: Observable<AreaListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getAreaList(
                 CommonRequest(
+
                     "smtest1",
                     "singhsatrangnew",
                     "North Karnataka",
@@ -52,6 +79,15 @@ object OrderPresenter {
                     "Karnataka",
                     "Test SM",
                     "81"
+                    /*ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)*/
+
+
                 )
             )
             .subscribeOn(Schedulers.io())
@@ -87,15 +123,15 @@ object OrderPresenter {
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getRouteList(
                 RouteListRequest(
-                    "01/16/2019",
-                    "5/16/2019",
-                    "smtest1",
-                    "singhsatrangnew",
-                    "North Karnataka",
-                    "DHANPAL JI JAIN",
-                    "Karnataka",
-                    "Test SM",
-                    "81"
+                    "Broad way Road Hubli",
+                    "AR-NKA-48",
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
                 )
             )
             .subscribeOn(Schedulers.io())
@@ -131,13 +167,13 @@ object OrderPresenter {
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getDistributorList(
                 CommonRequest(
-                    "smtest1",
-                    "singhsatrangnew",
-                    "North Karnataka",
-                    "DHANPAL JI JAIN",
-                    "Karnataka",
-                    "Test SM",
-                    "81"
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
                 )
             )
             .subscribeOn(Schedulers.io())
@@ -173,13 +209,13 @@ object OrderPresenter {
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getItemList(
                 CommonRequest(
-                    "smtest1",
-                    "singhsatrangnew",
-                    "North Karnataka",
-                    "DHANPAL JI JAIN",
-                    "Karnataka",
-                    "Test SM",
-                    "81"
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
                 )
             )
             .subscribeOn(Schedulers.io())
