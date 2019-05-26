@@ -14,7 +14,7 @@ public class BaseUrl {
     public static final String DISTRIBUT_LIST = "distributorListAPI.php";
     public static final String SAVEDISTRIBUTELIST = "feedbackSaveDistributorAPI.php";
     public static final String SAVE_RETAILER_FEEDBACK = "feedbackSaveRetailerAPI.php";
-    public static final String AREA_LIST = "areaLIstAPI.php";
+    public static final String AREA_LIST = "areaListAPI.php";
     public static final String ROUTE_LIST = "routeListAPI.php";
     public static final String SHOP_LIST = "veiwOrdersAPI.php";
 }

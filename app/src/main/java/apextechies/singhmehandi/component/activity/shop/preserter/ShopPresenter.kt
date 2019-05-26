@@ -36,26 +36,20 @@ object ShopPresenter {
         view!!.getShopList()
     }
 
+
     val getOtpObservable: Observable<ShopListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getShopList(
                 CommonRequestWithDate(
                     "01/16/2019",
                     "5/16/2019",
-                    "smtest1",
-                    "singhsatrangnew",
-                    "North Karnataka",
-                    "DHANPAL JI JAIN",
-                    "Karnataka",
-                    "Test SM",
-                    "81"
-                    /*ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.STATE),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEENAME),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEEID)*/
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEEID)
                 )
             )
             .subscribeOn(Schedulers.io())

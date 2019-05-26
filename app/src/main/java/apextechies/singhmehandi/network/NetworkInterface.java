@@ -26,7 +26,7 @@ public interface NetworkInterface {
     Observable<LoginModelVerifyModel> verifyOtp(@Body OtpValidate request);
 
     @POST(BaseUrl.AREA_LIST)
-    Observable<AreaListResponse> getAreaList(@Body CommonRequest  request);
+    Observable<AreaListResponse> getAreaList(@Body CommonRequest request);
 
     @POST(BaseUrl.ROUTE_LIST)
     Observable<RouteListResponse> getRouteList(@Body RouteListRequest request);

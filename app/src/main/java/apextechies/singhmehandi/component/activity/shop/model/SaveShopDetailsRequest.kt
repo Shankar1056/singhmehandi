@@ -2,46 +2,46 @@ package apextechies.singhmehandi.component.activity.shop.model
 
 import com.google.gson.annotations.SerializedName
 
-class SaveShopDetailsRequest {
+class SaveShopDetailsRequest (
 
     @SerializedName("date")
-    var date: String? = null
+    var date: String? = null,
     @SerializedName("areacode")
-    var areacode: String? = null
+    var areacode: String? = null,
     @SerializedName("areaname")
-    var areaname: String? = null
+    var areaname: String? = null,
     @SerializedName("routecode")
-    var routecode: String? = null
+    var routecode: String? = null,
     @SerializedName("routename")
-    var routename: String? = null
+    var routename: String? = null,
     @SerializedName("shopname")
-    var shopname: String? = null
+    var shopname: String? = null,
     @SerializedName("place")
-    var place: String? = null
+    var place: String? = null,
     @SerializedName("phone")
-    var phone: String? = null
+    var phone: String? = null,
     @SerializedName("gstno")
-    var gstno: String? = null
+    var gstno: String? = null,
     @SerializedName("shoptype")
-    var shoptype: String? = null
+    var shoptype: String? = null,
     @SerializedName("pan")
-    var pan: String? = null
+    var pan: String? = null,
     @SerializedName("address")
-    var address: String? = null
+    var address: String? = null,
     @SerializedName("narration")
-    var narration: String? = null
+    var narration: String? = null,
     @SerializedName("user")
-    var user: String? = null
+    var user: String? = null,
     @SerializedName("db")
-    var db: String? = null
+    var db: String? = null,
     @SerializedName("region")
-    var region: String? = null
+    var region: String? = null,
     @SerializedName("superstockist")
-    var superstockist: String? = null
+    var superstockist: String? = null,
     @SerializedName("state")
-    var state: String? = null
+    var state: String? = null,
     @SerializedName("employeename")
-    var employeename: String? = null
+    var employeename: String? = null,
     @SerializedName("employeeid")
     var employeeid: String? = null
-}
+)

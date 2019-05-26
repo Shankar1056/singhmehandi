@@ -40,4 +40,12 @@
     <string name="title_note">Note</string>
     <string name="hint_note">Enter your Note</string>
     <string name="title_order">Add Order</string>
+    <string name="title_submit">Submit</string>
+    <string name="title_empty_shop_value">Please enter shop name</string>
+    <string name="title_empty_place_value">Please enter shop location</string>
+    <string name="title_empty_mobile_value">Please enter mobile number</string>
+    <string name="title_invalid_mobile_value">Please enter 10 digit mobile number</string>
+    <string name="title_empty_gst_value">Please enter your GST number</string>
+    <string name="title_empty_shop_address_value">Please enter shop complete address</string>
+    <string name="title_empty_pintin_value">Please enter your Pin Tan number</string>
 </resources>

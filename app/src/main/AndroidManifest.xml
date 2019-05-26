@@ -32,7 +32,7 @@
         <activity android:name=".component.activity.shop.view.ShopActivity"
         android:theme="@style/AppTheme.NoActionBar"
         android:label="@string/title_shop_list"/>
-        <activity android:name=".component.activity.order.view.AddOrderActivity"
+        <activity android:name=".component.activity.shop.view.AddShopActivity"
         android:theme="@style/AppTheme.NoActionBar"
         android:label="@string/title_order">
 
