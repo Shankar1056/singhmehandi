@@ -68,6 +68,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:text="&#8942;"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary"
                     android:textAppearance="?android:textAppearanceLarge"/>
 

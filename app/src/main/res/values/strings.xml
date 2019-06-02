@@ -48,4 +48,20 @@
     <string name="title_empty_gst_value">Please enter your GST number</string>
     <string name="title_empty_shop_address_value">Please enter shop complete address</string>
     <string name="title_empty_pintin_value">Please enter your Pin Tan number</string>
+    <string name="title_shop">Shop</string>
+    <string name="order">Order</string>
+    <string name="title_profile">My Profile</string>
+    <string name="title_order_list">Order List</string>
+    <string name="title_add_shop">Add Shop</string>
+    <string name="title_area_details">Area Details</string>
+    <string name="title_add_order">Add Order</string>
+    <string name="retailer_name">Retailer Name</string>
+    <string name="retailer_code">Retailer Code</string>
+    <string name="distributor">Distributor</string>
+    <string name="title_shop_details">Shop Details</string>
+    <string name="title_retailer_details">Retailer Details</string>
+    <string name="title_edit">Edit</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_state">State</string>
+    <string name="title_region">Region</string>
 </resources>

@@ -7,11 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import android.widget.Toast
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
-import apextechies.singhmehandi.component.activity.shop.preserter.AddShopPresenter
 import apextechies.singhmehandi.component.activity.shop.model.*
+import apextechies.singhmehandi.component.activity.shop.preserter.AddShopPresenter
 import kotlinx.android.synthetic.main.activity_order_add.*
 
 
@@ -20,7 +21,8 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     var addShopPresenter = AddShopPresenter
     var areaList: ArrayList<AreaListData>? = null
     var routeList: ArrayList<RouteListdata>? = null
-    var shopType : String? =null
+    var shopType: String? = null
+    var radioSexButton: RadioButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +32,19 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun initWidgit() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         addShopPresenter.getAreaList()
         routeCode.setOnItemSelectedListener(this)
         areaName.setOnItemSelectedListener(this)
         submit.setOnClickListener {
+            val selectedId = radioGrp.getCheckedRadioButtonId()
+            radioSexButton = findViewById(selectedId)
             addShopPresenter.onSubmitClick(
                 areaName.selectedItem.toString(),
                 areaCode.selectedItem.toString(),
@@ -43,11 +54,11 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
                 placeET.text.toString(),
                 mobileET.text.toString(),
                 gstET.text.toString(),
-                shopType,
+                radioSexButton!!.getText().toString(),
                 addressET.text.toString(),
                 panTinET.text.toString(),
                 noteET.text.toString()
-                )
+            )
         }
     }
 
@@ -58,14 +69,17 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent!!.getId()) {
             R.id.areaName -> {
-               // orderPresenter.areaSelected(areaList, position)
-                addShopPresenter.getRouteList(areaList?.get(position)!!.areaname!!, areaList?.get(position)!!.areacode!!)
+                // orderPresenter.areaSelected(areaList, position)
+                addShopPresenter.getRouteList(
+                    areaList?.get(position)!!.areaname!!,
+                    areaList?.get(position)!!.areacode!!
+                )
             }
             R.id.areaCode -> {
-               // orderPresenter.areaSelected(areaList, position)
+                // orderPresenter.areaSelected(areaList, position)
             }
             R.id.routeName -> {
-               // orderPresenter.routeSelected(routeList, position)
+                // orderPresenter.routeSelected(routeList, position)
             }
         }
     }
@@ -129,10 +143,12 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         Handler(Looper.getMainLooper()).post {
             object : Runnable {
                 override fun run() {
-                    Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_value), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_value), Toast.LENGTH_SHORT)
+                        .show()
 
                 }
-            } }
+            }
+        }
 
     }
 
@@ -153,14 +169,17 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun emptyAddressValue() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_address_value), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_address_value), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun emptyPinTinValue() {
         Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_pintin_value), Toast.LENGTH_SHORT).show()
     }
+
     override fun displaySavedShopMessage(movieResponse: SaveShopResponse) {
         Toast.makeText(this@AddShopActivity, movieResponse.message.toString(), Toast.LENGTH_SHORT).show()
+        finish()
     }
 
 }

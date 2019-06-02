@@ -1,5 +1,6 @@
 package apextechies.singhmehandi.component.activity.shop.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -11,12 +12,11 @@ import apextechies.singhmehandi.component.activity.shop.view.adapter.ShopListAda
 import kotlinx.android.synthetic.main.activity_shop.*
 
 class ShopActivity : AppCompatActivity(), ShopView {
-
     var shopPresenter = ShopPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
-        shopPresenter.ShopPresenter(this,this)
+        shopPresenter.ShopPresenter(this, this)
         shopPresenter.initWidgit()
     }
 
@@ -24,6 +24,14 @@ class ShopActivity : AppCompatActivity(), ShopView {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        shopRV.layoutManager = LinearLayoutManager(this)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        addShop.setOnClickListener {
+            startActivity(Intent(this@ShopActivity, AddShopActivity::class.java))
+        }
         shopRV.layoutManager = LinearLayoutManager(this)
     }
 
@@ -34,6 +42,7 @@ class ShopActivity : AppCompatActivity(), ShopView {
     override fun showProgress() {
         progressAVL.show()
     }
+
     override fun hideProgress() {
         progressAVL.hide()
     }
@@ -43,7 +52,24 @@ class ShopActivity : AppCompatActivity(), ShopView {
 
     override fun onReceivedResponse(movieResponse: ShopListResponse) {
         Log.i("Response", movieResponse.toString())
-        shopRV.adapter = movieResponse.data?.let { ShopListAdapter(this@ShopActivity, it) }
+        shopRV.adapter = movieResponse.data?.let { ShopListAdapter(this@ShopActivity, it, object : ShopListAdapter.OnShopItemClickListener {
+            override fun onClick(pos: Int) {
+                startActivity(Intent(this@ShopActivity,  ShopDetailsActivity::class.java).
+                putExtra("areaName", movieResponse.data!![pos].areaname).
+                putExtra("areaCode", movieResponse.data!![pos].areacode).
+                putExtra("routeName", movieResponse.data!![pos].routename).
+                putExtra("routeCode", movieResponse.data!![pos].routecode).
+                putExtra("distributor", movieResponse.data!![pos].distributor).
+                putExtra("panno", movieResponse.data!![pos].panno).
+                putExtra("phone", movieResponse.data!![pos].phone).
+                putExtra("retailercode", movieResponse.data!![pos].retailercode).
+                putExtra("shoptype", movieResponse.data!![pos].shoptype).
+                putExtra("place", movieResponse.data!![pos].place).
+                putExtra("retailername", movieResponse.data!![pos].retailername)
+                )
+            }
+
+        }) }
     }
 
     override fun invalidUser() {

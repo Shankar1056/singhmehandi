@@ -43,7 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/area_name"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <Spinner
@@ -66,7 +66,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/areaName"
                     android:text="@string/area_code"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <Spinner
@@ -89,7 +89,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/areaCode"
                     android:text="@string/route_name"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <Spinner
@@ -112,7 +112,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/routeName"
                     android:text="@string/route_code"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <Spinner
@@ -135,7 +135,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/routeCode"
                     android:text="@string/shop_name"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -149,6 +149,9 @@
                     android:layout_marginRight="10dp"
                     android:paddingLeft="5dp"
                     android:textSize="14sp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPostalAddress"
                     android:textAppearance="@font/roboto_light"
                     android:hint="@string/hint_shop_name"
                     android:background="@drawable/rounded_corner_text"/>
@@ -160,7 +163,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/shopNameET"
                     android:text="@string/title_place"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -174,6 +177,10 @@
                     android:layout_marginRight="10dp"
                     android:hint="@string/hint_place"
                     android:textSize="15sp"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPostalAddress"
                     android:textAppearance="@font/roboto_light"
                     android:background="@drawable/rounded_corner_text"/>
 
@@ -185,7 +192,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/placeET"
                     android:text="@string/title_mobile"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -200,6 +207,10 @@
                     android:hint="@string/hint_mobile"
                     android:paddingLeft="5dp"
                     android:textSize="15sp"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:textAppearance="@font/roboto_light"
                     android:background="@drawable/rounded_corner_text"/>
             <TextView
@@ -210,7 +221,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/mobileET"
                     android:text="@string/title_gst"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -224,6 +235,10 @@
                     android:layout_marginRight="10dp"
                     android:paddingLeft="5dp"
                     android:textSize="15sp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPostalAddress"
+                    android:maxLength="15"
                     android:hint="@string/hint_gst"
                     android:textAppearance="@font/roboto_light"
                     android:background="@drawable/rounded_corner_text"/>
@@ -236,7 +251,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/gstET"
                     android:text="@string/shop_type"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
             <RadioGroup
                     android:id="@+id/radioGrp"
@@ -286,19 +301,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/radioGrp"
                     android:text="@string/title_address"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
                     android:id="@+id/addressET"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/addressText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:paddingLeft="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:inputType="textPostalAddress"
                     android:textSize="15sp"
                     android:hint="@string/hint_address"
                     android:background="@drawable/rounded_corner_text"/>
@@ -311,7 +329,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/addressET"
                     android:text="@string/title_pan_tan"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -325,6 +343,10 @@
                     android:layout_marginRight="10dp"
                     android:paddingLeft="5dp"
                     android:textSize="15sp"
+                    android:singleLine="true"
+                    android:inputType="textPostalAddress"
+                    android:maxLength="10"
+                    android:imeOptions="actionNext"
                     android:hint="@string/hint_pan_tin"
                     android:textAppearance="@font/roboto_light"
                     android:background="@drawable/rounded_corner_text"/>
@@ -337,7 +359,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/panTinET"
                     android:text="@string/title_note"
                     android:textAppearance="@font/roboto_medium"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_margin="10dp"/>
 
             <EditText
@@ -351,6 +373,8 @@
                     android:layout_marginRight="10dp"
                     android:paddingLeft="5dp"
                     android:textSize="15sp"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
                     android:hint="@string/hint_note"
                     android:background="@drawable/rounded_corner_text"/>
 

@@ -21,10 +21,9 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-                startActivity(Intent(this, ShopActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
-           // startActivity(Intent(this, ShopActivity::class.java))
 
         }, 3000)
     }

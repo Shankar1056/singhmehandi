@@ -14,20 +14,28 @@ class ShopListResponse {
 
 class ShopListData {
 
-    @SerializedName("date")
-    var date: String? = null
-    @SerializedName("trnum")
-    var trnum: String? = null
-    @SerializedName("superstockist")
-    var superstockist: String? = null
+    @SerializedName("retailername")
+    var retailername: String? = null
+    @SerializedName("retailercode")
+    var retailercode: String? = null
+    @SerializedName("routename")
+    var routename: String? = null
+    @SerializedName("routecode")
+    var routecode: String? = null
+    @SerializedName("areaname")
+    var areaname: String? = null
+    @SerializedName("areacode")
+    var areacode: String? = null
+    @SerializedName("place")
+    var place: String? = null
+    @SerializedName("phone")
+    var phone: String? = null
     @SerializedName("distributor")
     var distributor: String? = null
-    @SerializedName("shop")
-    var shop: String? = null
-    @SerializedName("salesman")
-    var salesman: String? = null
-    @SerializedName("addempname")
-    var addempname: String? = null
-    @SerializedName("updated")
-    var updated: String? = null
+    @SerializedName("shoptype")
+    var shoptype: String? = null
+    @SerializedName("panno")
+    var panno: String? = null
+    @SerializedName("auth")
+    var auth: String? = null
 }

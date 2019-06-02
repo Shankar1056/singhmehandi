@@ -6,8 +6,8 @@ import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.component.activity.CommonRequest
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
-import apextechies.singhmehandi.component.activity.shop.view.AddShopView
 import apextechies.singhmehandi.component.activity.shop.model.*
+import apextechies.singhmehandi.component.activity.shop.view.AddShopView
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
@@ -22,8 +22,18 @@ object AddShopPresenter {
     val TAG = "AddShopPresenter"
     var shopView: AddShopView? = null
     var context: Context? = null
-    var areaName: String? = null
     var areaCode: String? = null
+    var areaName: String? = null
+    var routeCode: String? = null
+    var routeName: String? = null
+    var shopName: String? = null
+    var place: String? = null
+    var phone: String? = null
+    var gestNo: String? = null
+    var shopType: String? = null
+    var pintin: String? = null
+    var address: String? = null
+    var note: String? = null
 
     fun AddShopPresenter(context: Context, shopView: AddShopView) {
         AddShopPresenter.context = context
@@ -134,13 +144,25 @@ object AddShopPresenter {
         pintin: String,
         note: String
     ) {
-        /*if (TextUtils.isEmpty(shopName)) {
+        this.areaName = areaName
+        this.areaCode = areaCode
+        this.routeName = routeName
+        this.routeCode = routeCode
+        this.shopName = shopName
+        this.place = place
+        this.phone = mobile
+        this.gestNo = gst
+        this.shopType = shopType
+        this.address = address
+        this.pintin = pintin
+        this.note = note
+        if (TextUtils.isEmpty(shopName)) {
             shopView!!.emptyShopValue()
         } else if (TextUtils.isEmpty(place)) {
             shopView!!.emptyPlaceValue()
         } else if (TextUtils.isEmpty(mobile)) {
             shopView!!.emptyMobileValue()
-        }else if (mobile.trim().length<10) {
+        } else if (mobile.trim().length < 10) {
             shopView!!.invalidMobileValue()
         } else if (TextUtils.isEmpty(gst)) {
             shopView!!.emptyGstValue()
@@ -148,9 +170,9 @@ object AddShopPresenter {
             shopView!!.emptyAddressValue()
         } else if (TextUtils.isEmpty(pintin)) {
             shopView!!.emptyPinTinValue()
-        } else{*/
+        } else {
             addShopObservable.subscribeWith(addShopaObserver)
-       // }
+        }
     }
 
 
@@ -179,6 +201,7 @@ object AddShopPresenter {
                 if (movieResponse.status.equals(Constants.FAIL)) {
                     shopView!!.noDataAvailable()
                 } else {
+
                     shopView!!.onAreaResponse(movieResponse)
                 }
             }
@@ -329,18 +352,18 @@ object AddShopPresenter {
             .addShop(
                 SaveShopDetailsRequest(
                     Utils.getCurrentDate(),
-                    "AR-NKA-88",
-                    "HUBLLI WHOLESALE",
-                    "RT-NKA-91",
-                    "HUBLLI WHOLESALE",
-                    "AVI SHOP",
-                    "HUBLI",
-                    "9480793348",
-                    "123456789012345",
-                    "Retailer",
-                    "1234567890",
-                    "Marata Galli",
-                    "areaName",
+                    areaCode,
+                    areaName,
+                    routeCode,
+                    routeName,
+                    shopName,
+                    place,
+                    phone,
+                    gestNo,
+                    shopType,
+                    pintin,
+                    address,
+                    note,
                     ClsGeneral.getPreferences(context, Constants.USER),
                     ClsGeneral.getPreferences(context, Constants.DB),
                     ClsGeneral.getPreferences(context, Constants.REGION),

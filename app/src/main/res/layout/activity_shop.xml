@@ -20,6 +20,18 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                    android:id="@+id/addShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/title_add_shop"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/colorWhite"
+            android:layout_marginRight="10dp"/>
 
         </android.support.v7.widget.Toolbar>
 

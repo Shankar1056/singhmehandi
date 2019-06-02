@@ -9,9 +9,11 @@ import apextechies.singhmehandi.component.activity.login.model.OtpRequest;
 import apextechies.singhmehandi.component.activity.login.model.OtpValidate;
 import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerList;
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse;
+import apextechies.singhmehandi.component.activity.order.model.OrderListResponse;
 import apextechies.singhmehandi.component.activity.shop.model.*;
 import io.reactivex.Observable;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * Created by anujgupta on 26/12/17.
@@ -37,8 +39,8 @@ public interface NetworkInterface {
     @POST(BaseUrl.ADDSHOP)
     Observable<SaveShopResponse> addShop(@Body SaveShopDetailsRequest request);
 
-    @POST(BaseUrl.RETAILERLIST_SHOP)
-    Observable<ShopRetailerList> getRetailerList(@Body CommonRequestWithDate request);
+  /*  @POST(BaseUrl.RETAILERLIST_SHOP)
+    Observable<ShopRetailerList> getRetailerList(@Body CommonRequestWithDate request);*/
 
     @POST(BaseUrl.AUTHORISED_RETAILERS_LIST)
     Observable<AuthorizedRetailerList> getAuthorisedRetailer(@Body CommonRequest request);
@@ -46,11 +48,11 @@ public interface NetworkInterface {
     @POST(BaseUrl.ITEMLIST)
     Observable<ItemListResponse> getItemList(@Body CommonRequest request);
 
-    @POST(BaseUrl.SHOP_LIST)
+    @POST(BaseUrl.RETAILERLIST_SHOP)
     Observable<ShopListResponse> getShopList(@Body CommonRequestWithDate request);
 
-
-
+    @POST(BaseUrl.ORDER_LIST)
+    Observable<OrderListResponse> getOrderList(@Body CommonRequestWithDate request);
 
 
 }
