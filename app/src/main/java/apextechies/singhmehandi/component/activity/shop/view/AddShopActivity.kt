@@ -5,15 +5,12 @@ import android.os.Handler
 import android.os.Looper
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 import apextechies.singhmehandi.component.activity.shop.model.*
 import apextechies.singhmehandi.component.activity.shop.preserter.AddShopPresenter
-import kotlinx.android.synthetic.main.activity_order_add.*
+import kotlinx.android.synthetic.main.activity_shop_add.*
 
 
 class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSelectedListener {
@@ -26,7 +23,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_add)
+        setContentView(R.layout.activity_shop_add)
         addShopPresenter.AddShopPresenter(this, this)
         addShopPresenter.onCreated()
     }
@@ -37,6 +34,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
             finish()
+
         }
 
         addShopPresenter.getAreaList()

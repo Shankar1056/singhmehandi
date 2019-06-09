@@ -13,7 +13,7 @@ import apextechies.singhmehandi.component.activity.order.model.OrderListData
 import apextechies.singhmehandi.component.activity.shop.model.ShopListData
 import apextechies.singhmehandi.component.activity.shop.view.adapter.ShopListAdapter
 
-class OrderListAdapter (private val context: Context, private val shopList: ArrayList<OrderListData>) :
+class OrderListAdapter (private val context: Context, private val shopList: ArrayList<OrderListData>, val listener: OrderListClick) :
     RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,12 +30,16 @@ class OrderListAdapter (private val context: Context, private val shopList: Arra
         holder.locationName.setText(shopList[position].distributor)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-            //clickListener.onClick(position)
+            listener.onItemClick(position)
         })
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val shopName: TextView = itemView.findViewById(R.id.shopName)
         val locationName: TextView = itemView.findViewById(R.id.locationName)
+    }
+
+    interface OrderListClick{
+        fun onItemClick(pos: Int)
     }
 }

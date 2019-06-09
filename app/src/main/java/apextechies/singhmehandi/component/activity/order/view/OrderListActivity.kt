@@ -1,5 +1,6 @@
 package apextechies.singhmehandi.component.activity.order.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -29,8 +30,13 @@ class OrderListActivity : AppCompatActivity(), OrderListView {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         shopRV.layoutManager = LinearLayoutManager(this)
         addShop.text = resources.getString(R.string.title_add_order)
+        addShop.visibility = View.GONE
         toolbar.setNavigationOnClickListener {
             finish()
+        }
+
+        addShop.setOnClickListener {
+            startActivity(Intent(this@OrderListActivity, AddOrderActivity::class.java))
         }
     }
 
@@ -50,14 +56,25 @@ class OrderListActivity : AppCompatActivity(), OrderListView {
     override fun displayError(s: String) {
     }
 
-    override fun onOrderResponseReceived(movieResponse: OrderListResponse) {
-        shopRV.adapter = movieResponse.data?.let { OrderListAdapter(this@OrderListActivity, it) }
+    override fun onOrderResponseReceived(orderList: OrderListResponse) {
+        shopRV.adapter = orderList.data?.let {
+            OrderListAdapter(this@OrderListActivity, it, object : OrderListAdapter.OrderListClick {
+                override fun onItemClick(pos: Int) {
+
+                    startActivity(
+                        Intent(this@OrderListActivity, AddOrderActivity::class.java).putExtra(
+                            "salesman",
+                            orderList.data!![pos].salesman
+                        ).putExtra("shop", orderList.data!![pos].shop).putExtra("trnum", orderList.data!![pos].trnum)
+                    )
+                }
+
+            })
+        }
     }
 
     override fun invalidUser() {
     }
-
-
 
 
 }

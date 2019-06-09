@@ -2,17 +2,18 @@ package apextechies.singhmehandi.component.activity.order.presenter
 
 import android.content.Context
 import android.support.annotation.NonNull
+import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.AppController
+import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequestWithDate
 import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 import apextechies.singhmehandi.component.activity.order.view.OrderListView
-import apextechies.singhmehandi.component.activity.shop.model.ShopListResponse
+import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter.view
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
-import apextechies.singhmehandi.util.Utils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -37,6 +38,13 @@ class OrderPresenter {
         view!!.showProgress()
         getOrderObservable.subscribeWith(getOrderOobserver)
     }
+
+    fun onCreated() {
+        view?.initWidgit()
+    }
+
+
+
 
     val getOrderObservable: Observable<OrderListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)

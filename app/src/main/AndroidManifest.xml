@@ -49,6 +49,9 @@
         <activity android:name=".component.activity.shop.view.ShopDetailsActivity"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/title_shop_details"/>
+        <activity android:name=".component.activity.order.view.AddOrderActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/title_add_order"/>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
