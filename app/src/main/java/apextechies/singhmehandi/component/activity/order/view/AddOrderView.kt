@@ -1,7 +1,6 @@
 package apextechies.singhmehandi.component.activity.order.view
 
 import apextechies.singhmehandi.component.activity.order.model.ItemListData
-import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 
 interface AddOrderView {
 
@@ -11,8 +10,8 @@ interface AddOrderView {
     fun showEmptyStringMessage(string: String)
     fun noDataAvailable()
     fun onItemResponse(movieResponse: ArrayList<String>, listResponse: ArrayList<ItemListData>)
-    fun displayError(errorMessage: String) {
-
-    }
+    fun displayError(errorMessage: String)
+    fun onaddOrderResponse( message: String)
+    fun onCompleted()
 
 }

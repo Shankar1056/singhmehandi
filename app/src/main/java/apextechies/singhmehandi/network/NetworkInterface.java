@@ -7,11 +7,10 @@ import apextechies.singhmehandi.component.activity.login.model.LoginModel;
 import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel;
 import apextechies.singhmehandi.component.activity.login.model.OtpRequest;
 import apextechies.singhmehandi.component.activity.login.model.OtpValidate;
-import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerList;
-import apextechies.singhmehandi.component.activity.order.model.ItemListResponse;
-import apextechies.singhmehandi.component.activity.order.model.OrderListResponse;
+import apextechies.singhmehandi.component.activity.order.model.*;
 import apextechies.singhmehandi.component.activity.shop.model.*;
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -53,6 +52,9 @@ public interface NetworkInterface {
 
     @POST(BaseUrl.ORDER_LIST)
     Observable<OrderListResponse> getOrderList(@Body CommonRequestWithDate request);
+
+    @POST(BaseUrl.GETSHOPORDER_VISITSHOP)
+    Observable<Response<Void>> visitOrGetShopOrder(@Body SaveShopOrder request);
 
 
 }

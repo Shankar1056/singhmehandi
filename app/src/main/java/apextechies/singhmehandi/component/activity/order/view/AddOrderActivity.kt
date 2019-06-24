@@ -14,11 +14,13 @@ import kotlinx.android.synthetic.main.activity_order_add.*
 class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSelectedListener {
 
     var presenter = AddOrderPresenter()
-    var radioorderType: RadioButton? = null
+    var radioType: String? = null
     var selectedArea: String? = null
     var itemList: ArrayList<ItemListData>? = null
-    var adapterItemName = ArrayList<String>()
-    var adapterItemCode = ArrayList<String>()
+    var descriptionName = ArrayList<String>()
+    var descriptionId = ArrayList<String>()
+    var quantityLst = ArrayList<String>()
+    var orderAdapter: OrderItemListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,38 +44,41 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         routeName.setOnItemSelectedListener(this)
         presenter.getOrderItemList()
         save.setOnClickListener {
-            /*presenter.validateField(
-                routeET.text.toString().trim(),
-                shopET.text.toString().trim(),
-                salesManET.text.toString().trim(),
-                adapterItemName,
-                adapterItemCode,
-                radioorderType!!.getText().toString(),
-                quantityET.text.toString().trim(),
-                narrationET.text.toString().trim()
-            )*/
+            quantityLst = orderAdapter!!.getQuantityList()
+            if (quantityLst.size == descriptionName.size) {
+                if (radioType == null || radioType.equals("")) {
+                    radioType = resources.getString(R.string.order)
+                }
+                presenter.validateField(
+                    routeET.text.toString().trim(),
+                    shopET.text.toString().trim(),
+                    salesManET.text.toString().trim(),
+                    descriptionName,
+                    descriptionId,
+                    radioType.toString(),
+                    quantityLst,
+                    narrationET.text.toString().trim()
+                )
+            }
         }
 
         radioGrp.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 val radio: RadioButton = findViewById(checkedId)
+                radioType = radio.text as String?
                 Toast.makeText(
                     applicationContext, " On checked change : ${radio.text}",
                     Toast.LENGTH_SHORT
                 ).show()
                 if (radio.text.equals(resources.getString(R.string.order))) {
                     routeName.visibility = View.VISIBLE
-                    quantityET.visibility = View.VISIBLE
                     description.visibility = View.VISIBLE
                     itemSpinnerRV.visibility = View.VISIBLE
-                    quantity.visibility = View.VISIBLE
 
                 } else {
                     routeName.visibility = View.GONE
-                    quantityET.visibility = View.GONE
                     description.visibility = View.GONE
                     itemSpinnerRV.visibility = View.GONE
-                    quantity.visibility = View.GONE
                 }
             })
         toolbar.setNavigationOnClickListener {
@@ -84,10 +89,10 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         selectedArea = routeName.selectedItem.toString()
-        if (adapterItemName.size > 0) {
+        if (descriptionName.size > 0) {
             var isFound = false
-            for (i in 0 until adapterItemName.size) {
-                if (adapterItemName[i].equals(itemList!![position].cat)) {
+            for (i in 0 until descriptionName.size) {
+                if (descriptionName[i].equals(itemList!![position].cat)) {
                     Toast.makeText(this@AddOrderActivity, "This list is already added", Toast.LENGTH_SHORT).show()
                     return
                 } else {
@@ -95,23 +100,27 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                 }
             }
             if (isFound) {
-                itemList!![position].cat?.let { adapterItemName.add(it) }
-                itemList!![position].code?.let { adapterItemCode.add(it) }
+                itemList!![position].cat?.let { descriptionName.add(it) }
+                itemList!![position].code?.let { descriptionId.add(it) }
             }
         } else {
-            itemList!![position].cat?.let { adapterItemName.add(it) }
-            itemList!![position].code?.let { adapterItemCode.add(it) }
+            itemList!![position].cat?.let { descriptionName.add(it) }
+            itemList!![position].code?.let { descriptionId.add(it) }
         }
 
-        itemSpinnerRV.adapter = OrderItemListAdapter(this, adapterItemName, object :
+        orderAdapter = OrderItemListAdapter(this, descriptionName, object :
             OrderItemListAdapter.OrderItemClickListener {
+            override fun noQuantityError() {
+                Toast.makeText(this@AddOrderActivity, "Enter quantity please", Toast.LENGTH_SHORT).show()
+            }
+
             override fun onClick(pos: Int) {
-                adapterItemName.removeAt(pos)
-                adapterItemCode.removeAt(pos)
+                descriptionName.removeAt(pos)
+                descriptionId.removeAt(pos)
             }
 
         })
-
+        itemSpinnerRV.adapter = orderAdapter
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -139,4 +148,17 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         routeName.setAdapter(aa)
     }
 
+    override fun displayError(errorMessage: String) {
+        Toast.makeText(this, "" + String, Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onaddOrderResponse(data: String) {
+        Toast.makeText(this, "Shop Added", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCompleted() {
+        Toast.makeText(this, "Shop Added", Toast.LENGTH_SHORT).show()
+        finish()
+    }
 }

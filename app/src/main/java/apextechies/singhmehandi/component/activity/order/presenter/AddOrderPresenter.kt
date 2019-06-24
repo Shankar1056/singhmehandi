@@ -6,17 +6,18 @@ import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequest
-import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
+import apextechies.singhmehandi.component.activity.order.model.*
 import apextechies.singhmehandi.component.activity.order.view.AddOrderView
-import apextechies.singhmehandi.component.activity.shop.preserter.AddShopPresenter.context
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
+import apextechies.singhmehandi.util.Utils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 
 class AddOrderPresenter {
 
@@ -26,11 +27,13 @@ class AddOrderPresenter {
     var routeName: String? = null
     var shopName: String? = null
     var salesManName: String? = null
-    var selectedRouteName: ArrayList<String>? = null
-    var selectedRouteCode: ArrayList<String>? = null
+    var descriptionName: ArrayList<String>? = null
+    var descriptionId: ArrayList<String>? = null
+    var quantity: ArrayList<String>? = null
     var radioIOrderType: String? = null
-    var quantity: String? = null
     var narration: String? = null
+    var quantityList = ArrayList<QuantityList>()
+    var descroptionList = ArrayList<DescriptionList>()
 
 
     fun AddOrderPresenter(view: AddOrderView, context: Context) {
@@ -49,34 +52,54 @@ class AddOrderPresenter {
         selectedRouteName: ArrayList<String>,
         selectedRouteCode: ArrayList<String>,
         radioIOrderType: String,
-        quantity: String,
+        quantity: ArrayList<String>,
         narration: String
     ) {
         this.routeName = routeName
         this.shopName = shopName
         this.salesManName = salesManName
-        this.selectedRouteName = selectedRouteName
-        this.selectedRouteCode = selectedRouteCode
+        this.descriptionName = selectedRouteName
+        this.descriptionId = selectedRouteCode
         this.radioIOrderType = radioIOrderType
         this.quantity = quantity
         this.narration = narration
 
         if (TextUtils.isEmpty(routeName)) {
-            context?.resources?.getString(R.string.empty_rootname)?.let { view?.showEmptyStringMessage(it) }
-        } else if (TextUtils.isEmpty(shopName)) {
-            context?.resources?.getString(R.string.empty_shopname)?.let { view?.showEmptyStringMessage(it) }
-        } else if (TextUtils.isEmpty(salesManName)) {
-            context?.resources?.getString(R.string.empty_sales_man_name)?.let { view?.showEmptyStringMessage(it) }
-        } else if (TextUtils.isEmpty(quantity)) {
-            context?.resources?.getString(R.string.empty_quantity)?.let { view?.showEmptyStringMessage(it) }
-        } else if (radioIOrderType.equals(context?.resources?.getString(R.string.order))) {
-            if (TextUtils.isEmpty(narration)) {
-                context?.resources?.getString(R.string.empty_narration)?.let { view?.showEmptyStringMessage(it) }
+            context?.resources?.getString(R.string.empty_rootname)?.let {
+                view?.showEmptyStringMessage(it)
+                return
             }
-        } else {
-            view!!.showProgress()
-            // saveOrderObservable.subscribeWith(saveOrderObserver)
         }
+        if (TextUtils.isEmpty(shopName)) {
+            context?.resources?.getString(R.string.empty_shopname)?.let {
+                view?.showEmptyStringMessage(it)
+                return
+            }
+        }
+        if (TextUtils.isEmpty(salesManName)) {
+            context?.resources?.getString(R.string.empty_sales_man_name)?.let {
+                view?.showEmptyStringMessage(it)
+                return
+            }
+        }
+        if (TextUtils.isEmpty(narration)) {
+            context?.resources?.getString(R.string.empty_narration)?.let {
+                view?.showEmptyStringMessage(it)
+                return
+            }
+        }
+        if (radioIOrderType.equals(context?.resources?.getString(R.string.order))) {
+
+            for (i in 0 until descriptionName!!.size) {
+                descroptionList.add(DescriptionList(descriptionId!![i], descriptionName!![i]))
+            }
+            for (i in 0 until quantity!!.size) {
+                quantityList.add(QuantityList("" + i, quantity!![i]))
+            }
+        }
+        view!!.showProgress()
+        saveOrderObservable.subscribeWith(saveOrderObserver)
+
     }
 
     fun getOrderItemList() {
@@ -84,36 +107,55 @@ class AddOrderPresenter {
     }
 
 
-    /*val saveOrderObservable: Observable<OrderListResponse>
+    val saveOrderObservable: Observable<Response<Void>>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-            .getOrderList(
-                CommonRequestWithDate(
-                    "01/16/2019",
-                    "5/16/2019",
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.STATE),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEENAME),
-                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEEID)
+            .visitOrGetShopOrder(
+                SaveShopOrder(
+                    Utils.getCurrentDate(),
+                    routeName,
+                    shopName,
+                    radioIOrderType,
+                    narration,
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID),
+                    descroptionList,
+                    quantityList
                 )
             )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
 
-    val saveOrderObserver: DisposableObserver<OrderListResponse>
-        get() = object : DisposableObserver<OrderListResponse>() {
+    val saveOrderObserver: DisposableObserver<Response<Void>>
+        get() = object : DisposableObserver<Response<Void>>() {
 
-            override fun onNext(@NonNull movieResponse: OrderListResponse) {
+            override fun onNext(@NonNull movieResponse: Response<Void>) {
                 Log.d(TAG, "OnNext$movieResponse")
-                if (movieResponse.status.equals(Constants.FAIL)) {
-                    view!!.invalidUser()
+               /* if (movieResponse.status.equals(Constants.FAIL)) {
+                    view!!.noDataAvailable()
                 } else {
-                    view!!.onOrderResponseReceived(movieResponse)
-                }
-            }*/
+                    view!!.onaddOrderResponse(movieResponse.message!!)
+                }*/
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                e.printStackTrace()
+                view!!.displayError("Error fetching Movie Data")
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                view!!.onCompleted()
+                view!!.hideProgress()
+            }
+        }
+
     val getItemObservable: Observable<ItemListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getItemList(
