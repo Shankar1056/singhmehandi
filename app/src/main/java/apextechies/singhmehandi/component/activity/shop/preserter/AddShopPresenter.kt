@@ -164,13 +164,13 @@ object AddShopPresenter {
             shopView!!.emptyMobileValue()
         } else if (mobile.trim().length < 10) {
             shopView!!.invalidMobileValue()
-        } else if (TextUtils.isEmpty(gst)) {
+        } /*else if (TextUtils.isEmpty(gst)) {
             shopView!!.emptyGstValue()
-        } else if (TextUtils.isEmpty(address)) {
+        } */ else if (TextUtils.isEmpty(address)) {
             shopView!!.emptyAddressValue()
-        } else if (TextUtils.isEmpty(pintin)) {
+        } /*else if (TextUtils.isEmpty(pintin)) {
             shopView!!.emptyPinTinValue()
-        } else {
+        } */ else {
             addShopObservable.subscribeWith(addShopaObserver)
         }
     }

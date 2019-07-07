@@ -78,4 +78,5 @@
     <string name="empty_sales_man_name">Please enter sales man name</string>
     <string name="empty_quantity">Please enter quantity</string>
     <string name="empty_narration">Please enter order narration</string>
+    <string name="title_logout">Logout</string>
 </resources>
