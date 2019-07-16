@@ -112,6 +112,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textAllCaps="true"
+                        android:text="@string/title_feedback"
                         android:textAppearance="@font/roboto_medium"
                         android:textSize="18sp"/>
             </android.support.v7.widget.CardView>

@@ -182,7 +182,7 @@ class AddOrderPresenter {
                     view!!.noDataAvailable()
                 } else {
                     var orderItemNameList = ArrayList<String>()
-                    for (name in movieResponse.data!!) name.cat?.let { orderItemNameList.add(it) }
+                    for (name in movieResponse.data!!) name.description?.let { orderItemNameList.add(it) }
                     view!!.onItemResponse(orderItemNameList, movieResponse.data!!)
                 }
             }

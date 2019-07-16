@@ -5,20 +5,24 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
-import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.OrderListData
-import apextechies.singhmehandi.component.activity.shop.model.ShopListData
-import apextechies.singhmehandi.component.activity.shop.view.adapter.ShopListAdapter
 
-class OrderListAdapter (private val context: Context, private val shopList: ArrayList<OrderListData>, val listener: OrderListClick) :
+
+class OrderListAdapter(
+    private val context: Context,
+    private var shopList: ArrayList<OrderListData>,
+    val listener: OrderListClick
+) :
     RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
+
+    private var copyList = ArrayList<OrderListData>()
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.item_shop_list, parent, false)
+        val itemView = inflater.inflate(apextechies.singhmehandi.R.layout.item_order_row, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -35,11 +39,39 @@ class OrderListAdapter (private val context: Context, private val shopList: Arra
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val shopName: TextView = itemView.findViewById(R.id.shopName)
-        val locationName: TextView = itemView.findViewById(R.id.locationName)
+        val shopName: TextView = itemView.findViewById(apextechies.singhmehandi.R.id.shopName)
+        val locationName: TextView = itemView.findViewById(apextechies.singhmehandi.R.id.locationName)
     }
 
-    interface OrderListClick{
+    init {
+        copyList = shopList
+    }
+
+    interface OrderListClick {
         fun onItemClick(pos: Int)
+    }
+
+    fun filter(queryText: String) {
+        //shopList.clear()
+
+        if (queryText.isEmpty()) {
+            shopList = copyList
+        } else {
+            val filteredList = ArrayList<OrderListData>()
+            copyList.forEach{
+                if (it.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
+                    filteredList.add(it)
+                }
+            }
+            shopList = filteredList
+            /*for (name in copyList) {
+                if (name.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
+                    shopList.add(name)
+                }
+            }*/
+
+        }
+
+        notifyDataSetChanged()
     }
 }

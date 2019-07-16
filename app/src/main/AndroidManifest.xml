@@ -35,23 +35,45 @@
         </activity>
         <activity android:name=".component.activity.shop.view.ShopActivity"
                   android:theme="@style/AppTheme.NoActionBar"
-                  android:label="@string/title_shop_list"/>
+                  android:label=""/>
         <activity android:name=".component.activity.shop.view.AddShopActivity"
                   android:theme="@style/AppTheme.NoActionBar"
-                  android:label="@string/title_order"
+                  android:label="@string/title_add_shop"
                   android:windowSoftInputMode="adjustResize">
         </activity>
 
+
+
+
+        <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.apkgetter.SearchResultsActivity" />
+
         <activity android:name=".component.activity.order.view.OrderListActivity"
                   android:theme="@style/AppTheme.NoActionBar"
-                  android:label="@string/title_order_list"/>
+                  android:label="">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/searchable" />
+        </activity>
+
+
+
+
 
         <activity android:name=".component.activity.shop.view.ShopDetailsActivity"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/title_shop_details"/>
         <activity android:name=".component.activity.order.view.AddOrderActivity"
                   android:theme="@style/AppTheme.NoActionBar"
-                  android:label="@string/title_add_order"/>
+                  android:label=""/>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>

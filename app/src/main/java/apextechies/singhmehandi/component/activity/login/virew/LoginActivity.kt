@@ -9,7 +9,6 @@ import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.login.model.LoginModel
 import apextechies.singhmehandi.component.activity.login.model.LoginModelVerifyModel
 import apextechies.singhmehandi.component.activity.login.presenter.LoginPresenter
-import apextechies.singhmehandi.component.activity.shop.view.ShopActivity
 import apextechies.singhmehandi.util.Utils
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher
@@ -104,7 +103,7 @@ class LoginActivity : AppCompatActivity(), LoginView, View.OnClickListener {
 
     override fun loginSuccess(movieResponse: LoginModelVerifyModel) {
 
-        startActivity(Intent(this, ShopActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.*
+import apextechies.singhmehandi.AppController
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.ItemListData
 import apextechies.singhmehandi.component.activity.order.presenter.AddOrderPresenter
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderItemListAdapter
+import apextechies.singhmehandi.util.ClsGeneral
+import apextechies.singhmehandi.util.Constants
 import kotlinx.android.synthetic.main.activity_order_add.*
 
 class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSelectedListener {
@@ -25,7 +28,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_add)
-
+        titleTV.setText(intent.getStringExtra("title"))
         presenter.AddOrderPresenter(this, this)
         presenter.onCreated()
 
@@ -36,7 +39,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        salesManET.setText(intent.getStringExtra("salesman"))
+        salesManET.setText(ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER))
         shopET.setText(intent.getStringExtra("shop"))
         routeET.setText(intent.getStringExtra("trnum"))
 

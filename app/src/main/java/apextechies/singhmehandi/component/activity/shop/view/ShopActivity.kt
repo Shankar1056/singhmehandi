@@ -9,15 +9,18 @@ import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.shop.model.ShopListResponse
 import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter
 import apextechies.singhmehandi.component.activity.shop.view.adapter.ShopListAdapter
+import apextechies.singhmehandi.util.Utils
 import kotlinx.android.synthetic.main.activity_shop.*
 
-class ShopActivity : AppCompatActivity(), ShopView {
+
+class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDateRangeSelectedListener {
     var shopPresenter = ShopPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shop)
+        setContentView(apextechies.singhmehandi.R.layout.activity_shop)
         shopPresenter.ShopPresenter(this, this)
         shopPresenter.initWidgit()
+        shopPresenter.getShopList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
     }
 
     override fun initWidgit() {
@@ -25,19 +28,23 @@ class ShopActivity : AppCompatActivity(), ShopView {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         shopRV.layoutManager = LinearLayoutManager(this)
+        titleTV.setText(resources.getString(R.string.title_shop_list))
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        callenderLL.setOnClickListener {
+            var dateRangePickerFragment = DateRangePickerFragment.newInstance(this@ShopActivity, false)
+            dateRangePickerFragment.show(getSupportFragmentManager(), "datePicker")
+        }
 
-        addShop.setOnClickListener {
+        fab.setOnClickListener {
             startActivity(Intent(this@ShopActivity, AddShopActivity::class.java))
         }
+
         shopRV.layoutManager = LinearLayoutManager(this)
+
     }
 
-    override fun getShopList() {
-        shopPresenter.getShopList()
-    }
 
     override fun showProgress() {
         progressAVL.show()
@@ -50,29 +57,54 @@ class ShopActivity : AppCompatActivity(), ShopView {
     override fun displayError(s: String) {
     }
 
-    override fun onReceivedResponse(movieResponse: ShopListResponse) {
-        Log.i("Response", movieResponse.toString())
-        shopRV.adapter = movieResponse.data?.let { ShopListAdapter(this@ShopActivity, it, object : ShopListAdapter.OnShopItemClickListener {
-            override fun onClick(pos: Int) {
-                startActivity(Intent(this@ShopActivity,  ShopDetailsActivity::class.java).
-                putExtra("areaName", movieResponse.data!![pos].areaname).
-                putExtra("areaCode", movieResponse.data!![pos].areacode).
-                putExtra("routeName", movieResponse.data!![pos].routename).
-                putExtra("routeCode", movieResponse.data!![pos].routecode).
-                putExtra("distributor", movieResponse.data!![pos].distributor).
-                putExtra("panno", movieResponse.data!![pos].panno).
-                putExtra("phone", movieResponse.data!![pos].phone).
-                putExtra("retailercode", movieResponse.data!![pos].retailercode).
-                putExtra("shoptype", movieResponse.data!![pos].shoptype).
-                putExtra("place", movieResponse.data!![pos].place).
-                putExtra("retailername", movieResponse.data!![pos].retailername)
-                )
-            }
+    override fun onReceivedResponse(shopResponse: ShopListResponse) {
+        Log.i("Response", shopResponse.toString())
+        if (shopResponse != null && shopResponse.data?.size!! > 0) {
+            shopCountShop.setText(""+ shopResponse.data!!.size+" - Shops found")
+        }
+        shopRV.adapter = shopResponse.data?.let {
+            ShopListAdapter(this@ShopActivity, it, object : ShopListAdapter.OnShopItemClickListener {
+                override fun onClick(pos: Int) {
+                    startActivity(
+                        Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
+                            "areaName",
+                            shopResponse.data!![pos].areaname
+                        ).putExtra("areaCode", shopResponse.data!![pos].areacode).putExtra(
+                            "routeName",
+                            shopResponse.data!![pos].routename
+                        ).putExtra("routeCode", shopResponse.data!![pos].routecode).putExtra(
+                            "distributor",
+                            shopResponse.data!![pos].distributor
+                        ).putExtra("panno", shopResponse.data!![pos].panno).putExtra(
+                            "phone",
+                            shopResponse.data!![pos].phone
+                        ).putExtra("retailercode", shopResponse.data!![pos].retailercode).putExtra(
+                            "shoptype",
+                            shopResponse.data!![pos].shoptype
+                        ).putExtra("place", shopResponse.data!![pos].place).putExtra(
+                            "retailername",
+                            shopResponse.data!![pos].retailername
+                        )
+                    )
+                }
 
-        }) }
+            })
+        }
     }
 
     override fun invalidUser() {
     }
 
+    override fun onDateRangeSelected(
+        startDay: Int,
+        startMonth: Int,
+        startYear: Int,
+        endDay: Int,
+        endMonth: Int,
+        endYear: Int
+    ) {
+        Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
+        selectedDateRange.setText("$startDay-$startMonth-$startYear - $endDay-$endMonth-$endYear")
+        shopPresenter.getShopList("$startMonth/$startDay/$startYear", "$endMonth/$endDay/$endYear")
+    }
 }

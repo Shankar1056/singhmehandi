@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import apextechies.singhmehandi.MainActivity
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.login.virew.LoginActivity
-import apextechies.singhmehandi.component.activity.shop.view.ShopActivity
 import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
 

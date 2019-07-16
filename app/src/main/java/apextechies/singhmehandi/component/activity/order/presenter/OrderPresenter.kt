@@ -2,18 +2,16 @@ package apextechies.singhmehandi.component.activity.order.presenter
 
 import android.content.Context
 import android.support.annotation.NonNull
-import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.AppController
-import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequestWithDate
 import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 import apextechies.singhmehandi.component.activity.order.view.OrderListView
-import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter.view
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
+import apextechies.singhmehandi.util.Utils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -23,6 +21,8 @@ class OrderPresenter {
     var context: Context? = null
     var view: OrderListView? = null
     val TAG = "OrderPresenter"
+    var fromDate: String? = null
+    var toDate: String? = null
 
     fun OrderPresenter(context: Context, view: OrderListView) {
         this.context = context
@@ -31,10 +31,11 @@ class OrderPresenter {
 
     fun initWidgit() {
         view!!.initWidgit()
-        getOrderList();
     }
 
-    fun getOrderList() {
+    fun getOrderList(fromDate: String, toDate: String) {
+        this.fromDate = fromDate
+        this.toDate = toDate
         view!!.showProgress()
         getOrderObservable.subscribeWith(getOrderOobserver)
     }
@@ -50,8 +51,8 @@ class OrderPresenter {
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getOrderList(
                 CommonRequestWithDate(
-                    "01/16/2019",
-                    "5/16/2019",
+                    fromDate,
+                    toDate,
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),

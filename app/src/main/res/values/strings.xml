@@ -79,4 +79,12 @@
     <string name="empty_quantity">Please enter quantity</string>
     <string name="empty_narration">Please enter order narration</string>
     <string name="title_logout">Logout</string>
+    <string name="title_feedback">Feedback</string>
+    <string name="title_toDate">select to date</string>
+    <string name="title_select_date">select data range</string>
+    <string name="but_done">Done</string>
+    <string name="title_tab_start_date">Start Date</string>
+    <string name="ttile_tab_end_date">End Date</string>
+    <string name="title_update_Order">Update Order</string>
+    <string name="search_hint">type order name</string>
 </resources>

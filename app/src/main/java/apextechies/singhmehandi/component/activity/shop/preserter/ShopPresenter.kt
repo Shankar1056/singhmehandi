@@ -19,30 +19,36 @@ import io.reactivex.schedulers.Schedulers
 
 object ShopPresenter {
     private val TAG = "ShopPresenter"
-    private var context: Context?=null
+    private var context: Context? = null
     var view: ShopView? = null
+    var fromDate: String? = null
+    var toDate: String? = null
     fun ShopPresenter(context: Context, view: ShopView) {
         this.view = view;
         this.context = context;
     }
 
-    fun getShopList() {
+    fun getShopList(fromDate: String, toDate: String) {
+        this.fromDate = fromDate
+        this.toDate = toDate
         view!!.showProgress()
-        getOtpObservable.subscribeWith(getOtpOobserver)
+        Log.d("range_predenter : ", "$fromDate - $toDate")
+        geShopObservable.subscribeWith(getShopOobserver)
     }
 
     fun initWidgit() {
         view!!.initWidgit()
-        view!!.getShopList()
     }
 
 
-    val getOtpObservable: Observable<ShopListResponse>
+
+
+    val geShopObservable: Observable<ShopListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getShopList(
                 CommonRequestWithDate(
-                    "01/16/2019",
-                    "5/16/2019",
+                    fromDate,
+                    toDate,
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
                     ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),
@@ -56,14 +62,15 @@ object ShopPresenter {
             .observeOn(AndroidSchedulers.mainThread())
 
 
-    val getOtpOobserver: DisposableObserver<ShopListResponse>
+    val getShopOobserver: DisposableObserver<ShopListResponse>
         get() = object : DisposableObserver<ShopListResponse>() {
 
             override fun onNext(@NonNull movieResponse: ShopListResponse) {
                 Log.d(TAG, "OnNext$movieResponse")
-                if (movieResponse.status.equals(Constants.FAIL)){
+                if (movieResponse.status.equals(Constants.FAIL)) {
                     view!!.invalidUser()
-                }else {
+                } else {
+                    Log.d("range response : ", "Area Code: ${movieResponse.data!![0].areacode}")
                     view!!.onReceivedResponse(movieResponse)
                 }
             }
