@@ -8,6 +8,9 @@ import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequest
 import apextechies.singhmehandi.component.activity.order.model.*
 import apextechies.singhmehandi.component.activity.order.view.AddOrderView
+import apextechies.singhmehandi.component.activity.shop.model.RouteListResponse
+import apextechies.singhmehandi.component.activity.shop.model.RouteListdata
+import apextechies.singhmehandi.component.activity.shop.preserter.AddShopPresenter
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
@@ -106,6 +109,78 @@ class AddOrderPresenter {
         getItemObservable.subscribeWith(getItemObserver)
     }
 
+    fun getAuthorisedRoute() {
+        getAuthorisedRouteItemObservable.subscribeWith(getAuthorisedRouteItemObserver)
+    }
+
+    fun onAuthorizedRouteReceived(message: ArrayList<RouteListdata>) {
+        Log.e("Order Presenter","onAuthorizedRouteReceived")
+        getRouteNameAndCodeFromList(message)
+    }
+
+    private fun getRouteNameAndCodeFromList(routeList: ArrayList<RouteListdata>?) {
+        Log.e("Order Presenter","getRouteNameAndCodeFromList")
+        var routeNameList = ArrayList<String>()
+        for (name in routeList!!) {
+            name.routename?.let { routeNameList.add(it) }
+        }
+        view!!.addRouteNameListInSpinner(routeNameList)
+    }
+
+    fun getAreaNameFound(stringExtra: String, orderRouteList: java.util.ArrayList<RouteListdata>) {
+
+        for (i in 0 until  orderRouteList!!.size) {
+            if (stringExtra.equals(orderRouteList[i].routename)){
+                view?.selectSpinnerPosition(i)
+            }
+        }
+    }
+
+
+    val getAuthorisedRouteItemObservable: Observable<RouteListResponse>
+        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+            .getRouteList(
+                CommonRequest(
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
+                )
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
+    val getAuthorisedRouteItemObserver: DisposableObserver<RouteListResponse>
+        get() = object : DisposableObserver<RouteListResponse>() {
+
+            override fun onNext(@NonNull movieResponse: RouteListResponse) {
+                Log.e("Order Presenter","onNext")
+                Log.d(TAG, "OnNext$movieResponse")
+                if (movieResponse.status.equals(Constants.FAIL)) {
+                    view!!.noDataAvailable()
+                } else {
+                    view!!.onAuthorisedDealerOrderResponse(movieResponse.data)
+                }
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                Log.e("Order Presenter","onError")
+                e.printStackTrace()
+                view!!.displayError("Error fetching Movie Data")
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                Log.e("Order Presenter","onComplete")
+                view!!.hideProgress()
+            }
+        }
+
 
     val saveOrderObservable: Observable<Response<Void>>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
@@ -136,11 +211,11 @@ class AddOrderPresenter {
 
             override fun onNext(@NonNull movieResponse: Response<Void>) {
                 Log.d(TAG, "OnNext$movieResponse")
-               /* if (movieResponse.status.equals(Constants.FAIL)) {
-                    view!!.noDataAvailable()
-                } else {
-                    view!!.onaddOrderResponse(movieResponse.message!!)
-                }*/
+                /* if (movieResponse.status.equals(Constants.FAIL)) {
+                     view!!.noDataAvailable()
+                 } else {
+                     view!!.onaddOrderResponse(movieResponse.message!!)
+                 }*/
             }
 
             override fun onError(@NonNull e: Throwable) {

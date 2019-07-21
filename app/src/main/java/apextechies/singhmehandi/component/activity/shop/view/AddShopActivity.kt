@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v7.app.AppCompatActivity
+import android.view.MotionEvent
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Toast
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 import apextechies.singhmehandi.component.activity.shop.model.*
@@ -38,7 +42,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         }
 
         addShopPresenter.getAreaList()
-        routeCode.setOnItemSelectedListener(this)
+        routeName.setOnItemSelectedListener(this)
         areaName.setOnItemSelectedListener(this)
         submit.setOnClickListener {
             val selectedId = radioGrp.getCheckedRadioButtonId()
@@ -60,6 +64,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         }
     }
 
+
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
@@ -67,17 +72,15 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent!!.getId()) {
             R.id.areaName -> {
-                // orderPresenter.areaSelected(areaList, position)
-                addShopPresenter.getRouteList(
-                    areaList?.get(position)!!.areaname!!,
-                    areaList?.get(position)!!.areacode!!
-                )
+                    addShopPresenter.areaSelected(areaList, position)
+                    addShopPresenter.getRouteList(
+                        areaList?.get(position)!!.areaname!!,
+                        areaList?.get(position)!!.areacode!!
+                    )
             }
-            R.id.areaCode -> {
-                // orderPresenter.areaSelected(areaList, position)
-            }
+
             R.id.routeName -> {
-                // orderPresenter.routeSelected(routeList, position)
+                addShopPresenter.routeSelected(routeList, position)
             }
         }
     }

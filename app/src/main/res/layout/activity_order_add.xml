@@ -62,7 +62,7 @@
                             android:textAppearance="@font/roboto_medium"
                             android:textSize="13sp"
                             app:layout_constraintTop_toTopOf="parent"/>
-                    <EditText
+                    <Spinner
                             android:id="@+id/routeET"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"

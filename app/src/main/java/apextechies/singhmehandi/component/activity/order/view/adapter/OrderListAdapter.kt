@@ -19,7 +19,6 @@ class OrderListAdapter(
     private var copyList = ArrayList<OrderListData>()
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(apextechies.singhmehandi.R.layout.item_order_row, parent, false)
@@ -53,25 +52,26 @@ class OrderListAdapter(
 
     fun filter(queryText: String) {
         //shopList.clear()
-
-        if (queryText.isEmpty()) {
-            shopList = copyList
-        } else {
-            val filteredList = ArrayList<OrderListData>()
-            copyList.forEach{
-                if (it.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
-                    filteredList.add(it)
+        if (shopList.size > 0) {
+            if (queryText.isEmpty()) {
+                shopList = copyList
+            } else {
+                val filteredList = ArrayList<OrderListData>()
+                copyList.forEach {
+                    if (it.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
+                        filteredList.add(it)
+                    }
                 }
+                shopList = filteredList
+                /*for (name in copyList) {
+                    if (name.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
+                        shopList.add(name)
+                    }
+                }*/
+
             }
-            shopList = filteredList
-            /*for (name in copyList) {
-                if (name.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
-                    shopList.add(name)
-                }
-            }*/
 
+            notifyDataSetChanged()
         }
-
-        notifyDataSetChanged()
     }
 }

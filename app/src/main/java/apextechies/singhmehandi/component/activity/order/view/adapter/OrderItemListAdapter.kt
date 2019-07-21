@@ -31,6 +31,7 @@ class OrderItemListAdapter(
         holder.shopName.setText(shopList[position])
 
         holder.delete.setOnClickListener(View.OnClickListener {
+            holder!!.quantity.setText("")
             listener!!.onClick(position)
             notifyDataSetChanged()
         })

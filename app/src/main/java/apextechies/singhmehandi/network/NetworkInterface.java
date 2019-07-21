@@ -32,6 +32,9 @@ public interface NetworkInterface {
     @POST(BaseUrl.ROUTE_LIST)
     Observable<RouteListResponse> getRouteList(@Body RouteListRequest request);
 
+    @POST(BaseUrl.ROUTE_LIST)
+    Observable<RouteListResponse> getRouteList(@Body CommonRequest request);
+
     @POST(BaseUrl.DISTRIBUT_LIST)
     Observable<DistributorListResponse> getDistributorList(@Body CommonRequest request);
 

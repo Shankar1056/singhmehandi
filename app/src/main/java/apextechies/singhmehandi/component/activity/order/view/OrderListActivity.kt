@@ -136,7 +136,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
 
             override fun onQueryTextChange(query: String): Boolean {
                 // filter recycler view when text is changed
-                orderAdapter!!.filter(query)
+                orderAdapter?.filter(query)
                 return false
             }
         })
