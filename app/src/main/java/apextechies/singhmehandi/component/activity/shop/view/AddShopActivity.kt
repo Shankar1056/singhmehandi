@@ -1,10 +1,7 @@
 package apextechies.singhmehandi.component.activity.shop.view
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.support.v7.app.AppCompatActivity
-import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -20,8 +17,8 @@ import kotlinx.android.synthetic.main.activity_shop_add.*
 class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSelectedListener {
 
     var addShopPresenter = AddShopPresenter
-    var areaList: ArrayList<AreaListData>? = null
-    var routeList: ArrayList<RouteListdata>? = null
+    var areaList = ArrayList<AreaListData>()
+    var routeList = ArrayList<RouteListdata>()
     var shopType: String? = null
     var radioSexButton: RadioButton? = null
 
@@ -72,11 +69,11 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent!!.getId()) {
             R.id.areaName -> {
-                    addShopPresenter.areaSelected(areaList, position)
-                    addShopPresenter.getRouteList(
-                        areaList?.get(position)!!.areaname!!,
-                        areaList?.get(position)!!.areacode!!
-                    )
+                addShopPresenter.areaSelected(areaList, position)
+                addShopPresenter.getRouteList(
+                    areaList?.get(position)!!.areaname!!,
+                    areaList?.get(position)!!.areacode!!
+                )
             }
 
             R.id.routeName -> {
@@ -92,7 +89,21 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun onRouteResponse(movieResponse: RouteListResponse) {
-        routeList = movieResponse.data
+        routeList.clear()
+        var routeListdata = RouteListdata()
+        routeListdata.routename = resources.getString(R.string.selectroutename)
+        routeListdata.routecode = resources.getString(R.string.selectroutecode)
+        routeList.add(routeListdata)
+        movieResponse.data?.let { routeList?.addAll(it) }
+        addShopPresenter.onRouteResponceReceived(routeList, 0)
+    }
+
+    override fun onRouteEmptyResponse() {
+        routeList.clear()
+        var routeListdata = RouteListdata()
+        routeListdata.routename = resources.getString(R.string.selectroutename)
+        routeListdata.routecode = resources.getString(R.string.selectroutecode)
+        routeList.add(routeListdata)
         addShopPresenter.onRouteResponceReceived(routeList, 0)
     }
 
@@ -113,7 +124,13 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
 
     override fun onAreaResponse(movieResponse: AreaListResponse) {
-        areaList = movieResponse!!.data
+        areaList.clear()
+        var areaListData = AreaListData()
+        areaListData.areaname = resources.getString(R.string.selectareaname)
+        areaListData.areacode = resources.getString(R.string.selectareacode)
+        areaList?.add(areaListData)
+        movieResponse!!.data?.let { areaList?.addAll(it) }
+
         addShopPresenter.onAreaResponceReceived(areaList, 0)
     }
 
@@ -141,16 +158,9 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun emptyShopValue() {
-        Handler(Looper.getMainLooper()).post {
-            object : Runnable {
-                override fun run() {
-                    Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_value), Toast.LENGTH_SHORT)
-                        .show()
 
-                }
-            }
-        }
-
+        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_value), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun emptyPlaceValue() {
@@ -176,6 +186,22 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun emptyPinTinValue() {
         Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_pintin_value), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun selectAreaName() {
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectareaname), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun selectAreaCode() {
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectareacode), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun selectRouteName() {
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectroutename), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun selectRouteCode() {
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectroutecode), Toast.LENGTH_SHORT).show()
     }
 
     override fun displaySavedShopMessage(movieResponse: SaveShopResponse) {

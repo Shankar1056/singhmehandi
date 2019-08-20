@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
+import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequest
 import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 import apextechies.singhmehandi.component.activity.shop.model.*
@@ -54,9 +55,13 @@ object AddShopPresenter {
     fun getRouteList(areaName: String, areaCode: String) {
         AddShopPresenter.areaName = areaName
         AddShopPresenter.areaCode = areaCode
-        getRouteObservable.subscribeWith(
-            getRouteObserver
-        )
+        if (areaName.equals(context?.resources?.getString(R.string.selectareaname))) {
+            shopView!!.onRouteEmptyResponse()
+        } else {
+            getRouteObservable.subscribeWith(
+                getRouteObserver
+            )
+        }
     }
 
     fun getDistributorList() {
@@ -159,17 +164,25 @@ object AddShopPresenter {
         this.address = address
         this.pintin = pintin
         this.note = note
-        if (TextUtils.isEmpty(shopName)) {
+        if (areaName.equals(context?.resources?.getString(R.string.selectareaname))) {
+            shopView!!.selectAreaName()
+        }else if (areaCode.equals(context?.resources?.getString(R.string.selectareacode))) {
+            shopView!!.selectAreaCode()
+        }else if (routeName.equals(context?.resources?.getString(R.string.selectroutename))) {
+            shopView!!.selectRouteName()
+        } else if (routeCode.equals(context?.resources?.getString(R.string.selectroutecode))) {
+            shopView!!.selectRouteCode()
+        } else if (shopName.trim().equals("")) {
             shopView!!.emptyShopValue()
-        } else if (TextUtils.isEmpty(place)) {
+        } else if (place.trim().equals("")) {
             shopView!!.emptyPlaceValue()
-        } else if (TextUtils.isEmpty(mobile)) {
+        } else if (mobile.trim().equals("")) {
             shopView!!.emptyMobileValue()
         } else if (mobile.trim().length < 10) {
             shopView!!.invalidMobileValue()
         } /*else if (TextUtils.isEmpty(gst)) {
             shopView!!.emptyGstValue()
-        } */ else if (TextUtils.isEmpty(address)) {
+        } */ else if (address.trim().equals("")) {
             shopView!!.emptyAddressValue()
         } /*else if (TextUtils.isEmpty(pintin)) {
             shopView!!.emptyPinTinValue()

@@ -9,6 +9,7 @@ interface AddShopView {
     fun displayError(error: String)
     fun hideProgress()
     fun onRouteResponse(movieResponse: RouteListResponse)
+    fun onRouteEmptyResponse()
     fun onAreaResponse(movieResponse: AreaListResponse)
     fun noDataAvailable()
     fun onDistributerResponse(movieResponse: DistributorListResponse)
@@ -25,4 +26,8 @@ interface AddShopView {
     fun emptyAddressValue()
     fun emptyPinTinValue()
     fun displaySavedShopMessage(movieResponse: SaveShopResponse)
+    fun selectAreaName()
+    fun selectAreaCode()
+    fun selectRouteName()
+    fun selectRouteCode()
 }

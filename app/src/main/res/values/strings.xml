@@ -87,4 +87,8 @@
     <string name="ttile_tab_end_date">End Date</string>
     <string name="title_update_Order">Update Order</string>
     <string name="search_hint">type order name</string>
+    <string name="selectroutename">Select route name</string>
+    <string name="selectroutecode">Select route code</string>
+    <string name="selectareaname">Select area name</string>
+    <string name="selectareacode">Select area code</string>
 </resources>
