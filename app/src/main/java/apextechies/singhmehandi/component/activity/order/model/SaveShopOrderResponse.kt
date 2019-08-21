@@ -7,10 +7,5 @@ class SaveShopOrderResponse {
     var status: String? = null
     @SerializedName("message")
     var message: String? = null
-    @SerializedName("data")
-    var data: ArrayList<SaveShopOrderData>? = null
-}
-
-class SaveShopOrderData {
 
 }

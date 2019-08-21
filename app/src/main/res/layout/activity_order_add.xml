@@ -39,7 +39,8 @@
             app:layout_constraintTop_toBottomOf="@+id/topbar">
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="60dp">
 
 
             <android.support.v7.widget.CardView
@@ -91,6 +92,9 @@
                             android:textAppearance="@font/roboto_medium"
                             android:textSize="13sp"
                             app:layout_constraintTop_toBottomOf="@+id/routeET"/>
+
+                    <!--Use Authorised shop list api-->
+
                     <EditText
                             android:id="@+id/shopET"
                             android:layout_width="match_parent"

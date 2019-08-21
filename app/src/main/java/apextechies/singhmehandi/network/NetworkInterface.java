@@ -57,7 +57,7 @@ public interface NetworkInterface {
     Observable<OrderListResponse> getOrderList(@Body CommonRequestWithDate request);
 
     @POST(BaseUrl.GETSHOPORDER_VISITSHOP)
-    Observable<Response<Void>> visitOrGetShopOrder(@Body SaveShopOrder request);
+    Observable<SaveShopOrderResponse> visitOrGetShopOrder(@Body SaveShopOrder request);
 
 
 }

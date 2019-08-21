@@ -36,6 +36,14 @@ object Utils {
         val formattedDate = df.format(c)
         return formattedDate
     }
+    fun getCurrentDateForOrder(): String{
+        val c = Calendar.getInstance().getTime()
+        println("Current time => $c")
+
+        val df = SimpleDateFormat("dd-MM-yyyy")
+        val formattedDate = df.format(c)
+        return formattedDate
+    }
     fun getCurrentDateWithDash(): String{
         val c = Calendar.getInstance().getTime()
         println("Current time => $c")
