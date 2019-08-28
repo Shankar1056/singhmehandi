@@ -14,4 +14,10 @@ object Constants{
     val STATE = "state"
     val EMPLOYEENAME = "employeename"
     val EMPLOYEEID = "employeeid"
+    val DESCRIPTION = "description"
+    val COSMETICS = "Cosmetics"
+    val FINISHGOODS = "FINISH GOODS"
+    val MEHANDICONE = "Mehandi Cone"
+    val POUCHES = "Pouches"
+    val RAWMATERIAL = "Raw Material"
 }

@@ -64,7 +64,7 @@ object AddShopPresenter {
         }
     }
 
-    fun getDistributorList() {
+   /* fun getDistributorList() {
         getDistributorObservable.subscribeWith(
             getDistributorObserver
         )
@@ -74,7 +74,7 @@ object AddShopPresenter {
         getItemObservable.subscribeWith(
             getItemObserver
         )
-    }
+    }*/
 
     fun onAreaResponceReceived(areaList: ArrayList<AreaListData>?, defaultPosition: Int) {
         getAreaNameAndCodeFromList(
@@ -279,7 +279,7 @@ object AddShopPresenter {
         }
 
 
-    val getDistributorObservable: Observable<DistributorListResponse>
+   /* val getDistributorObservable: Observable<DistributorListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getDistributorList(
                 CommonRequest(
@@ -360,7 +360,7 @@ object AddShopPresenter {
                 Log.d(TAG, "Completed")
                 shopView!!.hideProgress()
             }
-        }
+        }*/
 
 
     val addShopObservable: Observable<SaveShopResponse>

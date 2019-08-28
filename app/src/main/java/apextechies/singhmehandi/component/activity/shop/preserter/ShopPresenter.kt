@@ -40,9 +40,6 @@ object ShopPresenter {
         view!!.initWidgit()
     }
 
-
-
-
     val geShopObservable: Observable<ShopListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getShopList(

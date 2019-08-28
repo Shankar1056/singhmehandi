@@ -5,8 +5,6 @@ import android.support.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.component.activity.CommonRequest
-import apextechies.singhmehandi.component.activity.order.Download_web
-import apextechies.singhmehandi.component.activity.order.OnTaskCompleted
 import apextechies.singhmehandi.component.activity.order.model.*
 import apextechies.singhmehandi.component.activity.order.view.AddOrderView
 import apextechies.singhmehandi.component.activity.shop.model.RouteListResponse
@@ -20,9 +18,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONArray
-import org.json.JSONObject
-import retrofit2.Response
 
 
 class AddOrderPresenter {
@@ -31,6 +26,7 @@ class AddOrderPresenter {
     var context: Context? = null
     val TAG = "AddOrderPresenter"
     var routeName: String? = null
+    var routeId: String? = null
     var shopName: String? = null
     var salesManName: String? = null
     var descriptionName: ArrayList<String>? = null
@@ -128,81 +124,102 @@ class AddOrderPresenter {
         soa.employeeid = ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
         soa.employeename = ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME)
 
-/*
-        var web = Download_web(object : OnTaskCompleted {
-            override fun onTaskCompleted(response: String?) {
-                Log.i("response", response)
-            }
-        })
-        var obj = JSONObject()
-        obj.put("date", Utils.getCurrentDate())
-        obj.put("route", routeName)
-        obj.put("retailer", shopName)
-        obj.put("type", radioIOrderType)
-        obj.put("narration", narration)
-        obj.put("user", ClsGeneral.getPreferences(context, Constants.USER))
-        obj.put("db", ClsGeneral.getPreferences(context, Constants.DB))
-        obj.put("region", ClsGeneral.getPreferences(context, Constants.REGION))
-        obj.put("superstockist", ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST))
-        obj.put("state", ClsGeneral.getPreferences(context, Constants.STATE))
-        obj.put("employeename", ClsGeneral.getPreferences(context, Constants.EMPLOYEEID))
-        obj.put("employeeid", ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME))
-        var array = JSONArray()
-        var quanObj = JSONObject()
-        for (i in 0 until quantity!!.size) {
-            quanObj.put("quantity_id", i)
-            quanObj.put("quantity", quantity!![i])
-        }
-        array.put(quanObj)
-        obj.put("quantity", array)
 
-        var decsarray = JSONArray()
-        var decsObj = JSONObject()
-        for (i in 0 until descriptionName!!.size) {
-            decsObj.put("description_id", descriptionId!![i])
-            decsObj.put("description", descriptionName!![i])
-        }
-        decsarray.put(decsObj)
-        obj.put("description", decsarray)
-
-        web.setData(obj)
-
-        web.execute("https://ssm.smocglobal.com/androidApp/salesOrderAPI.php");*/
-
-         saveOrderObservable.subscribeWith(saveOrderObserver)
+        saveOrderObservable.subscribeWith(saveOrderObserver)
 
     }
 
-    fun getOrderItemList() {
-        getItemObservable.subscribeWith(getItemObserver)
-    }
 
     fun getAuthorisedRoute() {
         getAuthorisedRouteItemObservable.subscribeWith(getAuthorisedRouteItemObserver)
     }
 
-    fun onAuthorizedRouteReceived(message: ArrayList<RouteListdata>) {
-        Log.e("Order Presenter", "onAuthorizedRouteReceived")
-        getRouteNameAndCodeFromList(message)
-    }
-
-    private fun getRouteNameAndCodeFromList(routeList: ArrayList<RouteListdata>?) {
-        Log.e("Order Presenter", "getRouteNameAndCodeFromList")
+    fun onAuthorizedRouteReceived( routeList: ArrayList<RouteListdata>, locationName: String ) {
+        var pos = 0
         var routeNameList = ArrayList<String>()
-        for (name in routeList!!) {
-            name.routename?.let { routeNameList.add(it) }
+        for (i in 0 until   routeList.size) {
+            routeList[i].routename?.let { routeNameList.add(it) }
+            if (locationName?.trim() != "" && locationName?.length!! > 0) {
+                if (locationName.equals(routeList[i].routename)) {
+                    pos = i
+                }
+            }
+
         }
-        view!!.addRouteNameListInSpinner(routeNameList)
+        view!!.addRouteNameListInSpinner(routeNameList, pos)
     }
 
-    fun getAreaNameFound(stringExtra: String, orderRouteList: java.util.ArrayList<RouteListdata>) {
 
-        for (i in 0 until orderRouteList!!.size) {
-            if (stringExtra.equals(orderRouteList[i].routename)) {
-                view?.selectSpinnerPosition(i)
+    fun getAuthorisedShop(routeName: String, routeId: String?) {
+        this.routeName = routeName
+        this.routeId = routeId
+        getAuthorisedShopObservable.subscribeWith(getAuthorisedShopObserver)
+    }
+
+    fun getOnlyShop(selectedShop: String?, data: java.util.ArrayList<AuthorizedRetailerDataList>?) {
+        var shopList = ArrayList<String>()
+        var pos = 0
+
+        if (data != null) {
+            for (i in 0 until data.size) {
+                data[i].retailername?.let { shopList.add(it) }
+                if (selectedShop?.trim() != null && selectedShop?.length!! > 0) {
+                    if (selectedShop.equals(data[i].retailername)) {
+                        pos = i
+                    }
+                }
+            }
+
+            view?.AuthorizedShopWithSelectedPosition(shopList, pos)
+        }
+    }
+
+
+    val getAuthorisedShopObservable: Observable<AuthorizedRetailerList>
+        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+            .getAuthorisedRetailer(
+                AuthorizedRetailerRequest(
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID),
+                    routeId,
+                    routeName
+                )
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
+    val getAuthorisedShopObserver: DisposableObserver<AuthorizedRetailerList>
+        get() = object : DisposableObserver<AuthorizedRetailerList>() {
+
+            override fun onNext(@NonNull movieResponse: AuthorizedRetailerList) {
+                Log.e("Order Presenter", "onNext")
+                Log.d(TAG, "OnNext$movieResponse")
+                if (movieResponse.status.equals(Constants.FAIL)) {
+                    view!!.noDataAvailable()
+                } else {
+                    view!!.onAuthorisedShopResponse(movieResponse.data)
+                }
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                Log.e("Order Presenter", "onError")
+                e.printStackTrace()
+                view!!.displayError("Error fetching Movie Data")
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                Log.e("Order Presenter", "onComplete")
+                view!!.hideProgress()
             }
         }
-    }
 
 
     val getAuthorisedRouteItemObservable: Observable<RouteListResponse>
@@ -264,11 +281,11 @@ class AddOrderPresenter {
 
             override fun onNext(@NonNull movieResponse: SaveShopOrderResponse) {
                 Log.d(TAG, "OnNext$movieResponse")
-                 if (movieResponse.status.equals(Constants.FAIL)) {
-                     view!!.noDataAvailable()
-                 } else {
-                     view!!.onaddOrderResponse(movieResponse.message!!)
-                 }
+                if (movieResponse.status.equals(Constants.FAIL)) {
+                    view!!.noDataAvailable()
+                } else {
+                    view!!.onaddOrderResponse(movieResponse.message!!)
+                }
             }
 
             override fun onError(@NonNull e: Throwable) {
@@ -284,46 +301,5 @@ class AddOrderPresenter {
             }
         }
 
-    val getItemObservable: Observable<ItemListResponse>
-        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-            .getItemList(
-                CommonRequest(
-                    ClsGeneral.getPreferences(context, Constants.USER),
-                    ClsGeneral.getPreferences(context, Constants.DB),
-                    ClsGeneral.getPreferences(context, Constants.REGION),
-                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
-                    ClsGeneral.getPreferences(context, Constants.STATE),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
-                )
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
 
-
-    val getItemObserver: DisposableObserver<ItemListResponse>
-        get() = object : DisposableObserver<ItemListResponse>() {
-
-            override fun onNext(@NonNull movieResponse: ItemListResponse) {
-                Log.d(TAG, "OnNext$movieResponse")
-                if (movieResponse.status.equals(Constants.FAIL)) {
-                    view!!.noDataAvailable()
-                } else {
-                    var orderItemNameList = ArrayList<String>()
-                    for (name in movieResponse.data!!) name.description?.let { orderItemNameList.add(it) }
-                    view!!.onItemResponse(orderItemNameList, movieResponse.data!!)
-                }
-            }
-
-            override fun onError(@NonNull e: Throwable) {
-                Log.d(TAG, "Error$e")
-                e.printStackTrace()
-                view!!.displayError("Error fetching Movie Data")
-            }
-
-            override fun onComplete() {
-                Log.d(TAG, "Completed")
-                view!!.hideProgress()
-            }
-        }
 }

@@ -45,10 +45,10 @@ public interface NetworkInterface {
     Observable<ShopRetailerList> getRetailerList(@Body CommonRequestWithDate request);*/
 
     @POST(BaseUrl.AUTHORISED_RETAILERS_LIST)
-    Observable<AuthorizedRetailerList> getAuthorisedRetailer(@Body CommonRequest request);
+    Observable<AuthorizedRetailerList> getAuthorisedRetailer(@Body AuthorizedRetailerRequest request);
 
     @POST(BaseUrl.ITEMLIST)
-    Observable<ItemListResponse> getItemList(@Body CommonRequest request);
+    Observable<ItemListResponse> getItemList(@Body DescriptionCategoryRequestModel request);
 
     @POST(BaseUrl.RETAILERLIST_SHOP)
     Observable<ShopListResponse> getShopList(@Body CommonRequestWithDate request);

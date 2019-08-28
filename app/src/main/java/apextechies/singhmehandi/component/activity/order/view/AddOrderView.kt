@@ -1,5 +1,6 @@
 package apextechies.singhmehandi.component.activity.order.view
 
+import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerDataList
 import apextechies.singhmehandi.component.activity.order.model.ItemListData
 import apextechies.singhmehandi.component.activity.shop.model.RouteListdata
 
@@ -15,6 +16,7 @@ interface AddOrderView {
     fun onaddOrderResponse(message: String)
     fun onCompleted()
     fun onAuthorisedDealerOrderResponse(message: ArrayList<RouteListdata>?)
-    fun addRouteNameListInSpinner(routeNameList: ArrayList<String>)
-    fun selectSpinnerPosition(i: Int)
+    fun addRouteNameListInSpinner(routeNameList: ArrayList<String>, pos: Int)
+    fun onAuthorisedShopResponse(data: ArrayList<AuthorizedRetailerDataList>?)
+    fun AuthorizedShopWithSelectedPosition(shopList: java.util.ArrayList<String>, pos: Int)
 }
