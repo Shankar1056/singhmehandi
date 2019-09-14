@@ -107,8 +107,8 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
-        selectedDateRange.setText("$startDay-$startMonth-$startYear - $endDay-$endMonth-$endYear")
-        presenter.getOrderList("$startMonth/$startDay/$startYear", "$endMonth/$endDay/$endYear")
+        selectedDateRange.setText("$startDay-${startMonth+1}-$startYear - $endDay-${endMonth+1}-$endYear")
+        presenter.getOrderList("${startMonth+1}/$startDay/$startYear", "${endMonth+1}/$endDay/$endYear")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

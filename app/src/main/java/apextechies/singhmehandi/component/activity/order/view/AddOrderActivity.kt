@@ -11,11 +11,13 @@ import apextechies.singhmehandi.AppController
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerDataList
 import apextechies.singhmehandi.component.activity.order.model.ItemListData
+import apextechies.singhmehandi.component.activity.order.model.OrderDescriptionQuantityModel
 import apextechies.singhmehandi.component.activity.order.presenter.AddOrderPresenter
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderItemListAdapter
 import apextechies.singhmehandi.component.activity.shop.model.RouteListdata
 import apextechies.singhmehandi.util.ClsGeneral
 import apextechies.singhmehandi.util.Constants
+import apextechies.singhmehandi.util.Utils
 import kotlinx.android.synthetic.main.activity_order_add.*
 
 
@@ -31,6 +33,8 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     var orderAdapter: OrderItemListAdapter? = null
     var orderRouteList = ArrayList<RouteListdata>()
     var routeId: String? = null
+    var desc_quan_list = ArrayList<OrderDescriptionQuantityModel>()
+    var pos: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,16 +65,16 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         presenter.getAuthorisedRoute()
         save.setOnClickListener {
             quantityLst = orderAdapter!!.getQuantityList()
-            if (quantityLst.size == descriptionName.size) {
+            if (quantityLst.size == desc_quan_list.size) {
                 if (radioType == null || radioType.equals("")) {
-                    radioType = resources.getString(R.string.order)
+                    radioType = resources.getString(R.string.order_caps)
                 }
                 presenter.validateField(
                     routeET.selectedItem.toString().trim(),
                     shopET.selectedItem.toString().trim(),
                     salesManET.text.toString().trim(),
-                    descriptionName,
-                    descriptionId,
+                    Utils.getDescriptionName(desc_quan_list),
+                    Utils.getDescriptionId(desc_quan_list),
                     radioType.toString(),
                     quantityLst,
                     narrationET.text.toString().trim()
@@ -86,7 +90,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                     applicationContext, " On checked change : ${radio.text}",
                     Toast.LENGTH_SHORT
                 ).show()
-                if (radio.text.equals(resources.getString(R.string.order))) {
+                if (radio.text.equals(resources.getString(R.string.order_caps))) {
                     routeName.visibility = View.VISIBLE
                     description.visibility = View.VISIBLE
                     itemSpinnerRV.visibility = View.VISIBLE
@@ -99,7 +103,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
             })
 
 
-        orderAdapter = OrderItemListAdapter(this, descriptionName, object :
+        orderAdapter = OrderItemListAdapter(this, desc_quan_list, quantityLst, object :
             OrderItemListAdapter.OrderItemClickListener {
             override fun noQuantityError() {
                 Toast.makeText(this@AddOrderActivity, "Enter quantity please", Toast.LENGTH_SHORT)
@@ -107,8 +111,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
             }
 
             override fun onClick(pos: Int) {
-                descriptionName.removeAt(pos)
-                descriptionId.removeAt(pos)
+                desc_quan_list.removeAt(pos)
             }
 
         })
@@ -124,34 +127,35 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         super.onActivityResult(requestCode, resultCode, data)
         // check if the request code is same as what is passed  here it is 2
         if (requestCode == 2) {
-            val description_name = data!!.getStringExtra("description_name")
-            val description_id = data!!.getStringExtra("description_id")
+            if (data != null) {
+                val description_name = data!!.getStringExtra("description_name")
+                val description_id = data!!.getStringExtra("description_id")
 
-            if (descriptionName.size > 0) {
-                var isFound = false
-                for (i in 0 until descriptionName.size) {
-                    if (descriptionName[i].equals(description_name)) {
-                        Toast.makeText(
-                            this@AddOrderActivity,
-                            "This descriptionist is already added",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        return
-                    } else {
-                        isFound = true
+                if (desc_quan_list.size > 0) {
+                    var isFound = false
+                    for (i in 0 until desc_quan_list.size) {
+                        if (desc_quan_list[i].descriptionName.equals(description_name)) {
+                            Toast.makeText(
+                                this@AddOrderActivity,
+                                "This descriptionist is already added",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            return
+                        } else {
+                            isFound = true
+                        }
                     }
+                    if (isFound) {
+                        desc_quan_list.add(OrderDescriptionQuantityModel(description_name, description_id))
+                       // quantityLst.addAll(orderAdapter!!.getQuantityList())
+                    }
+                } else {
+                    desc_quan_list.add(OrderDescriptionQuantityModel(description_name,  description_id))
                 }
-                if (isFound) {
-                    descriptionName.add(description_name)
-                    descriptionId.add(description_id)
-                }
-            } else {
-                descriptionName.add(description_name)
-                descriptionId.add(description_id)
-            }
 
-            orderAdapter?.notifyDataSetChanged()
+                orderAdapter?.notifyDataSetChanged()
+            }
         }
     }
 

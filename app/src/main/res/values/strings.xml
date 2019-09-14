@@ -50,6 +50,7 @@
     <string name="title_empty_pintin_value">Please enter your Pin Tan number</string>
     <string name="title_shop">Shop</string>
     <string name="order">order</string>
+    <string name="order_caps">Order</string>
     <string name="title_profile">My Profile</string>
     <string name="title_order_list">Order List</string>
     <string name="title_add_shop">Add Shop</string>
