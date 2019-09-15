@@ -18,7 +18,8 @@ import apextechies.singhmehandi.util.Utils
 import kotlinx.android.synthetic.main.activity_shop.*
 
 
-class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFragment.OnDateRangeSelectedListener {
+class OrderListActivity : AppCompatActivity(), OrderListView,
+    DateRangePickerFragment.OnDateRangeSelectedListener {
 
     var presenter = OrderPresenter()
     var orderAdapter: OrderListAdapter? = null
@@ -43,14 +44,18 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
         }
 
         callenderLL.setOnClickListener {
-            var dateRangePickerFragment = DateRangePickerFragment.newInstance(this@OrderListActivity, false)
+            var dateRangePickerFragment =
+                DateRangePickerFragment.newInstance(this@OrderListActivity, false)
             dateRangePickerFragment.show(getSupportFragmentManager(), "datePicker");
         }
 
         fab.setOnClickListener {
             startActivity(
                 Intent(this@OrderListActivity, AddOrderActivity::class.java)
-                    .putExtra("title", resources.getString(apextechies.singhmehandi.R.string.title_add_order))
+                    .putExtra(
+                        "title",
+                        resources.getString(apextechies.singhmehandi.R.string.title_add_order)
+                    )
             )
         }
     }
@@ -78,10 +83,12 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
                 override fun onItemClick(pos: Int) {
 
                     startActivity(
-                        Intent(this@OrderListActivity, AddOrderActivity::class.java)
+                        Intent(this@OrderListActivity, OrderDetailsActivity::class.java)
                             .putExtra("salesman", orderList.data!![pos].salesman)
                             .putExtra("shop", orderList.data!![pos].shop)
                             .putExtra("trnum", orderList.data!![pos].trnum)
+                            .putExtra("distributor", orderList.data!![pos].distributor)
+                            .putExtra("date", orderList.data!![pos].date)
                             .putExtra(
                                 "title",
                                 resources.getString(apextechies.singhmehandi.R.string.title_update_Order)
@@ -107,8 +114,11 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
-        selectedDateRange.setText("$startDay-${startMonth+1}-$startYear - $endDay-${endMonth+1}-$endYear")
-        presenter.getOrderList("${startMonth+1}/$startDay/$startYear", "${endMonth+1}/$endDay/$endYear")
+        selectedDateRange.setText("$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear")
+        presenter.getOrderList(
+            "${startMonth + 1}/$startDay/$startYear",
+            "${endMonth + 1}/$endDay/$endYear"
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -117,7 +127,8 @@ class OrderListActivity : AppCompatActivity(), OrderListView, DateRangePickerFra
 
         val searchItem = menu.findItem(R.id.action_search)
 
-        val searchManager = this@OrderListActivity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager =
+            this@OrderListActivity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
         var searchView: SearchView? = null
         if (searchItem != null) {

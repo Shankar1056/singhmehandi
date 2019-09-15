@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            <android.support.v7.widget.CardView
+                    android:id="@+id/topCV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp">
+
+                    <TextView
+                            android:id="@+id/topTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:text="@string/title_order_details"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                            android:id="@+id/deviderTop"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorPrimary"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/topTV" />
+
+                    <TextView
+                            android:id="@+id/distributorNameText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/distributor_name"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/deviderTop" />
+
+                    <TextView
+                            android:id="@+id/distributorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/distributorNameText"
+                            app:layout_constraintTop_toBottomOf="@+id/deviderTop" />
+
+                    <TextView
+                            android:id="@+id/shopNameText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/shop_name"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/distributorName" />
+
+                    <TextView
+                            android:id="@+id/shopName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/shopNameText"
+                            app:layout_constraintTop_toTopOf="@+id/shopNameText" />
+
+                    <TextView
+                            android:id="@+id/salesmanText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/title_sales_man_name"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/shopName" />
+
+                    <TextView
+                            android:id="@+id/salesmanName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/salesmanText"
+                            app:layout_constraintTop_toTopOf="@+id/salesmanText" />
+
+                    <TextView
+                            android:id="@+id/superstockText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/title_superstock"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/salesmanName" />
+
+                    <TextView
+                            android:id="@+id/superstockName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/superstockText"
+                            app:layout_constraintTop_toTopOf="@+id/superstockText" />
+
+                    <TextView
+                            android:id="@+id/trnumText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/title_trum"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/superstockText" />
+
+                    <TextView
+                            android:id="@+id/trnumName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/trnumText"
+                            app:layout_constraintTop_toTopOf="@+id/trnumText" />
+
+                    <TextView
+                            android:id="@+id/dateText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/route_code"
+                            android:textAppearance="@font/roboto_medium"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/trnumText" />
+
+                    <TextView
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textAppearance="@font/roboto_light"
+                            android:textSize="14sp"
+                            app:layout_constraintLeft_toRightOf="@+id/dateText"
+                            app:layout_constraintTop_toTopOf="@+id/dateText" />
+
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/topCV">
+
+                <Button
+                        android:id="@+id/edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight=".5"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/title_edit"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp" />
+
+                <Button
+                        android:id="@+id/delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight=".5"
+                        android:background="@color/colorAccent"
+                        android:text="@string/title_delete"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

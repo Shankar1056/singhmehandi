@@ -93,4 +93,9 @@
     <string name="selectareaname">Select area name</string>
     <string name="selectareacode">Select area code</string>
     <string name="select_description">Select Description</string>
+    <string name="title_order_details">Order Details</string>
+    <string name="distributor_name">Distributor Name</string>
+    <string name="title_sales_man_name">SalesMan</string>
+    <string name="title_superstock">Super Stock</string>
+    <string name="title_trum">Trum</string>
 </resources>
