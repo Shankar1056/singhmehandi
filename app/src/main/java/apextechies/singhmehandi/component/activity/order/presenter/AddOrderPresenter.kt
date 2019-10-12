@@ -63,7 +63,7 @@ class AddOrderPresenter {
         this.salesManName = salesManName
         this.descriptionName = selectedRouteName
         this.descriptionId = selectedRouteCode
-        this.radioIOrderType = radioIOrderType
+        this.radioIOrderType = radioIOrderType.toLowerCase()
         this.quantity = quantity
         this.narration = narration
 
@@ -109,7 +109,7 @@ class AddOrderPresenter {
         view!!.showProgress()
 
 
-        soa.date = Utils.getCurrentDateForOrder()
+        soa.date = Utils.getCurrentDateWithDash()
         soa.route = routeName
         soa.retailer = shopName
         soa.type = radioIOrderType

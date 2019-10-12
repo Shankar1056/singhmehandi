@@ -21,6 +21,14 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     var routeList = ArrayList<RouteListdata>()
     var shopType: String? = null
     var radioSexButton: RadioButton? = null
+    var isAreaName: Boolean = true
+    var isAreaCode: Boolean = true
+    var areaN: Boolean = false
+    var areaC: Boolean = false
+    var isRouteName: Boolean = true
+    var isRouteCode: Boolean = true
+    var routeN: Boolean = false
+    var routeC: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +47,10 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         }
 
         addShopPresenter.getAreaList()
-        routeName.setOnItemSelectedListener(this)
-        areaName.setOnItemSelectedListener(this)
+        routeName.onItemSelectedListener = this
+        routeCode.onItemSelectedListener = this
+        areaName.onItemSelectedListener = this
+        areaCode.onItemSelectedListener = this
         submit.setOnClickListener {
             val selectedId = radioGrp.getCheckedRadioButtonId()
             radioSexButton = findViewById(selectedId)
@@ -67,19 +77,58 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when (parent!!.getId()) {
+        when (parent!!.id) {
             R.id.areaName -> {
-                addShopPresenter.areaSelected(areaList, position)
-                addShopPresenter.getRouteList(
-                    areaList?.get(position)!!.areaname!!,
-                    areaList?.get(position)!!.areacode!!
-                )
+                areaN = true
+                if (isAreaName) {
+                    addShopPresenter.areaSelected(areaList, position)
+                    addShopPresenter.getRouteList(
+                        areaList?.get(position)!!.areaname!!,
+                        areaList?.get(position)!!.areacode!!
+                    )
+                }
+                isAreaCode = false
+            }
+            R.id.areaCode -> {
+                areaC = true
+                if (isAreaCode) {
+                    addShopPresenter.areaCodeSelected(areaList, position)
+                    addShopPresenter.getRouteList(
+                        areaList?.get(position)!!.areaname!!,
+                        areaList?.get(position)!!.areacode!!
+                    )
+                }
+
+                isAreaName = false
             }
 
             R.id.routeName -> {
-                addShopPresenter.routeSelected(routeList, position)
+                routeN = true
+                if (isRouteName) {
+                    addShopPresenter.routeSelected(routeList, position)
+                }
+                isRouteCode = false
+            }
+            R.id.routeCode -> {
+                routeC = true
+                if (isRouteCode) {
+                    addShopPresenter.routeCodeSelected(routeList, position)
+                }
+                isRouteName = false
             }
         }
+
+        if ((areaN && areaC) || (routeN && routeC)) {
+            isAreaName = true
+            isAreaCode = true
+            isRouteName = true
+            isRouteCode = true
+            areaN = false
+            areaC = false
+            routeN = false
+            routeC = false
+        }
+
     }
 
     override fun displayError(error: String) {
@@ -110,7 +159,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun addRouteNameListInSpinner(routeNameList: ArrayList<String>, defaultPosition: Int) {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, routeNameList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        routeName.setAdapter(aa)
+        routeName.adapter = aa
         routeName.setSelection(defaultPosition)
 
     }
@@ -118,7 +167,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun addRouteCodeListInSpinner(routeCodeList: ArrayList<String>, defaultPosition: Int) {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, routeCodeList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        routeCode.setAdapter(aa)
+        routeCode.adapter = aa
         routeCode.setSelection(defaultPosition)
     }
 
@@ -137,14 +186,14 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     override fun addAreaNameListInSpinner(areaList: ArrayList<String>, selectedposition: Int) {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, areaList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        areaName.setAdapter(aa)
+        areaName.adapter = aa
         areaName.setSelection(selectedposition)
     }
 
     override fun addAreaCodeListInSpinner(areaList: ArrayList<String>, selectedposition: Int) {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, areaList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        areaCode.setAdapter(aa)
+        areaCode.adapter = aa
         areaCode.setSelection(selectedposition)
     }
 
@@ -159,12 +208,20 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun emptyShopValue() {
 
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_value), Toast.LENGTH_SHORT)
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.title_empty_shop_value),
+            Toast.LENGTH_SHORT
+        )
             .show()
     }
 
     override fun emptyPlaceValue() {
-        Toast.makeText(this, resources.getString(R.string.title_empty_place_value), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            resources.getString(R.string.title_empty_place_value),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun emptyMobileValue() {
@@ -172,40 +229,67 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun invalidMobileValue() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_invalid_mobile_value), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.title_invalid_mobile_value),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun emptyGstValue() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_gst_value), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.title_empty_gst_value),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun emptyAddressValue() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_shop_address_value), Toast.LENGTH_SHORT)
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.title_empty_shop_address_value),
+            Toast.LENGTH_SHORT
+        )
             .show()
     }
 
     override fun emptyPinTinValue() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.title_empty_pintin_value), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.title_empty_pintin_value),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun selectAreaName() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.selectareaname), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectareaname), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun selectAreaCode() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.selectareacode), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddShopActivity, getString(R.string.selectareacode), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun selectRouteName() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.selectroutename), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.selectroutename),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun selectRouteCode() {
-        Toast.makeText(this@AddShopActivity, getString(R.string.selectroutecode), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@AddShopActivity,
+            getString(R.string.selectroutecode),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun displaySavedShopMessage(movieResponse: SaveShopResponse) {
-        Toast.makeText(this@AddShopActivity, movieResponse.message.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddShopActivity, movieResponse.message.toString(), Toast.LENGTH_SHORT)
+            .show()
         finish()
     }
 

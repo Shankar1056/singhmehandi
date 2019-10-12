@@ -67,7 +67,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
             quantityLst = orderAdapter!!.getQuantityList()
             if (quantityLst.size == desc_quan_list.size) {
                 if (radioType == null || radioType.equals("")) {
-                    radioType = resources.getString(R.string.order_caps)
+                    radioType = resources.getString(R.string.order)
                 }
                 presenter.validateField(
                     routeET.selectedItem.toString().trim(),
@@ -82,25 +82,24 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
             }
         }
 
-        radioGrp.setOnCheckedChangeListener(
-            RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = findViewById(checkedId)
-                radioType = radio.text as String?
-                Toast.makeText(
-                    applicationContext, " On checked change : ${radio.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                if (radio.text.equals(resources.getString(R.string.order_caps))) {
-                    routeName.visibility = View.VISIBLE
-                    description.visibility = View.VISIBLE
-                    itemSpinnerRV.visibility = View.VISIBLE
+        radioGrp.setOnCheckedChangeListener { _, checkedId ->
+            val radio: RadioButton = findViewById(checkedId)
+            radioType = radio.text as String?
+            Toast.makeText(
+                applicationContext, " On checked change : ${radio.text}",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (radio.text == resources.getString(R.string.order)) {
+                routeName.visibility = View.VISIBLE
+                description.visibility = View.VISIBLE
+                itemSpinnerRV.visibility = View.VISIBLE
 
-                } else {
-                    routeName.visibility = View.GONE
-                    description.visibility = View.GONE
-                    itemSpinnerRV.visibility = View.GONE
-                }
-            })
+            } else {
+                routeName.visibility = View.GONE
+                description.visibility = View.GONE
+                itemSpinnerRV.visibility = View.GONE
+            }
+        }
 
 
         orderAdapter = OrderItemListAdapter(this, desc_quan_list, quantityLst, object :
@@ -240,11 +239,11 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     }
 
     override fun onaddOrderResponse(data: String) {
-        Toast.makeText(this, "Shop Added", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Order Added", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCompleted() {
-        Toast.makeText(this, "Shop Added", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Order Added", Toast.LENGTH_SHORT).show()
         finish()
     }
 

@@ -125,6 +125,17 @@ object AddShopPresenter {
         shopView!!.addAreaCodeListInSpinner(areaCodeList, position)
 
     }
+    fun areaCodeSelected(
+        areaList: ArrayList<AreaListData>?,
+        position: Int
+    ) {
+        var areaNameList = ArrayList<String>()
+        for (name in areaList!!) {
+            name.areaname?.let { areaNameList.add(it) }
+        }
+        shopView!!.addAreaNameListInSpinner(areaNameList, position)
+
+    }
 
     fun routeSelected(
         routeList: ArrayList<RouteListdata>?,
@@ -136,6 +147,17 @@ object AddShopPresenter {
             name.routecode?.let { routeCodeList.add(it) }
         }
         shopView!!.addRouteCodeListInSpinner(routeCodeList, position)
+    }
+    fun routeCodeSelected(
+        routeList: ArrayList<RouteListdata>?,
+        position: Int
+    ) {
+
+        var routeNameist = ArrayList<String>()
+        for (name in routeList!!) {
+            name.routename?.let { routeNameist.add(it) }
+        }
+        shopView!!.addRouteNameListInSpinner(routeNameist, position)
     }
 
     fun onSubmitClick(

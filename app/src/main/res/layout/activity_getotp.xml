@@ -73,9 +73,7 @@
             android:background="@drawable/round_corner_filled"
             android:fontFamily="@font/roboto_medium"/>
 
-    <!--<include
-            layout="@layout/activity_loadingindicator"/>
--->
+
 
     <com.wang.avi.AVLoadingIndicatorView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -83,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AVLoadingIndicatorView"
-            android:visibility="gone"
+            android:visibility="visible"
             app:indicatorName="BallPulseIndicator"
             app:indicatorColor="@color/colorPrimary"
             app:layout_constraintLeft_toLeftOf="parent"
