@@ -2,11 +2,9 @@ package apextechies.singhmehandi.component.activity.shop.preserter
 
 import android.content.Context
 import android.support.annotation.NonNull
-import android.text.TextUtils
 import android.util.Log
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequest
-import apextechies.singhmehandi.component.activity.order.model.ItemListResponse
 import apextechies.singhmehandi.component.activity.shop.model.*
 import apextechies.singhmehandi.component.activity.shop.view.AddShopView
 import apextechies.singhmehandi.network.NetworkClient
@@ -64,17 +62,17 @@ object AddShopPresenter {
         }
     }
 
-   /* fun getDistributorList() {
-        getDistributorObservable.subscribeWith(
-            getDistributorObserver
-        )
-    }
+    /* fun getDistributorList() {
+         getDistributorObservable.subscribeWith(
+             getDistributorObserver
+         )
+     }
 
-    fun getRetailerList() {
-        getItemObservable.subscribeWith(
-            getItemObserver
-        )
-    }*/
+     fun getRetailerList() {
+         getItemObservable.subscribeWith(
+             getItemObserver
+         )
+     }*/
 
     fun onAreaResponceReceived(areaList: ArrayList<AreaListData>?, defaultPosition: Int) {
         getAreaNameAndCodeFromList(
@@ -83,7 +81,10 @@ object AddShopPresenter {
         )
     }
 
-    private fun getAreaNameAndCodeFromList(areaList: ArrayList<AreaListData>?, defaultPosition: Int) {
+    private fun getAreaNameAndCodeFromList(
+        areaList: ArrayList<AreaListData>?,
+        defaultPosition: Int
+    ) {
         var areaNameList = ArrayList<String>()
         var areaCodeList = ArrayList<String>()
         for (name in areaList!!) {
@@ -102,7 +103,10 @@ object AddShopPresenter {
 
     }
 
-    private fun getRouteNameAndCodeFromList(routeList: ArrayList<RouteListdata>?, defaultPosition: Int) {
+    private fun getRouteNameAndCodeFromList(
+        routeList: ArrayList<RouteListdata>?,
+        defaultPosition: Int
+    ) {
         var routeNameList = ArrayList<String>()
         var routeCodeList = ArrayList<String>()
         for (name in routeList!!) {
@@ -125,6 +129,7 @@ object AddShopPresenter {
         shopView!!.addAreaCodeListInSpinner(areaCodeList, position)
 
     }
+
     fun areaCodeSelected(
         areaList: ArrayList<AreaListData>?,
         position: Int
@@ -148,6 +153,7 @@ object AddShopPresenter {
         }
         shopView!!.addRouteCodeListInSpinner(routeCodeList, position)
     }
+
     fun routeCodeSelected(
         routeList: ArrayList<RouteListdata>?,
         position: Int
@@ -188,9 +194,9 @@ object AddShopPresenter {
         this.note = note
         if (areaName.equals(context?.resources?.getString(R.string.selectareaname))) {
             shopView!!.selectAreaName()
-        }else if (areaCode.equals(context?.resources?.getString(R.string.selectareacode))) {
+        } else if (areaCode.equals(context?.resources?.getString(R.string.selectareacode))) {
             shopView!!.selectAreaCode()
-        }else if (routeName.equals(context?.resources?.getString(R.string.selectroutename))) {
+        } else if (routeName.equals(context?.resources?.getString(R.string.selectroutename))) {
             shopView!!.selectRouteName()
         } else if (routeCode.equals(context?.resources?.getString(R.string.selectroutecode))) {
             shopView!!.selectRouteCode()
@@ -237,7 +243,7 @@ object AddShopPresenter {
             override fun onNext(@NonNull movieResponse: AreaListResponse) {
                 Log.d(TAG, "OnNext$movieResponse")
                 if (movieResponse.status.equals(Constants.FAIL)) {
-                    shopView!!.noDataAvailable()
+                    movieResponse.message?.let { shopView!!.noDataAvailable(it) }
                 } else {
 
                     shopView!!.onAreaResponse(movieResponse)
@@ -282,7 +288,7 @@ object AddShopPresenter {
             override fun onNext(@NonNull movieResponse: RouteListResponse) {
                 Log.d(TAG, "OnNext$movieResponse")
                 if (movieResponse.status.equals(Constants.FAIL)) {
-                    shopView!!.noDataAvailable()
+                    movieResponse.message?.let { shopView!!.noDataAvailable(it) }
                 } else {
                     shopView!!.onRouteResponse(movieResponse)
                 }
@@ -301,88 +307,88 @@ object AddShopPresenter {
         }
 
 
-   /* val getDistributorObservable: Observable<DistributorListResponse>
-        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-            .getDistributorList(
-                CommonRequest(
-                    ClsGeneral.getPreferences(context, Constants.USER),
-                    ClsGeneral.getPreferences(context, Constants.DB),
-                    ClsGeneral.getPreferences(context, Constants.REGION),
-                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
-                    ClsGeneral.getPreferences(context, Constants.STATE),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
-                )
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    /* val getDistributorObservable: Observable<DistributorListResponse>
+         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+             .getDistributorList(
+                 CommonRequest(
+                     ClsGeneral.getPreferences(context, Constants.USER),
+                     ClsGeneral.getPreferences(context, Constants.DB),
+                     ClsGeneral.getPreferences(context, Constants.REGION),
+                     ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                     ClsGeneral.getPreferences(context, Constants.STATE),
+                     ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                     ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
+                 )
+             )
+             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
 
 
-    val getDistributorObserver: DisposableObserver<DistributorListResponse>
-        get() = object : DisposableObserver<DistributorListResponse>() {
+     val getDistributorObserver: DisposableObserver<DistributorListResponse>
+         get() = object : DisposableObserver<DistributorListResponse>() {
 
-            override fun onNext(@NonNull movieResponse: DistributorListResponse) {
-                Log.d(TAG, "OnNext$movieResponse")
-                if (movieResponse.status.equals(Constants.FAIL)) {
-                    shopView!!.noDataAvailable()
-                } else {
-                    shopView!!.onDistributerResponse(movieResponse)
-                }
-            }
+             override fun onNext(@NonNull movieResponse: DistributorListResponse) {
+                 Log.d(TAG, "OnNext$movieResponse")
+                 if (movieResponse.status.equals(Constants.FAIL)) {
+                     shopView!!.noDataAvailable()
+                 } else {
+                     shopView!!.onDistributerResponse(movieResponse)
+                 }
+             }
 
-            override fun onError(@NonNull e: Throwable) {
-                Log.d(TAG, "Error$e")
-                e.printStackTrace()
-                shopView!!.displayError("Error fetching Movie Data")
-            }
+             override fun onError(@NonNull e: Throwable) {
+                 Log.d(TAG, "Error$e")
+                 e.printStackTrace()
+                 shopView!!.displayError("Error fetching Movie Data")
+             }
 
-            override fun onComplete() {
-                Log.d(TAG, "Completed")
-                shopView!!.hideProgress()
-            }
-        }
-
-
-    val getItemObservable: Observable<ItemListResponse>
-        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-            .getItemList(
-                CommonRequest(
-                    ClsGeneral.getPreferences(context, Constants.USER),
-                    ClsGeneral.getPreferences(context, Constants.DB),
-                    ClsGeneral.getPreferences(context, Constants.REGION),
-                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
-                    ClsGeneral.getPreferences(context, Constants.STATE),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
-                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
-                )
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+             override fun onComplete() {
+                 Log.d(TAG, "Completed")
+                 shopView!!.hideProgress()
+             }
+         }
 
 
-    val getItemObserver: DisposableObserver<ItemListResponse>
-        get() = object : DisposableObserver<ItemListResponse>() {
+     val getItemObservable: Observable<ItemListResponse>
+         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+             .getItemList(
+                 CommonRequest(
+                     ClsGeneral.getPreferences(context, Constants.USER),
+                     ClsGeneral.getPreferences(context, Constants.DB),
+                     ClsGeneral.getPreferences(context, Constants.REGION),
+                     ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                     ClsGeneral.getPreferences(context, Constants.STATE),
+                     ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                     ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
+                 )
+             )
+             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
 
-            override fun onNext(@NonNull movieResponse: ItemListResponse) {
-                Log.d(TAG, "OnNext$movieResponse")
-                if (movieResponse.status.equals(Constants.FAIL)) {
-                    shopView!!.noDataAvailable()
-                } else {
-                    shopView!!.onItemResponse(movieResponse)
-                }
-            }
 
-            override fun onError(@NonNull e: Throwable) {
-                Log.d(TAG, "Error$e")
-                e.printStackTrace()
-                shopView!!.displayError("Error fetching Movie Data")
-            }
+     val getItemObserver: DisposableObserver<ItemListResponse>
+         get() = object : DisposableObserver<ItemListResponse>() {
 
-            override fun onComplete() {
-                Log.d(TAG, "Completed")
-                shopView!!.hideProgress()
-            }
-        }*/
+             override fun onNext(@NonNull movieResponse: ItemListResponse) {
+                 Log.d(TAG, "OnNext$movieResponse")
+                 if (movieResponse.status.equals(Constants.FAIL)) {
+                     shopView!!.noDataAvailable()
+                 } else {
+                     shopView!!.onItemResponse(movieResponse)
+                 }
+             }
+
+             override fun onError(@NonNull e: Throwable) {
+                 Log.d(TAG, "Error$e")
+                 e.printStackTrace()
+                 shopView!!.displayError("Error fetching Movie Data")
+             }
+
+             override fun onComplete() {
+                 Log.d(TAG, "Completed")
+                 shopView!!.hideProgress()
+             }
+         }*/
 
 
     val addShopObservable: Observable<SaveShopResponse>
@@ -421,7 +427,7 @@ object AddShopPresenter {
             override fun onNext(@NonNull movieResponse: SaveShopResponse) {
                 Log.d(TAG, "OnNext$movieResponse")
                 if (movieResponse.status.equals(Constants.FAIL)) {
-                    shopView!!.noDataAvailable()
+                    movieResponse.message?.let { shopView!!.noDataAvailable(it) }
                 } else {
                     shopView!!.displaySavedShopMessage(movieResponse)
                 }
