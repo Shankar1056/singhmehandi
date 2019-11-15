@@ -11,7 +11,7 @@ interface AddShopView {
     fun onRouteResponse(movieResponse: RouteListResponse)
     fun onRouteEmptyResponse()
     fun onAreaResponse(movieResponse: AreaListResponse)
-    fun noDataAvailable()
+    fun noDataAvailable(mesage : String)
     fun onDistributerResponse(movieResponse: DistributorListResponse)
     fun onItemResponse(movieResponse: ItemListResponse)
     fun addAreaNameListInSpinner(areaList: ArrayList<String>, defaultPosition:Int)
