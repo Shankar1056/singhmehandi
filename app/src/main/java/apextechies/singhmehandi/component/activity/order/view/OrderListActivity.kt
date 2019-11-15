@@ -27,9 +27,16 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(apextechies.singhmehandi.R.layout.activity_shop)
+        setContentView(R.layout.activity_shop)
         presenter.OrderPresenter(this, this)
         presenter.initWidgit()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        selectedDateRange.text =
+            Utils.getCurrentDateWithDash() + " - " + Utils.getCurrentDateWithDash()
         presenter.getOrderList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
     }
 
@@ -74,7 +81,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
     override fun onOrderResponseReceived(orderList: OrderListResponse) {
         if (orderList != null && orderList.data?.size!! > 0) {
-            shopCountShop.setText("" + orderList.data!!.size + " - Orders found")
+            shopCountShop.text = "" + orderList.data!!.size + " - Orders found"
         }
 
 
@@ -114,7 +121,8 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
-        selectedDateRange.setText("$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear")
+        selectedDateRange.text =
+            "$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear"
         presenter.getOrderList(
             "${startMonth + 1}/$startDay/$startYear",
             "${endMonth + 1}/$endDay/$endYear"
