@@ -39,7 +39,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_add)
-        titleTV.setText(intent.getStringExtra("title"))
+        titleTV.text = intent.getStringExtra("title")
         presenter.AddOrderPresenter(this, this)
         presenter.onCreated()
 
@@ -60,7 +60,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                 ), 2
             )
         }
-        routeET.setOnItemSelectedListener(this)
+        routeET.onItemSelectedListener = this
 
         presenter.getAuthorisedRoute()
         save.setOnClickListener {
@@ -85,11 +85,8 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         radioGrp.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             radioType = radio.text as String?
-            Toast.makeText(
-                applicationContext, " On checked change : ${radio.text}",
-                Toast.LENGTH_SHORT
-            ).show()
-            if (radio.text == resources.getString(R.string.order)) {
+
+            if (radio.text == resources.getString(R.string.title_type_order)) {
                 routeName.visibility = View.VISIBLE
                 description.visibility = View.VISIBLE
                 itemSpinnerRV.visibility = View.VISIBLE
@@ -102,7 +99,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         }
 
 
-        orderAdapter = OrderItemListAdapter(this, desc_quan_list, quantityLst, object :
+        orderAdapter = OrderItemListAdapter(desc_quan_list,  object :
             OrderItemListAdapter.OrderItemClickListener {
             override fun noQuantityError() {
                 Toast.makeText(this@AddOrderActivity, "Enter quantity please", Toast.LENGTH_SHORT)
@@ -111,6 +108,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
 
             override fun onClick(pos: Int) {
                 desc_quan_list.removeAt(pos)
+                orderAdapter!!.notifyDataSetChanged()
             }
 
         })
@@ -239,7 +237,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     }
 
     override fun onaddOrderResponse(data: String) {
-        Toast.makeText(this, "Order Added", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Order Added", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCompleted() {
