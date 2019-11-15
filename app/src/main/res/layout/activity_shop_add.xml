@@ -151,7 +151,7 @@
                     android:textSize="14sp"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="textPersonName"
                     android:textAppearance="@font/roboto_light"
                     android:hint="@string/hint_shop_name"
                     android:background="@drawable/rounded_corner_text"/>
