@@ -49,7 +49,7 @@ class DiscriptionCategoryActivity : AppCompatActivity(){
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        titleTV.setText("Description List")
+        titleTV.text = "Description List"
 
         toolbar.setNavigationOnClickListener {
             finish()
