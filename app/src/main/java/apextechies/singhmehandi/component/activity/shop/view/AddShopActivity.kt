@@ -197,7 +197,8 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         areaCode.setSelection(selectedposition)
     }
 
-    override fun noDataAvailable() {
+    override fun noDataAvailable(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDistributerResponse(movieResponse: DistributorListResponse) {
