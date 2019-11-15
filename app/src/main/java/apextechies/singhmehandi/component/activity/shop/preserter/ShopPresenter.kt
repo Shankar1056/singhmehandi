@@ -40,7 +40,7 @@ object ShopPresenter {
         view!!.initWidgit()
     }
 
-    val geShopObservable: Observable<ShopListResponse>
+    private val geShopObservable: Observable<ShopListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .getShopList(
                 CommonRequestWithDate(
@@ -59,7 +59,7 @@ object ShopPresenter {
             .observeOn(AndroidSchedulers.mainThread())
 
 
-    val getShopOobserver: DisposableObserver<ShopListResponse>
+    private val getShopOobserver: DisposableObserver<ShopListResponse>
         get() = object : DisposableObserver<ShopListResponse>() {
 
             override fun onNext(@NonNull movieResponse: ShopListResponse) {
