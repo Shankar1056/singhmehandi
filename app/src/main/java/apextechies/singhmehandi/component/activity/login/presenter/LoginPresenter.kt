@@ -79,7 +79,7 @@ object LoginPresenter {
         loginView!!.setOtp(code)
     }
 
-    val getOtpObservable: Observable<LoginModel>
+    private val getOtpObservable: Observable<LoginModel>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
             .userLogin(
                 OtpRequest(
