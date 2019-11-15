@@ -13,14 +13,15 @@ import apextechies.singhmehandi.util.Utils
 import kotlinx.android.synthetic.main.activity_shop.*
 
 
-class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDateRangeSelectedListener {
+class ShopActivity : AppCompatActivity(), ShopView,
+    DateRangePickerFragment.OnDateRangeSelectedListener {
     var shopPresenter = ShopPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(apextechies.singhmehandi.R.layout.activity_shop)
+        setContentView(R.layout.activity_shop)
         shopPresenter.ShopPresenter(this, this)
         shopPresenter.initWidgit()
-        shopPresenter.getShopList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
+
     }
 
     override fun initWidgit() {
@@ -28,13 +29,14 @@ class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDa
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         shopRV.layoutManager = LinearLayoutManager(this)
-        titleTV.setText(resources.getString(R.string.title_shop_list))
+        titleTV.text = resources.getString(R.string.title_shop_list)
         toolbar.setNavigationOnClickListener {
             finish()
         }
         callenderLL.setOnClickListener {
-            var dateRangePickerFragment = DateRangePickerFragment.newInstance(this@ShopActivity, false)
-            dateRangePickerFragment.show(getSupportFragmentManager(), "datePicker")
+            var dateRangePickerFragment =
+                DateRangePickerFragment.newInstance(this@ShopActivity, false)
+            dateRangePickerFragment.show(supportFragmentManager, "datePicker")
         }
 
         fab.setOnClickListener {
@@ -43,6 +45,13 @@ class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDa
 
         shopRV.layoutManager = LinearLayoutManager(this)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        selectedDateRange.text =
+            Utils.getCurrentDateWithDash() + "" + Utils.getCurrentDateWithDash()
+        shopPresenter.getShopList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
     }
 
 
@@ -60,35 +69,41 @@ class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDa
     override fun onReceivedResponse(shopResponse: ShopListResponse) {
         Log.i("Response", shopResponse.toString())
         if (shopResponse != null && shopResponse.data?.size!! > 0) {
-            shopCountShop.setText(""+ shopResponse.data!!.size+" - Shops found")
+            shopCountShop.text = "" + shopResponse.data!!.size + " - Shops found"
         }
         shopRV.adapter = shopResponse.data?.let {
-            ShopListAdapter(this@ShopActivity, it, object : ShopListAdapter.OnShopItemClickListener {
-                override fun onClick(pos: Int) {
-                    startActivity(
-                        Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
-                            "areaName",
-                            shopResponse.data!![pos].areaname
-                        ).putExtra("areaCode", shopResponse.data!![pos].areacode).putExtra(
-                            "routeName",
-                            shopResponse.data!![pos].routename
-                        ).putExtra("routeCode", shopResponse.data!![pos].routecode).putExtra(
-                            "distributor",
-                            shopResponse.data!![pos].distributor
-                        ).putExtra("panno", shopResponse.data!![pos].panno).putExtra(
-                            "phone",
-                            shopResponse.data!![pos].phone
-                        ).putExtra("retailercode", shopResponse.data!![pos].retailercode).putExtra(
-                            "shoptype",
-                            shopResponse.data!![pos].shoptype
-                        ).putExtra("place", shopResponse.data!![pos].place).putExtra(
-                            "retailername",
-                            shopResponse.data!![pos].retailername
+            ShopListAdapter(
+                this@ShopActivity,
+                it,
+                object : ShopListAdapter.OnShopItemClickListener {
+                    override fun onClick(pos: Int) {
+                        startActivity(
+                            Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
+                                "areaName",
+                                shopResponse.data!![pos].areaname
+                            ).putExtra("areaCode", shopResponse.data!![pos].areacode).putExtra(
+                                "routeName",
+                                shopResponse.data!![pos].routename
+                            ).putExtra("routeCode", shopResponse.data!![pos].routecode).putExtra(
+                                "distributor",
+                                shopResponse.data!![pos].distributor
+                            ).putExtra("panno", shopResponse.data!![pos].panno).putExtra(
+                                "phone",
+                                shopResponse.data!![pos].phone
+                            ).putExtra(
+                                "retailercode",
+                                shopResponse.data!![pos].retailercode
+                            ).putExtra(
+                                "shoptype",
+                                shopResponse.data!![pos].shoptype
+                            ).putExtra("place", shopResponse.data!![pos].place).putExtra(
+                                "retailername",
+                                shopResponse.data!![pos].retailername
+                            )
                         )
-                    )
-                }
+                    }
 
-            })
+                })
         }
     }
 
@@ -104,7 +119,11 @@ class ShopActivity : AppCompatActivity(), ShopView, DateRangePickerFragment.OnDa
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
-        selectedDateRange.setText("$startDay-${startMonth+1}-$startYear - $endDay-${endMonth+1}-$endYear")
-        shopPresenter.getShopList("${startMonth+1}/$startDay/$startYear", "${startMonth+1}/$endDay/$endYear")
+        selectedDateRange.text =
+            "$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear"
+        shopPresenter.getShopList(
+            "${startMonth + 1}/$startDay/$startYear",
+            "${startMonth + 1}/$endDay/$endYear"
+        )
     }
 }
