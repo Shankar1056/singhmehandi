@@ -2,7 +2,10 @@ package apextechies.singhmehandi.component.activity.shop.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
+import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
@@ -38,9 +41,12 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun initWidgit() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+
         toolbar.setNavigationOnClickListener {
             finish()
 
@@ -69,6 +75,8 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
                 noteET.text.toString()
             )
         }
+
+
     }
 
 
@@ -139,10 +147,10 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun onRouteResponse(movieResponse: RouteListResponse) {
         routeList.clear()
-        var routeListdata = RouteListdata()
+       /* var routeListdata = RouteListdata()
         routeListdata.routename = resources.getString(R.string.selectroutename)
         routeListdata.routecode = resources.getString(R.string.selectroutecode)
-        routeList.add(routeListdata)
+        routeList.add(routeListdata)*/
         movieResponse.data?.let { routeList?.addAll(it) }
         addShopPresenter.onRouteResponceReceived(routeList, 0)
     }
@@ -174,10 +182,10 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun onAreaResponse(movieResponse: AreaListResponse) {
         areaList.clear()
-        var areaListData = AreaListData()
+       /* var areaListData = AreaListData()
         areaListData.areaname = resources.getString(R.string.selectareaname)
         areaListData.areacode = resources.getString(R.string.selectareacode)
-        areaList?.add(areaListData)
+        areaList?.add(areaListData)*/
         movieResponse!!.data?.let { areaList?.addAll(it) }
 
         addShopPresenter.onAreaResponceReceived(areaList, 0)

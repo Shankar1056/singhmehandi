@@ -40,9 +40,9 @@ class OrderDetailsActivity : AppCompatActivity() {
         distributorName.text = ":- " + intent.getStringExtra("distributor")
         shopName.text = ":- " + intent.getStringExtra("shop")
         salesmanName.text = ":- " + intent.getStringExtra("salesman")
-        superstockName.text = ":- " + intent.getStringExtra("")
+        superstockName.text = ":- " + intent.getStringExtra("superstockist")
         trnumName.text = ":- " + intent.getStringExtra("trnum")
-        date.text = ":- " + intent.getStringExtra("date")
+        date.text = ":- " + intent.getStringExtra("route_name")
     }
 
 

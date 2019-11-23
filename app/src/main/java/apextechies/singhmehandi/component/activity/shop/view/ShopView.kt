@@ -10,5 +10,6 @@ interface ShopView {
     fun onReceivedResponse(movieResponse: ShopListResponse)
     fun invalidUser()
     fun showProgress()
+    fun clearList()
 
 }

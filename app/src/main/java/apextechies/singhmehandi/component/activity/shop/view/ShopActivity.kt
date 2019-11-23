@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import apextechies.singhmehandi.R
+import apextechies.singhmehandi.component.activity.shop.model.ShopListData
 import apextechies.singhmehandi.component.activity.shop.model.ShopListResponse
 import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter
 import apextechies.singhmehandi.component.activity.shop.view.adapter.ShopListAdapter
@@ -16,6 +17,10 @@ import kotlinx.android.synthetic.main.activity_shop.*
 class ShopActivity : AppCompatActivity(), ShopView,
     DateRangePickerFragment.OnDateRangeSelectedListener {
     var shopPresenter = ShopPresenter
+    private var shopList = ArrayList<ShopListData>()
+    private lateinit var shopAdpter: ShopListAdapter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
@@ -45,12 +50,44 @@ class ShopActivity : AppCompatActivity(), ShopView,
 
         shopRV.layoutManager = LinearLayoutManager(this)
 
+        shopAdpter = ShopListAdapter(shopList, object : ShopListAdapter.OnShopItemClickListener {
+            override fun onClick(pos: Int) {
+                startActivity(
+                    Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
+                        "areaName",
+                        shopList[pos].areaname
+                    ).putExtra("areaCode", shopList[pos].areacode).putExtra(
+                        "routeName",
+                        shopList[pos].routename
+                    ).putExtra("routeCode", shopList[pos].routecode).putExtra(
+                        "distributor",
+                        shopList[pos].distributor
+                    ).putExtra("panno", shopList[pos].panno).putExtra(
+                        "phone",
+                        shopList[pos].phone
+                    ).putExtra(
+                        "retailercode",
+                        shopList[pos].retailercode
+                    ).putExtra(
+                        "shoptype",
+                        shopList[pos].shoptype
+                    ).putExtra("place", shopList[pos].place).putExtra(
+                        "retailername",
+                        shopList[pos].retailername
+                    )
+                )
+            }
+
+        })
+
+        shopRV.adapter = shopAdpter
+
     }
 
     override fun onResume() {
         super.onResume()
         selectedDateRange.text =
-            Utils.getCurrentDateWithDash() + "" + Utils.getCurrentDateWithDash()
+            Utils.getCurrentDateWithhifun() + "" + Utils.getCurrentDateWithhifun()
         shopPresenter.getShopList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
     }
 
@@ -59,6 +96,7 @@ class ShopActivity : AppCompatActivity(), ShopView,
         progressAVL.show()
     }
 
+
     override fun hideProgress() {
         progressAVL.hide()
     }
@@ -66,45 +104,20 @@ class ShopActivity : AppCompatActivity(), ShopView,
     override fun displayError(s: String) {
     }
 
+    override fun clearList() {
+        shopList.clear()
+        shopAdpter.notifyDataSetChanged()
+    }
+
     override fun onReceivedResponse(shopResponse: ShopListResponse) {
         Log.i("Response", shopResponse.toString())
-        if (shopResponse != null && shopResponse.data?.size!! > 0) {
-            shopCountShop.text = "" + shopResponse.data!!.size + " - Shops found"
+        shopList.clear()
+        shopList.addAll(shopResponse.data!!)
+        if (shopResponse != null && shopList.size!! > 0) {
+            shopCountShop.text = "" + shopList.size + " - Shops found"
         }
-        shopRV.adapter = shopResponse.data?.let {
-            ShopListAdapter(
-                this@ShopActivity,
-                it,
-                object : ShopListAdapter.OnShopItemClickListener {
-                    override fun onClick(pos: Int) {
-                        startActivity(
-                            Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
-                                "areaName",
-                                shopResponse.data!![pos].areaname
-                            ).putExtra("areaCode", shopResponse.data!![pos].areacode).putExtra(
-                                "routeName",
-                                shopResponse.data!![pos].routename
-                            ).putExtra("routeCode", shopResponse.data!![pos].routecode).putExtra(
-                                "distributor",
-                                shopResponse.data!![pos].distributor
-                            ).putExtra("panno", shopResponse.data!![pos].panno).putExtra(
-                                "phone",
-                                shopResponse.data!![pos].phone
-                            ).putExtra(
-                                "retailercode",
-                                shopResponse.data!![pos].retailercode
-                            ).putExtra(
-                                "shoptype",
-                                shopResponse.data!![pos].shoptype
-                            ).putExtra("place", shopResponse.data!![pos].place).putExtra(
-                                "retailername",
-                                shopResponse.data!![pos].retailername
-                            )
-                        )
-                    }
+        shopAdpter.notifyDataSetChanged()
 
-                })
-        }
     }
 
     override fun invalidUser() {

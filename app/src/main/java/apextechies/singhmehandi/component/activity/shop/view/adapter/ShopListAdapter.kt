@@ -11,7 +11,7 @@ import android.widget.Toast
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.shop.model.ShopListData
 
-class ShopListAdapter(private val context: Context, private val shopList: ArrayList<ShopListData>, val listener : OnShopItemClickListener) :
+class ShopListAdapter(private val shopList: ArrayList<ShopListData>, val listener : OnShopItemClickListener) :
     RecyclerView.Adapter<ShopListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -38,17 +38,21 @@ class RawMeterialFragment : Fragment(), DescriptionCategoryView {
     override fun onItemResponse(
         data: ArrayList<ItemListData>
     ) {
-        descriptionRV.adapter = DescriptionCategoryAdapter(data, object : DescriptionCategoryAdapter.OrderItemClickListener {
-            override fun onClick(description: String, id: String) {
+        if (descriptionRV !=null) {
+            descriptionRV.adapter = DescriptionCategoryAdapter(
+                data,
+                object : DescriptionCategoryAdapter.OrderItemClickListener {
+                    override fun onClick(description: String, id: String) {
 
-                val intent = Intent()
-                intent.putExtra("description_name", description)
-                intent.putExtra("description_id", id)
-                activity?.setResult(2, intent)
-                activity?.finish()
-            }
+                        val intent = Intent()
+                        intent.putExtra("description_name", description)
+                        intent.putExtra("description_id", id)
+                        activity?.setResult(2, intent)
+                        activity?.finish()
+                    }
 
-        })
+                })
+        }
     }
 
     override fun displayError(s: String) {}

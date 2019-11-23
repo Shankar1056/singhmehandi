@@ -45,7 +45,7 @@ object Utils {
         return formattedDate
     }
 
-    fun getCurrentDateForOrder(): String {
+    fun getCurrentDateWithhifun(): String {
         val c = Calendar.getInstance().getTime()
         println("Current time => $c")
 

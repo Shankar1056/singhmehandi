@@ -36,7 +36,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
     override fun onResume() {
         super.onResume()
         selectedDateRange.text =
-            Utils.getCurrentDateWithDash() + " - " + Utils.getCurrentDateWithDash()
+            Utils.getCurrentDateWithhifun() + " - " + Utils.getCurrentDateWithhifun()
         presenter.getOrderList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
     }
 
@@ -95,7 +95,8 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
                             .putExtra("shop", orderList.data!![pos].shop)
                             .putExtra("trnum", orderList.data!![pos].trnum)
                             .putExtra("distributor", orderList.data!![pos].distributor)
-                            .putExtra("date", orderList.data!![pos].date)
+                            .putExtra("route_name", orderList.data!![pos].route)
+                            .putExtra("superstockist", orderList.data!![pos].superstockist)
                             .putExtra(
                                 "title",
                                 resources.getString(apextechies.singhmehandi.R.string.title_update_Order)

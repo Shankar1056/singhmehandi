@@ -66,6 +66,7 @@ object ShopPresenter {
                 Log.d(TAG, "OnNext$movieResponse")
                 if (movieResponse.status.equals(Constants.FAIL)) {
                     view!!.invalidUser()
+                    view!!.clearList()
                 } else {
                     Log.d("range response : ", "Area Code: ${movieResponse.data!![0].areacode}")
                     view!!.onReceivedResponse(movieResponse)
