@@ -98,4 +98,7 @@
     <string name="title_sales_man_name">SalesMan</string>
     <string name="title_superstock">Super Stock</string>
     <string name="title_trum">Trum</string>
+    <string name="title_item_details">Item Details</string>
+    <string name="title_item">Item</string>
+    <string name="title_quantity">Quantity</string>
 </resources>

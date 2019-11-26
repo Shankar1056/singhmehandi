@@ -91,16 +91,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
                     startActivity(
                         Intent(this@OrderListActivity, OrderDetailsActivity::class.java)
-                            .putExtra("salesman", orderList.data!![pos].salesman)
-                            .putExtra("shop", orderList.data!![pos].shop)
-                            .putExtra("trnum", orderList.data!![pos].trnum)
-                            .putExtra("distributor", orderList.data!![pos].distributor)
-                            .putExtra("route_name", orderList.data!![pos].route)
-                            .putExtra("superstockist", orderList.data!![pos].superstockist)
-                            .putExtra(
-                                "title",
-                                resources.getString(apextechies.singhmehandi.R.string.title_update_Order)
-                            )
+                            .putExtra("list", orderList.data!![pos])
                     )
                 }
 
