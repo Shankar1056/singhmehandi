@@ -192,30 +192,41 @@ object AddShopPresenter {
         this.address = address
         this.pintin = pintin
         this.note = note
-        if (areaName.equals(context?.resources?.getString(R.string.selectareaname))) {
-            shopView!!.selectAreaName()
-        } else if (areaCode.equals(context?.resources?.getString(R.string.selectareacode))) {
-            shopView!!.selectAreaCode()
-        } else if (routeName.equals(context?.resources?.getString(R.string.selectroutename))) {
-            shopView!!.selectRouteName()
-        } else if (routeCode.equals(context?.resources?.getString(R.string.selectroutecode))) {
-            shopView!!.selectRouteCode()
-        } else if (shopName.trim().equals("")) {
-            shopView!!.emptyShopValue()
-        } else if (place.trim().equals("")) {
-            shopView!!.emptyPlaceValue()
-        } else if (mobile.trim().equals("")) {
-            shopView!!.emptyMobileValue()
-        } else if (mobile.trim().length < 10) {
-            shopView!!.invalidMobileValue()
-        } /*else if (TextUtils.isEmpty(gst)) {
-            shopView!!.emptyGstValue()
-        } */ else if (address.trim().equals("")) {
-            shopView!!.emptyAddressValue()
-        } /*else if (TextUtils.isEmpty(pintin)) {
-            shopView!!.emptyPinTinValue()
-        } */ else {
-            addShopObservable.subscribeWith(addShopaObserver)
+        when {
+            areaName == context?.resources?.getString(R.string.selectareaname) -> {
+                shopView!!.selectAreaName()
+            }
+            areaCode == context?.resources?.getString(R.string.selectareacode) -> {
+                shopView!!.selectAreaCode()
+            }
+            routeName == context?.resources?.getString(R.string.selectroutename) -> {
+                shopView!!.selectRouteName()
+            }
+            routeCode == context?.resources?.getString(R.string.selectroutecode) -> {
+                shopView!!.selectRouteCode()
+            }
+            shopName.trim() == "" -> {
+                shopView!!.emptyShopValue()
+            }
+            place.trim() == "" -> {
+                shopView!!.emptyPlaceValue()
+            }
+            mobile.trim() == "" -> {
+                shopView!!.emptyMobileValue()
+            }
+            mobile.trim().length < 10 -> {
+                shopView!!.invalidMobileValue()
+            } /*else if (TextUtils.isEmpty(gst)) {
+                shopView!!.emptyGstValue()
+            } */
+            address.trim() == "" -> {
+                shopView!!.emptyAddressValue()
+            } /*else if (TextUtils.isEmpty(pintin)) {
+                shopView!!.emptyPinTinValue()
+            } */
+            else -> {
+                addShopObservable.subscribeWith(addShopaObserver)
+            }
         }
     }
 

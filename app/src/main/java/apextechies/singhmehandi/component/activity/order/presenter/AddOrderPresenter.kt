@@ -91,7 +91,7 @@ class AddOrderPresenter {
                 return
             }
         }
-        if (radioIOrderType.equals(context?.resources?.getString(apextechies.singhmehandi.R.string.order))) {
+        if (radioIOrderType == context?.resources?.getString(apextechies.singhmehandi.R.string.order)) {
 
             for (i in 0 until descriptionName!!.size) {
                 var descList = DescriptionList()

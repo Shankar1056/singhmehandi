@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Toast
 import apextechies.singhmehandi.AppController
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerDataList
@@ -82,6 +85,9 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
             }
         }
 
+
+        cancel.setOnClickListener { finish() }
+
         radioGrp.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             radioType = radio.text as String?
@@ -99,7 +105,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         }
 
 
-        orderAdapter = OrderItemListAdapter(desc_quan_list,  object :
+        orderAdapter = OrderItemListAdapter(desc_quan_list, object :
             OrderItemListAdapter.OrderItemClickListener {
             override fun noQuantityError() {
                 Toast.makeText(this@AddOrderActivity, "Enter quantity please", Toast.LENGTH_SHORT)
@@ -144,11 +150,21 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                         }
                     }
                     if (isFound) {
-                        desc_quan_list.add(OrderDescriptionQuantityModel(description_name, description_id))
-                       // quantityLst.addAll(orderAdapter!!.getQuantityList())
+                        desc_quan_list.add(
+                            OrderDescriptionQuantityModel(
+                                description_name,
+                                description_id
+                            )
+                        )
+                        // quantityLst.addAll(orderAdapter!!.getQuantityList())
                     }
                 } else {
-                    desc_quan_list.add(OrderDescriptionQuantityModel(description_name,  description_id))
+                    desc_quan_list.add(
+                        OrderDescriptionQuantityModel(
+                            description_name,
+                            description_id
+                        )
+                    )
                 }
 
                 orderAdapter?.notifyDataSetChanged()

@@ -412,7 +412,7 @@
                             android:id="@+id/region"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintLeft_toRightOf="@+id/stateText"
+                            app:layout_constraintLeft_toRightOf="@+id/regionText"
                             app:layout_constraintTop_toBottomOf="@+id/state"
                             android:layout_marginTop="10dp"
                             android:textSize="14sp"

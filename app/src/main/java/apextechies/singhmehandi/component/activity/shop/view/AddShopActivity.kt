@@ -234,7 +234,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun emptyMobileValue() {
-        Toast.makeText(this@AddShopActivity, "hi", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@AddShopActivity, resources.getString(R.string.title_empty_mobile_value), Toast.LENGTH_SHORT).show()
     }
 
     override fun invalidMobileValue() {
