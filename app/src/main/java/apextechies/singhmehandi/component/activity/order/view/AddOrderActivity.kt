@@ -53,7 +53,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        salesManET.setText(ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER))
+        salesManET.text = ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER)
 
         itemSpinnerRV.layoutManager = LinearLayoutManager(this)
         routeName.setOnClickListener {
@@ -90,7 +90,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
 
         radioGrp.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
-            radioType = radio.text as String?
+            radioType = radio.text.toString().toLowerCase()
 
             if (radio.text == resources.getString(R.string.title_type_order)) {
                 routeName.visibility = View.VISIBLE
