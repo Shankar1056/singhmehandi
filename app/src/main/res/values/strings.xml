@@ -101,5 +101,6 @@
     <string name="title_item_details">Item Details</string>
     <string name="title_item">Item</string>
     <string name="title_quantity">Quantity</string>
-    <string name="only_alpha_numeric_with_caps_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
+    <string name="only_alpha_numeric_with_caps_special_char_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890.,-/ </string>
+    <string name="only_alpha_numeric_with_caps_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890</string>
 </resources>

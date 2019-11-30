@@ -80,12 +80,16 @@ class AddOrderPresenter {
             }
         }
         if (TextUtils.isEmpty(salesManName)) {
-            context?.resources?.getString(apextechies.singhmehandi.R.string.empty_sales_man_name)?.let {
-                view?.showEmptyStringMessage(it)
-                return
-            }
+            context?.resources?.getString(apextechies.singhmehandi.R.string.empty_sales_man_name)
+                ?.let {
+                    view?.showEmptyStringMessage(it)
+                    return
+                }
         }
-        if (TextUtils.isEmpty(narration)) {
+        if (radioIOrderType == context?.resources?.getString(apextechies.singhmehandi.R.string.order) && TextUtils.isEmpty(
+                narration
+            )
+        ) {
             context?.resources?.getString(apextechies.singhmehandi.R.string.empty_narration)?.let {
                 view?.showEmptyStringMessage(it)
                 return
@@ -134,10 +138,10 @@ class AddOrderPresenter {
         getAuthorisedRouteItemObservable.subscribeWith(getAuthorisedRouteItemObserver)
     }
 
-    fun onAuthorizedRouteReceived( routeList: ArrayList<RouteListdata>, locationName: String ) {
+    fun onAuthorizedRouteReceived(routeList: ArrayList<RouteListdata>, locationName: String) {
         var pos = 0
         var routeNameList = ArrayList<String>()
-        for (i in 0 until   routeList.size) {
+        for (i in 0 until routeList.size) {
             routeList[i].routename?.let { routeNameList.add(it) }
             if (locationName?.trim() != "" && locationName?.length!! > 0) {
                 if (locationName.equals(routeList[i].routename)) {

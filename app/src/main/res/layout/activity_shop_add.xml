@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
     <android.support.design.widget.AppBarLayout
             android:id="@+id/topbar"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -24,13 +24,15 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topbar"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/topbar">
+
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -39,223 +41,222 @@
                     android:id="@+id/areaNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="10dp"
                     android:text="@string/area_name"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                     android:id="@+id/areaName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_corner_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/areaNameText"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/rounded_corner_text">
-            </Spinner>
+                    app:layout_constraintTop_toBottomOf="@+id/areaNameText"></Spinner>
 
             <TextView
                     android:id="@+id/areaCodeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/areaName"
+                    android:layout_margin="10dp"
                     android:text="@string/area_code"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/areaName" />
 
             <Spinner
                     android:id="@+id/areaCode"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_corner_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/areaCodeText"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/rounded_corner_text">
-            </Spinner>
+                    app:layout_constraintTop_toBottomOf="@+id/areaCodeText"></Spinner>
 
             <TextView
                     android:id="@+id/routeNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/areaCode"
+                    android:layout_margin="10dp"
                     android:text="@string/route_name"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/areaCode" />
 
             <Spinner
                     android:id="@+id/routeName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_corner_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeNameText"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/rounded_corner_text">
-            </Spinner>
+                    app:layout_constraintTop_toBottomOf="@+id/routeNameText"></Spinner>
 
             <TextView
                     android:id="@+id/routeCodeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeName"
+                    android:layout_margin="10dp"
                     android:text="@string/route_code"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routeName" />
 
             <Spinner
                     android:id="@+id/routeCode"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_corner_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeCodeText"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/rounded_corner_text">
-            </Spinner>
+                    app:layout_constraintTop_toBottomOf="@+id/routeCodeText"></Spinner>
 
             <TextView
                     android:id="@+id/shopNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/routeCode"
+                    android:layout_margin="10dp"
                     android:text="@string/shop_name"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routeCode" />
 
             <EditText
                     android:id="@+id/shopNameET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/shopNameText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:paddingLeft="5dp"
-                    android:textSize="14sp"
+                    android:background="@drawable/rounded_corner_text"
                     android:digits="@string/only_alpha_numeric_with_caps_and_space"
-                    android:singleLine="true"
+                    android:hint="@string/hint_shop_name"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:textAppearance="@font/roboto_light"
-                    android:hint="@string/hint_shop_name"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shopNameText" />
+
             <TextView
                     android:id="@+id/placeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/shopNameET"
+                    android:layout_margin="10dp"
                     android:text="@string/title_place"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shopNameET" />
 
             <EditText
                     android:id="@+id/placeET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/placeText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:hint="@string/hint_place"
+                    android:background="@drawable/rounded_corner_text"
                     android:digits="@string/only_alpha_numeric_with_caps_and_space"
-                    android:textSize="15sp"
-                    android:paddingLeft="5dp"
-                    android:singleLine="true"
+                    android:hint="@string/hint_place"
                     android:imeOptions="actionNext"
                     android:inputType="textPostalAddress"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:textAppearance="@font/roboto_light"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeText" />
 
             <TextView
                     android:id="@+id/mobileText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/placeET"
+                    android:layout_margin="10dp"
                     android:text="@string/title_mobile"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeET" />
 
             <EditText
                     android:id="@+id/mobileET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mobileText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_corner_text"
                     android:hint="@string/hint_mobile"
-                    android:paddingLeft="5dp"
-                    android:textSize="15sp"
+                    android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="10"
+                    android:paddingLeft="5dp"
                     android:singleLine="true"
-                    android:imeOptions="actionNext"
                     android:textAppearance="@font/roboto_light"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileText" />
+
             <TextView
                     android:id="@+id/gstText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mobileET"
+                    android:layout_margin="10dp"
                     android:text="@string/title_gst"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileET" />
 
             <EditText
                     android:id="@+id/gstET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gstText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:paddingLeft="5dp"
-                    android:textSize="15sp"
+                    android:background="@drawable/rounded_corner_text"
                     android:digits="@string/only_alpha_numeric_with_caps_and_space"
-                    android:singleLine="true"
+                    android:hint="@string/hint_gst"
                     android:imeOptions="actionNext"
                     android:inputType="textPostalAddress"
                     android:maxLength="15"
-                    android:hint="@string/hint_gst"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:textAppearance="@font/roboto_light"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gstText" />
 
             <TextView
                     android:id="@+id/shopTypeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gstET"
+                    android:layout_margin="10dp"
                     android:text="@string/shop_type"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gstET" />
+
             <RadioGroup
                     android:id="@+id/radioGrp"
                     android:layout_width="fill_parent"
@@ -265,137 +266,141 @@
                     android:paddingRight="8dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/shopTypeText"
-            >
+                    app:layout_constraintTop_toBottomOf="@+id/shopTypeText">
+
                 <RadioButton
                         android:id="@+id/retailer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:checked="true"
                         android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:text="@string/title_retailer"/>
+                        android:checked="true"
+                        android:text="@string/title_retailer"
+                        android:textSize="14dp" />
+
                 <RadioButton
                         android:id="@+id/wholesale"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:checked="false"
                         android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:text="@string/title_wholesale"/>
+                        android:checked="false"
+                        android:text="@string/title_wholesale"
+                        android:textSize="14dp" />
+
                 <RadioButton
                         android:id="@+id/modernoutlet"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:checked="false"
                         android:layout_weight="1"
-                        android:textSize="14dp"
-                        android:text="@string/title_mobileoutlet"/>
+                        android:checked="false"
+                        android:text="@string/title_mobileoutlet"
+                        android:textSize="14dp" />
             </RadioGroup>
 
             <TextView
                     android:id="@+id/addressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/radioGrp"
+                    android:layout_margin="10dp"
                     android:text="@string/title_address"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGrp" />
 
             <EditText
                     android:id="@+id/addressET"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addressText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:paddingLeft="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:inputType="textPostalAddress"
-                    android:textSize="15sp"
+                    android:background="@drawable/rounded_corner_text"
+                    android:digits="@string/only_alpha_numeric_with_caps_special_char_and_space"
                     android:hint="@string/hint_address"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:inputType="textPostalAddress"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addressText" />
 
             <TextView
                     android:id="@+id/panTinText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addressET"
+                    android:layout_margin="10dp"
                     android:text="@string/title_pan_tan"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/addressET" />
 
             <EditText
                     android:id="@+id/panTinET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/panTinText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:paddingLeft="5dp"
-                    android:textSize="15sp"
-                    android:singleLine="true"
+                    android:background="@drawable/rounded_corner_text"
+                    android:digits="@string/only_alpha_numeric_with_caps_and_space"
+                    android:hint="@string/hint_pan_tin"
+                    android:imeOptions="actionNext"
                     android:inputType="textPostalAddress"
                     android:maxLength="10"
-                    android:digits="@string/only_alpha_numeric_with_caps_and_space"
-                    android:imeOptions="actionNext"
-                    android:hint="@string/hint_pan_tin"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:textAppearance="@font/roboto_light"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/panTinText" />
 
             <TextView
                     android:id="@+id/noteText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/panTinET"
+                    android:layout_margin="10dp"
                     android:text="@string/title_note"
                     android:textAppearance="@font/roboto_medium"
                     android:textSize="13sp"
-                    android:layout_margin="10dp"/>
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/panTinET" />
 
             <EditText
                     android:id="@+id/noteET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/noteText"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:paddingLeft="5dp"
-                    android:textSize="15sp"
-                    android:singleLine="true"
-                    android:imeOptions="actionDone"
+                    android:background="@drawable/rounded_corner_text"
+                    android:digits="@string/only_alpha_numeric_with_caps_special_char_and_space"
                     android:hint="@string/hint_note"
-                    android:background="@drawable/rounded_corner_text"/>
+                    android:imeOptions="actionDone"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/noteText" />
 
             <Button
                     android:id="@+id/submit"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/noteET"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:background="@drawable/round_corner_filled"
                     android:text="@string/title_submit"
-                    android:textSize="15sp"
                     android:textAppearance="@font/roboto_medium"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/noteET" />
 
         </android.support.constraint.ConstraintLayout>
 
