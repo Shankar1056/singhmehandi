@@ -32,6 +32,9 @@ class OrderItemListAdapter(
         holder.shopName.text = shopList[position].descriptionName
         // if (shopList.size > position)
         holder.quantity.setText(shopList[position].Quantity)
+        if (shopList[position].Quantity!!.trim() == "") {
+            holder.quantity.requestFocus()
+        }
 
 
         /*holder.quantity.addTextChangedListener(object : TextWatcher {

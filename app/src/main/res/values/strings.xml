@@ -67,6 +67,7 @@
     <string name="title_region">Region</string>
     <string name="title_type_order">Order</string>
     <string name="title_type_visit">Visit</string>
+    <string name="title_type_visit_small">visit</string>
     <string name="hint_quantity">Quantity</string>
     <string name="hint_narration">Narration</string>
     <string name="description">Description</string>
@@ -103,4 +104,5 @@
     <string name="title_quantity">Quantity</string>
     <string name="only_alpha_numeric_with_caps_special_char_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890.,-/ </string>
     <string name="only_alpha_numeric_with_caps_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890</string>
+    <string name="empty_description">Please seclect description first to proceed.</string>
 </resources>

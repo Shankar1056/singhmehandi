@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
+import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.CommonRequest
 import apextechies.singhmehandi.component.activity.order.model.*
 import apextechies.singhmehandi.component.activity.order.view.AddOrderView
@@ -86,17 +87,22 @@ class AddOrderPresenter {
                     return
                 }
         }
-        if (radioIOrderType == context?.resources?.getString(apextechies.singhmehandi.R.string.order) && TextUtils.isEmpty(
+        if (radioIOrderType == context?.resources?.getString(R.string.title_type_visit_small) && TextUtils.isEmpty(
                 narration
             )
         ) {
-            context?.resources?.getString(apextechies.singhmehandi.R.string.empty_narration)?.let {
+            context?.resources?.getString(R.string.empty_narration)?.let {
                 view?.showEmptyStringMessage(it)
                 return
             }
         }
         if (radioIOrderType == context?.resources?.getString(apextechies.singhmehandi.R.string.order)) {
-
+            if (descriptionName!!.size == 0) {
+                context?.resources?.getString(R.string.empty_description)?.let {
+                    view?.showEmptyStringMessage(it)
+                    return
+                }
+            }
             for (i in 0 until descriptionName!!.size) {
                 var descList = DescriptionList()
                 descList.description = descriptionName!![i]
