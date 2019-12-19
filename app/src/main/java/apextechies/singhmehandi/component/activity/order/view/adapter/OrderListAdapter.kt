@@ -29,8 +29,8 @@ class OrderListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.shopName.setText(shopList[position].shop)
-        holder.locationName.setText(shopList[position].distributor)
+        holder.shopName.text = shopList[position].shop
+        holder.locationName.text = shopList[position].distributor
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             listener.onItemClick(position)
@@ -51,10 +51,8 @@ class OrderListAdapter(
     }
 
     fun filter(queryText: String) {
-        //shopList.clear()
-        if (shopList.size > 0) {
-            if (queryText.isEmpty()) {
-                shopList = copyList
+            shopList = if (queryText.isEmpty()) {
+                copyList
             } else {
                 val filteredList = ArrayList<OrderListData>()
                 copyList.forEach {
@@ -62,16 +60,10 @@ class OrderListAdapter(
                         filteredList.add(it)
                     }
                 }
-                shopList = filteredList
-                /*for (name in copyList) {
-                    if (name.shop!!.toLowerCase().contains(queryText.toLowerCase())) {
-                        shopList.add(name)
-                    }
-                }*/
-
+                filteredList
             }
 
             notifyDataSetChanged()
         }
-    }
+
 }

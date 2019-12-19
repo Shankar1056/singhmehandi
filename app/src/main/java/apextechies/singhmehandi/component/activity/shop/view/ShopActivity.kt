@@ -86,9 +86,14 @@ class ShopActivity : AppCompatActivity(), ShopView,
 
     override fun onResume() {
         super.onResume()
-        selectedDateRange.text =
-            Utils.getCurrentDateWithhifun() + "" + Utils.getCurrentDateWithhifun()
-        shopPresenter.getShopList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
+        if (selectedDateRange.text.toString().trim() == resources.getString(R.string.title_select_date)) {
+            selectedDateRange.text =
+                Utils.getCurrentDateWithhifun() + " to " + Utils.getCurrentDateWithhifun()
+            shopPresenter.getShopList(
+                Utils.getCurrentDateWithDash(),
+                Utils.getCurrentDateWithDash()
+            )
+        }
     }
 
 
@@ -133,7 +138,7 @@ class ShopActivity : AppCompatActivity(), ShopView,
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
         selectedDateRange.text =
-            "$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear"
+            "$startDay-${startMonth + 1}-$startYear to  $endDay-${endMonth + 1}-$endYear"
         shopPresenter.getShopList(
             "${startMonth + 1}/$startDay/$startYear",
             "${startMonth + 1}/$endDay/$endYear"

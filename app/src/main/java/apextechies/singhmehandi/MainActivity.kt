@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         logout.setOnClickListener {
             ClsGeneral.setPreferences(this@MainActivity, Constants.USER, "")
             startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finishAffinity()
         }
 
     }

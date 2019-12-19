@@ -41,7 +41,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun initWidgit() {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -69,7 +69,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
                 placeET.text.toString(),
                 mobileET.text.toString(),
                 gstET.text.toString(),
-                radioSexButton!!.getText().toString(),
+                radioSexButton!!.text.toString(),
                 addressET.text.toString(),
                 panTinET.text.toString(),
                 noteET.text.toString()
