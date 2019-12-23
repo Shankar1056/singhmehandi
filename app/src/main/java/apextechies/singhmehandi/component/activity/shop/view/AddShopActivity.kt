@@ -41,7 +41,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     override fun initWidgit() {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -58,7 +58,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         areaName.onItemSelectedListener = this
         areaCode.onItemSelectedListener = this
         submit.setOnClickListener {
-            val selectedId = radioGrp.getCheckedRadioButtonId()
+            val selectedId = radioGrp.checkedRadioButtonId
             radioSexButton = findViewById(selectedId)
             addShopPresenter.onSubmitClick(
                 areaName.selectedItem.toString(),

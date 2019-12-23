@@ -14,6 +14,7 @@ import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 import apextechies.singhmehandi.component.activity.order.presenter.OrderPresenter
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderListAdapter
 import apextechies.singhmehandi.component.activity.shop.view.DateRangePickerFragment
+import apextechies.singhmehandi.component.activity.shop.view.ShopActivity
 import apextechies.singhmehandi.util.Utils
 import kotlinx.android.synthetic.main.activity_shop.*
 
@@ -23,6 +24,11 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
     var presenter = OrderPresenter()
     var orderAdapter: OrderListAdapter? = null
+
+    companion object {
+        var fromDate: String? = null
+        var toDate: String? = null
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +41,20 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
     override fun onResume() {
         super.onResume()
-        selectedDateRange.text =
-            Utils.getCurrentDateWithhifun() + " - " + Utils.getCurrentDateWithhifun()
-        presenter.getOrderList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
+
+
+        if (selectedDateRange.text.toString().trim() == resources.getString(R.string.title_select_date)) {
+            fromDate = Utils.getCurrentDateWithDash()
+            toDate = Utils.getCurrentDateWithDash()
+            selectedDateRange.text =
+                Utils.getCurrentDateWithhifun() + " - " + Utils.getCurrentDateWithhifun()
+            presenter.getOrderList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
+
+        } else {
+            presenter.getOrderList(fromDate.toString(), toDate.toString())
+        }
+
+
     }
 
     override fun initWidgit() {
@@ -113,6 +130,8 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
+        fromDate = "${startMonth + 1}/$startDay/$startYear"
+        toDate =  "${endMonth + 1}/$endDay/$endYear"
         selectedDateRange.text =
             "$startDay-${startMonth + 1}-$startYear - $endDay-${endMonth + 1}-$endYear"
         presenter.getOrderList(

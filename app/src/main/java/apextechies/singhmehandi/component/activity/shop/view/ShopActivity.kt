@@ -20,6 +20,11 @@ class ShopActivity : AppCompatActivity(), ShopView,
     private var shopList = ArrayList<ShopListData>()
     private lateinit var shopAdpter: ShopListAdapter
 
+    companion object {
+        var fromDate: String? = null
+        var toDate: String? = null
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,11 +92,18 @@ class ShopActivity : AppCompatActivity(), ShopView,
     override fun onResume() {
         super.onResume()
         if (selectedDateRange.text.toString().trim() == resources.getString(R.string.title_select_date)) {
+            fromDate = Utils.getCurrentDateWithDash()
+            toDate = Utils.getCurrentDateWithDash()
             selectedDateRange.text =
                 Utils.getCurrentDateWithhifun() + " to " + Utils.getCurrentDateWithhifun()
             shopPresenter.getShopList(
                 Utils.getCurrentDateWithDash(),
                 Utils.getCurrentDateWithDash()
+            )
+        } else {
+            shopPresenter.getShopList(
+                fromDate.toString(),
+                toDate.toString()
             )
         }
     }
@@ -137,11 +149,13 @@ class ShopActivity : AppCompatActivity(), ShopView,
         endYear: Int
     ) {
         Log.d("range : ", "from: $startDay-$startMonth-$startYear to : $endDay-$endMonth-$endYear")
+        fromDate = "${startMonth + 1}/$startDay/$startYear"
+        toDate = "${endMonth + 1}/$endDay/$endYear"
         selectedDateRange.text =
             "$startDay-${startMonth + 1}-$startYear to  $endDay-${endMonth + 1}-$endYear"
         shopPresenter.getShopList(
             "${startMonth + 1}/$startDay/$startYear",
-            "${startMonth + 1}/$endDay/$endYear"
+            "${endMonth + 1}/$endDay/$endYear"
         )
     }
 }

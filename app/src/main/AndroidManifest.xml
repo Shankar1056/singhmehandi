@@ -40,7 +40,7 @@
                 android:name=".component.activity.shop.view.AddShopActivity"
                 android:label="@string/title_add_shop"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+                android:windowSoftInputMode="adjustResize"></activity>
 
 
         <meta-data
