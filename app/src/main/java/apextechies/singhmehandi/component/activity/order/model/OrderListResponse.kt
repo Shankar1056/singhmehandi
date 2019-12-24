@@ -36,6 +36,8 @@ class OrderListData(
     var addempname: String? = null,
     @SerializedName("updated")
     var updated: String? = null,
+    @SerializedName("remarks")
+    var remarks: String? = null,
     @SerializedName("item")
     var item: ArrayList<OrderItem>? = null,
     @SerializedName("quantity")

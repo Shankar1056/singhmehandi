@@ -3,6 +3,7 @@ package apextechies.singhmehandi.component.activity.order.view
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.OrderListData
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderDetaildItemAdapter
@@ -21,7 +22,13 @@ class OrderDetailsActivity : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-        rv_item.adapter = OrderDetaildItemAdapter(orderListData)
+        if (orderListData.item != null) {
+            if (orderListData.item!!.size > 0) {
+                rv_item.adapter = OrderDetaildItemAdapter(orderListData)
+            } else {
+                rvCV.visibility = View.GONE
+            }
+        }
     }
 
     fun initWidgit() {
@@ -40,6 +47,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                     .putExtra("salesman",  orderListData.salesman)
                     .putExtra("shop", orderListData.shop)
                     .putExtra("trnum", orderListData.trnum)
+                    .putExtra("remarks", orderListData.remarks)
                     .putExtra(
                         "title",
                         resources.getString(R.string.title_update_Order)
@@ -55,6 +63,7 @@ class OrderDetailsActivity : AppCompatActivity() {
         superstockName.text = ":- " + orderListData.superstockist
         trnumName.text = ":- " + orderListData.trnum
         date.text = ":- " + orderListData.route
+        remarks.text = ":- " + orderListData.remarks
     }
 
 

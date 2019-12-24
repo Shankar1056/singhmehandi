@@ -98,11 +98,14 @@
     <string name="distributor_name">Distributor Name</string>
     <string name="title_sales_man_name">SalesMan</string>
     <string name="title_superstock">Super Stock</string>
+    <string name="title_superstockist">Superstockist</string>
     <string name="title_trum">Trum</string>
+    <string name="title_trnum">Tr.Num</string>
     <string name="title_item_details">Item Details</string>
     <string name="title_item">Item</string>
     <string name="title_quantity">Quantity</string>
     <string name="only_alpha_numeric_with_caps_special_char_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890.,-/ </string>
     <string name="only_alpha_numeric_with_caps_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890</string>
     <string name="empty_description">Please seclect description first to proceed.</string>
+    <string name="title_remarks">Remarks</string>
 </resources>

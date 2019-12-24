@@ -98,6 +98,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                 itemSpinnerRV.visibility = View.VISIBLE
 
             } else {
+                orderAdapter!!.clearListWhenVisitClicked()
                 routeName.visibility = View.GONE
                 description.visibility = View.GONE
                 itemSpinnerRV.visibility = View.GONE

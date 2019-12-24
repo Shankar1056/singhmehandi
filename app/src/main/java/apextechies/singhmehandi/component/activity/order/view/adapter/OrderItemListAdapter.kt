@@ -54,6 +54,10 @@ class OrderItemListAdapter(
         }
     }
 
+    fun clearListWhenVisitClicked(){
+        shopList.clear()
+    }
+
     fun getQuantityList(): ArrayList<String> {
         var quantityList = ArrayList<String>()
         for (i in 0 until shopList.size) {
