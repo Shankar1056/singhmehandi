@@ -7,6 +7,7 @@ import apextechies.singhmehandi.AppController
 import apextechies.singhmehandi.component.activity.CommonRequestWithDate
 import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 import apextechies.singhmehandi.component.activity.order.view.OrderListView
+import apextechies.singhmehandi.component.activity.shop.preserter.ShopPresenter
 import apextechies.singhmehandi.network.NetworkClient
 import apextechies.singhmehandi.network.NetworkInterface
 import apextechies.singhmehandi.util.ClsGeneral
@@ -73,6 +74,7 @@ class OrderPresenter {
                 Log.d(TAG, "OnNext$movieResponse")
                 if (movieResponse.status.equals(Constants.FAIL)) {
                     view!!.invalidUser()
+                    view!!.clearList()
                 } else {
                     view!!.onOrderResponseReceived(movieResponse)
                 }

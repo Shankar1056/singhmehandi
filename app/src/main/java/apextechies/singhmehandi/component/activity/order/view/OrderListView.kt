@@ -9,5 +9,6 @@ interface OrderListView {
     fun onOrderResponseReceived(movieResponse: OrderListResponse)
     fun invalidUser()
     fun showProgress()
+    fun clearList()
 
 }

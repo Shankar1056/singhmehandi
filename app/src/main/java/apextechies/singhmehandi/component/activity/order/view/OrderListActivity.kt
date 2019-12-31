@@ -10,13 +10,17 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import apextechies.singhmehandi.R
+import apextechies.singhmehandi.component.activity.order.model.OrderListData
 import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 import apextechies.singhmehandi.component.activity.order.presenter.OrderPresenter
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderListAdapter
 import apextechies.singhmehandi.component.activity.shop.view.DateRangePickerFragment
-import apextechies.singhmehandi.component.activity.shop.view.ShopActivity
 import apextechies.singhmehandi.util.Utils
+import kotlinx.android.synthetic.main.activity_order_add.*
 import kotlinx.android.synthetic.main.activity_shop.*
+import kotlinx.android.synthetic.main.activity_shop.progressAVL
+import kotlinx.android.synthetic.main.activity_shop.titleTV
+import kotlinx.android.synthetic.main.activity_shop.toolbar
 
 
 class OrderListActivity : AppCompatActivity(), OrderListView,
@@ -24,6 +28,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
 
     var presenter = OrderPresenter()
     var orderAdapter: OrderListAdapter? = null
+    private var orderList = ArrayList<OrderListData>()
 
     companion object {
         var fromDate: String? = null
@@ -82,6 +87,24 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
                     )
             )
         }
+
+
+        orderAdapter = orderList?.let {
+            orderList.addAll(it)
+            OrderListAdapter(this@OrderListActivity, it, object : OrderListAdapter.OrderListClick {
+                override fun onItemClick(pos: Int) {
+
+                    startActivity(
+                        Intent(this@OrderListActivity, OrderDetailsActivity::class.java)
+                            .putExtra("list", orderList!![pos])
+                    )
+                }
+
+            })
+
+        }
+        shopRV.adapter = orderAdapter
+
     }
 
 
@@ -96,26 +119,20 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
     override fun displayError(s: String) {
     }
 
-    override fun onOrderResponseReceived(orderList: OrderListResponse) {
-        if (orderList != null && orderList.data?.size!! > 0) {
-            shopCountShop.text = "" + orderList.data!!.size + " - Orders found"
+    override fun onOrderResponseReceived(ordrList: OrderListResponse) {
+        if (ordrList != null && ordrList.data?.size!! > 0) {
+            shopCountShop.text = "" + ordrList.data!!.size + " - Orders found"
         }
 
+        ordrList.data?.let { orderList.addAll(it) }
+        orderAdapter!!.notifyDataSetChanged()
 
-        orderAdapter = orderList.data?.let {
-            OrderListAdapter(this@OrderListActivity, it, object : OrderListAdapter.OrderListClick {
-                override fun onItemClick(pos: Int) {
 
-                    startActivity(
-                        Intent(this@OrderListActivity, OrderDetailsActivity::class.java)
-                            .putExtra("list", orderList.data!![pos])
-                    )
-                }
+    }
 
-            })
-
-        }
-        shopRV.adapter = orderAdapter
+    override fun clearList() {
+        orderList.clear()
+        orderAdapter!!.notifyDataSetChanged()
     }
 
     override fun invalidUser() {
