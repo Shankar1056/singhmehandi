@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity(), LoginView, View.OnClickListener {
             })
         loginPresentor.onViewCreated()
 
-        smsVerifyCatcher!!.setPhoneNumberFilter(resources.getString(apextechies.singhmehandi.R.string.otp_filter_message))
+        smsVerifyCatcher!!.setPhoneNumberFilter(resources.getString(R.string.otp_filter_message))
 
     }
 

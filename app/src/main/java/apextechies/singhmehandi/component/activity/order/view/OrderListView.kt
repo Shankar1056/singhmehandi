@@ -1,5 +1,6 @@
 package apextechies.singhmehandi.component.activity.order.view
 
+import apextechies.singhmehandi.component.activity.order.model.OrderDeleteResponse
 import apextechies.singhmehandi.component.activity.order.model.OrderListResponse
 
 interface OrderListView {
@@ -10,5 +11,6 @@ interface OrderListView {
     fun invalidUser()
     fun showProgress()
     fun clearList()
+    fun onOrderdeleted(movieResponse: String)
 
 }

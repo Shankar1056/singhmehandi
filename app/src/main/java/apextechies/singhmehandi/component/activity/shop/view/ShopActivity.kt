@@ -50,7 +50,10 @@ class ShopActivity : AppCompatActivity(), ShopView,
         }
 
         fab.setOnClickListener {
-            startActivity(Intent(this@ShopActivity, AddShopActivity::class.java))
+            startActivity(
+                Intent(this@ShopActivity, AddShopActivity::class.java)
+                    .putExtra("from", "shoplist")
+            )
         }
 
         shopRV.layoutManager = LinearLayoutManager(this)
@@ -59,9 +62,9 @@ class ShopActivity : AppCompatActivity(), ShopView,
             override fun onClick(pos: Int) {
                 startActivity(
                     Intent(this@ShopActivity, ShopDetailsActivity::class.java).putExtra(
-                        "areaName",
-                        shopList[pos].areaname
-                    ).putExtra("areaCode", shopList[pos].areacode).putExtra(
+                        "list",
+                        shopList[pos]
+                    )/*.putExtra("areaCode", shopList[pos].areacode).putExtra(
                         "routeName",
                         shopList[pos].routename
                     ).putExtra("routeCode", shopList[pos].routecode).putExtra(
@@ -79,7 +82,7 @@ class ShopActivity : AppCompatActivity(), ShopView,
                     ).putExtra("place", shopList[pos].place).putExtra(
                         "retailername",
                         shopList[pos].retailername
-                    )
+                    )*/
                 )
             }
 
@@ -101,6 +104,7 @@ class ShopActivity : AppCompatActivity(), ShopView,
                 Utils.getCurrentDateWithDash()
             )
         } else {
+            shopPresenter.ShopPresenter(this, this)
             shopPresenter.getShopList(
                 fromDate.toString(),
                 toDate.toString()
@@ -124,6 +128,10 @@ class ShopActivity : AppCompatActivity(), ShopView,
     override fun clearList() {
         shopList.clear()
         shopAdpter.notifyDataSetChanged()
+    }
+
+    override fun onshopDeleted(message: String?) {
+
     }
 
     override fun onReceivedResponse(shopResponse: ShopListResponse) {

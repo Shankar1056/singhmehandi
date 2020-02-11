@@ -2,10 +2,7 @@ package apextechies.singhmehandi.component.activity.shop.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.InputType
-import android.text.TextUtils
 import android.view.View
-import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
@@ -18,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_shop_add.*
 
 
 class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSelectedListener {
-
+    private lateinit var listItem: ShopListData
     var addShopPresenter = AddShopPresenter
     var areaList = ArrayList<AreaListData>()
     var routeList = ArrayList<RouteListdata>()
@@ -45,6 +42,12 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        if (intent.getStringExtra("from") == "details") {
+            listItem = intent.getParcelableExtra("list")
+        } else {
+
+        }
 
 
         toolbar.setNavigationOnClickListener {
@@ -76,7 +79,29 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
             )
         }
 
+        if (intent.getStringExtra("from") == "details") {
+            setIntentData()
+        }
 
+
+    }
+
+    private fun setIntentData() {
+        listItem
+        shopNameET.setText(listItem.retailername)
+        placeET.setText(listItem.place)
+        mobileET.setText(listItem.phone)
+//        gstET.setText(listItem.g)
+        if (listItem.shoptype == resources.getString(R.string.title_retailer)) {
+            retailer.isChecked = true
+        } else if (listItem.shoptype == resources.getString(R.string.title_wholesale)) {
+            wholesale.isChecked = true
+        } else {
+            modernoutlet.isChecked = true
+        }
+//        addressET.setText(listItem.)
+        panTinET.setText(listItem.panno)
+//        noteET.setText(listItem.no)
     }
 
 
@@ -147,7 +172,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun onRouteResponse(movieResponse: RouteListResponse) {
         routeList.clear()
-       /* var routeListdata = RouteListdata()
+        /* var routeListdata = RouteListdata()
         routeListdata.routename = resources.getString(R.string.selectroutename)
         routeListdata.routecode = resources.getString(R.string.selectroutecode)
         routeList.add(routeListdata)*/
@@ -168,7 +193,16 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, routeNameList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         routeName.adapter = aa
-        routeName.setSelection(defaultPosition)
+        if (intent.getStringExtra("from") == "details") {
+
+            for (i in 0 until routeNameList.size) {
+                if (listItem.retailername == routeNameList[i]) {
+                    areaName.setSelection(i)
+                }
+            }
+        } else {
+            routeName.setSelection(defaultPosition)
+        }
 
     }
 
@@ -182,7 +216,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
 
     override fun onAreaResponse(movieResponse: AreaListResponse) {
         areaList.clear()
-       /* var areaListData = AreaListData()
+        /* var areaListData = AreaListData()
         areaListData.areaname = resources.getString(R.string.selectareaname)
         areaListData.areacode = resources.getString(R.string.selectareacode)
         areaList?.add(areaListData)*/
@@ -195,7 +229,16 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, areaList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         areaName.adapter = aa
-        areaName.setSelection(selectedposition)
+        if (intent.getStringExtra("from") == "details") {
+
+            for (i in 0 until areaList.size) {
+                if (listItem.areaname == areaList[i]) {
+                    areaName.setSelection(i)
+                }
+            }
+        } else {
+            areaName.setSelection(selectedposition)
+    }
     }
 
     override fun addAreaCodeListInSpinner(areaList: ArrayList<String>, selectedposition: Int) {

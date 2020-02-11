@@ -5,6 +5,8 @@ import android.support.annotation.NonNull
 import android.util.Log
 import apextechies.singhmehandi.AppController
 import apextechies.singhmehandi.component.activity.CommonRequestWithDate
+import apextechies.singhmehandi.component.activity.shop.model.DeleteResponse
+import apextechies.singhmehandi.component.activity.shop.model.DeleteShopRequest
 import apextechies.singhmehandi.component.activity.shop.model.ShopListResponse
 import apextechies.singhmehandi.component.activity.shop.view.ShopView
 import apextechies.singhmehandi.network.NetworkClient
@@ -23,9 +25,10 @@ object ShopPresenter {
     var view: ShopView? = null
     var fromDate: String? = null
     var toDate: String? = null
+    private var shopId: String? = null
     fun ShopPresenter(context: Context, view: ShopView) {
-        this.view = view;
-        this.context = context;
+        this.view = view
+        this.context = context
     }
 
     fun getShopList(fromDate: String, toDate: String) {
@@ -39,6 +42,66 @@ object ShopPresenter {
     fun initWidgit() {
         view!!.initWidgit()
     }
+
+    fun deleteShop(id: String?) {
+        shopId = id
+        view!!.showProgress()
+        val a =DeleteShopRequest(
+            shopId,
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.STATE),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEENAME),
+            ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEEID)
+        )
+        deleteShopObservable.subscribeWith(deleteShopOobserver)
+    }
+
+    private val deleteShopObservable: Observable<DeleteResponse>
+        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+            .deleteShop(
+                DeleteShopRequest(
+                    shopId,
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.USER),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.DB),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.REGION),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.STATE),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(AppController.getInstance(), Constants.EMPLOYEEID)
+                )
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
+    private val deleteShopOobserver: DisposableObserver<DeleteResponse>
+        get() = object : DisposableObserver<DeleteResponse>() {
+
+            override fun onNext(@NonNull movieResponse: DeleteResponse) {
+                Log.d(TAG, "OnNext$movieResponse")
+                view!!.hideProgress()
+                if (movieResponse.status!!.equals("false")) {
+                    view!!.invalidUser()
+                } else {
+                    view!!.onshopDeleted(movieResponse.message)
+                }
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                e.printStackTrace()
+                view!!.displayError("Error fetching Movie Data")
+                view!!.hideProgress()
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                view!!.hideProgress()
+            }
+        }
 
     private val geShopObservable: Observable<ShopListResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)

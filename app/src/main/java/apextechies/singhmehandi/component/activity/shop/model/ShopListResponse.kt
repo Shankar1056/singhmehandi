@@ -1,6 +1,8 @@
 package apextechies.singhmehandi.component.activity.shop.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 class ShopListResponse {
 
@@ -12,30 +14,37 @@ class ShopListResponse {
     var data: ArrayList<ShopListData>? = null
 }
 
-class ShopListData {
+@Parcelize
+class ShopListData(
 
     @SerializedName("retailername")
-    var retailername: String? = null
+    var retailername: String? = null,
     @SerializedName("retailercode")
-    var retailercode: String? = null
+    var retailercode: String? = null,
     @SerializedName("routename")
-    var routename: String? = null
+    var routename: String? = null,
     @SerializedName("routecode")
-    var routecode: String? = null
+    var routecode: String? = null,
     @SerializedName("areaname")
-    var areaname: String? = null
+    var areaname: String? = null,
     @SerializedName("areacode")
-    var areacode: String? = null
+    var areacode: String? = null,
     @SerializedName("place")
-    var place: String? = null
+    var place: String? = null,
     @SerializedName("phone")
-    var phone: String? = null
+    var phone: String? = null,
     @SerializedName("distributor")
-    var distributor: String? = null
+    var distributor: String? = null,
     @SerializedName("shoptype")
-    var shoptype: String? = null
+    var shoptype: String? = null,
     @SerializedName("panno")
-    var panno: String? = null
+    var panno: String? = null,
     @SerializedName("auth")
-    var auth: String? = null
-}
+    var auth: String? = null,
+    @SerializedName("latitude")
+    var latitude: String? = null,
+    @SerializedName("longitude")
+    var longitude: String? = null,
+    @SerializedName("id")
+    var id: String? = null
+) : Parcelable

@@ -16,11 +16,7 @@ import apextechies.singhmehandi.component.activity.order.presenter.OrderPresente
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderListAdapter
 import apextechies.singhmehandi.component.activity.shop.view.DateRangePickerFragment
 import apextechies.singhmehandi.util.Utils
-import kotlinx.android.synthetic.main.activity_order_add.*
 import kotlinx.android.synthetic.main.activity_shop.*
-import kotlinx.android.synthetic.main.activity_shop.progressAVL
-import kotlinx.android.synthetic.main.activity_shop.titleTV
-import kotlinx.android.synthetic.main.activity_shop.toolbar
 
 
 class OrderListActivity : AppCompatActivity(), OrderListView,
@@ -56,6 +52,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
             presenter.getOrderList(Utils.getCurrentDateWithDash(), Utils.getCurrentDateWithDash())
 
         } else {
+            presenter.OrderPresenter(this, this)
             presenter.getOrderList(fromDate.toString(), toDate.toString())
         }
 
@@ -124,6 +121,7 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
             shopCountShop.text = "" + ordrList.data!!.size + " - Orders found"
         }
 
+        orderList.clear()
         ordrList.data?.let { orderList.addAll(it) }
         orderAdapter!!.notifyDataSetChanged()
 
@@ -133,6 +131,10 @@ class OrderListActivity : AppCompatActivity(), OrderListView,
     override fun clearList() {
         orderList.clear()
         orderAdapter!!.notifyDataSetChanged()
+    }
+
+    override fun onOrderdeleted(movieResponse: String) {
+
     }
 
     override fun invalidUser() {

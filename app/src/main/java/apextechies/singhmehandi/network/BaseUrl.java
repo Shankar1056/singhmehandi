@@ -17,4 +17,6 @@ public class BaseUrl {
     public static final String AREA_LIST = "areaListAPI.php";
     public static final String ROUTE_LIST = "routeListAPI.php";
     public static final String ORDER_LIST = "veiwOrdersAPI.php";
+    public static final String DELETE_SHOP = "deleteShopAPI.php";
+    public static final String DELETE_ORDER = "deleteOrdersAPI.php";
 }

@@ -11,5 +11,6 @@ interface ShopView {
     fun invalidUser()
     fun showProgress()
     fun clearList()
+    fun onshopDeleted(message: String?)
 
 }
