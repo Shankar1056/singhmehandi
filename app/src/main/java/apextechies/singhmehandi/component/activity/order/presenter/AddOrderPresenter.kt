@@ -38,6 +38,8 @@ class AddOrderPresenter {
     var quantityList = ArrayList<QuantityList>()
     var descroptionList = ArrayList<DescriptionList>()
     var soa = SaveShopOrder()
+    var operationName: String = ""
+    var trnum: String = ""
 
 
     fun AddOrderPresenter(view: AddOrderView, context: Context) {
@@ -57,7 +59,9 @@ class AddOrderPresenter {
         selectedRouteCode: ArrayList<String>,
         radioIOrderType: String,
         quantity: ArrayList<String>,
-        narration: String
+        narration: String,
+        operationName: String,
+        trnum: String
     ) {
         this.routeName = routeName
         this.shopName = shopName
@@ -67,6 +71,8 @@ class AddOrderPresenter {
         this.radioIOrderType = radioIOrderType.toLowerCase()
         this.quantity = quantity
         this.narration = narration
+        this.operationName = operationName
+        this.trnum = trnum
 
         if (TextUtils.isEmpty(routeName)) {
             context?.resources?.getString(apextechies.singhmehandi.R.string.empty_rootname)?.let {
@@ -119,6 +125,7 @@ class AddOrderPresenter {
         view!!.showProgress()
 
 
+
         soa.date = Utils.getCurrentDateWithDash()
         soa.route = routeName
         soa.retailer = shopName
@@ -135,7 +142,13 @@ class AddOrderPresenter {
         soa.employeename = ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME)
 
 
-        saveOrderObservable.subscribeWith(saveOrderObserver)
+        if (operationName == context?.resources?.getString(R.string.title_update)) {
+            soa.trnum = trnum
+            updateOrderObservable.subscribeWith(updateOrderObserver)
+        } else {
+            soa.trnum = trnum
+            saveOrderObservable.subscribeWith(saveOrderObserver)
+        }
 
     }
 
@@ -276,6 +289,40 @@ class AddOrderPresenter {
             }
         }
 
+
+    val updateOrderObservable: Observable<SaveShopOrderResponse>
+        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+            .updateOrGetShopOrder(
+                soa
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
+    val updateOrderObserver: DisposableObserver<SaveShopOrderResponse>
+        get() = object : DisposableObserver<SaveShopOrderResponse>() {
+
+            override fun onNext(@NonNull movieResponse: SaveShopOrderResponse) {
+                Log.d(TAG, "OnNext$movieResponse")
+                if (movieResponse.status.equals(Constants.FAIL)) {
+                    view!!.noDataAvailable()
+                } else {
+                    view!!.onaddOrderResponse(movieResponse.message!!)
+                }
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                e.printStackTrace()
+                view!!.displayError("Error fetching Movie Data")
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                view!!.onCompleted()
+                view!!.hideProgress()
+            }
+        }
 
     val saveOrderObservable: Observable<SaveShopOrderResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)

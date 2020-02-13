@@ -41,6 +41,12 @@ class ShopListData(
     var panno: String? = null,
     @SerializedName("auth")
     var auth: String? = null,
+    @SerializedName("gstno")
+    var gstno: String? = null,
+    @SerializedName("address")
+    var address: String? = null,
+    @SerializedName("narration")
+    var narration: String? = null,
     @SerializedName("latitude")
     var latitude: String? = null,
     @SerializedName("longitude")

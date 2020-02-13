@@ -108,4 +108,5 @@
     <string name="only_alpha_numeric_with_caps_and_space">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890</string>
     <string name="empty_description">Please seclect description first to proceed.</string>
     <string name="title_remarks">Remarks</string>
+    <string name="title_update">Update</string>
 </resources>

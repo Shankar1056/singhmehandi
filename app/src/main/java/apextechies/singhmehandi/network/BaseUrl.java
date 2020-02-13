@@ -5,8 +5,10 @@ public class BaseUrl {
     public static final String BASEURL = "https://ssm.smocglobal.com/androidApp/";
     public static final String LOGINVALIDATEAPI = "loginValidateAPI.php";
     public static final String GETSHOPORDER_VISITSHOP = "salesOrderAPI.php";
+    public static final String UPDATEORDER = "updateOrderAPI.php";
     public static final String ITEMLIST = "itemListAPI.php";
     public static final String ADDSHOP = "shopAPI.php";
+    public static final String UPDATESHOP = "updateShopAPI.php";
     public static final String SAVE_ACTIVITY = "activitySaveAPI.php";//save Acticity created by ASM
     public static final String ACTIVITY_CATEGORY_LIST = "activityFetchAPI.php";//category list, when ASM adding activity
     public static final String RETAILERLIST_SHOP = "retailerListAPI.php";//pendng, approved, rejected to display all shops

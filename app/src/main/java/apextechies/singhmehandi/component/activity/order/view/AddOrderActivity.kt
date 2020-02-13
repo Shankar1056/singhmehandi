@@ -15,6 +15,7 @@ import apextechies.singhmehandi.R
 import apextechies.singhmehandi.component.activity.order.model.AuthorizedRetailerDataList
 import apextechies.singhmehandi.component.activity.order.model.ItemListData
 import apextechies.singhmehandi.component.activity.order.model.OrderDescriptionQuantityModel
+import apextechies.singhmehandi.component.activity.order.model.OrderListData
 import apextechies.singhmehandi.component.activity.order.presenter.AddOrderPresenter
 import apextechies.singhmehandi.component.activity.order.view.adapter.OrderItemListAdapter
 import apextechies.singhmehandi.component.activity.shop.model.RouteListdata
@@ -37,7 +38,9 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     var orderRouteList = ArrayList<RouteListdata>()
     var routeId: String? = null
     var desc_quan_list = ArrayList<OrderDescriptionQuantityModel>()
+    var desc_quan_list_dummy = ArrayList<OrderDescriptionQuantityModel>()
     var pos: Int = 0
+    var orderListData = OrderListData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +83,10 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                     Utils.getDescriptionId(desc_quan_list),
                     radioType.toString(),
                     quantityLst,
-                    narrationET.text.toString().trim()
+                    narrationET.text.toString().trim(),
+                    save.text.toString(),
+                    orderListData.trnum.toString()
+
                 )
             }
         }
@@ -125,6 +131,46 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        getIntentData()
+    }
+
+    private fun getIntentData() {
+        if (intent.getStringExtra("title") == resources.getString(R.string.title_update_Order)) {
+            save.text = resources.getString(R.string.title_update)
+            orderListData = intent.getParcelableExtra<OrderListData>("list")
+            setData()
+        }
+    }
+
+    private fun setData() {
+        salesManET.text = orderListData.salesman
+        if (orderListData.type == resources.getString(R.string.order_caps)) {
+            order.isChecked = true
+        } else {
+            visit.isChecked = true
+        }
+        if (orderListData.item!!.size > 0) {
+            desc_quan_list_dummy.clear()
+            desc_quan_list.clear()
+            for (i in 0 until orderListData.item!!.size) {
+                try {
+                    desc_quan_list_dummy.add(
+                        OrderDescriptionQuantityModel(
+                            orderListData.item!![i].item.toString(),
+                            orderListData.item!![i].item.toString(),
+                            orderListData.quantity!![i].quantity.toString()
+                        )
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+            desc_quan_list.addAll(desc_quan_list_dummy)
+
+            orderAdapter!!.notifyDataSetChanged()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -154,7 +200,8 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                         desc_quan_list.add(
                             OrderDescriptionQuantityModel(
                                 description_name,
-                                description_id
+                                description_id,
+                                ""
                             )
                         )
                         // quantityLst.addAll(orderAdapter!!.getQuantityList())
@@ -163,7 +210,8 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
                     desc_quan_list.add(
                         OrderDescriptionQuantityModel(
                             description_name,
-                            description_id
+                            description_id,
+                            ""
                         )
                     )
                 }
@@ -196,7 +244,7 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         Log.e("Order Presenter", "onAuthorisedDealerOrderResponse")
         if (message != null) {
             orderRouteList = message
-            if (intent.getStringExtra("trnum") != null && intent.getStringExtra("trnum").length > 0) {
+            if (intent.getStringExtra("trnum") != null && intent.getStringExtra("trnum").isNotEmpty()) {
                 presenter.onAuthorizedRouteReceived(message, intent.getStringExtra("trnum"))
             }
             presenter.onAuthorizedRouteReceived(message, "")
@@ -208,8 +256,16 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
         Log.e("Order Presenter", "addRouteNameListInSpinner")
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, routeNameList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        routeET.setAdapter(aa)
-        routeET.setSelection(pos)
+        routeET.adapter = aa
+        if (intent.getStringExtra("title") == resources.getString(R.string.title_update_Order)) {
+            for (i in 0 until routeNameList.size) {
+                if (routeNameList[i] == orderListData.route) {
+                    routeET.setSelection(i)
+                }
+            }
+        } else {
+            routeET.setSelection(pos)
+        }
 
     }
 
@@ -221,8 +277,16 @@ class AddOrderActivity : AppCompatActivity(), AddOrderView, AdapterView.OnItemSe
     override fun AuthorizedShopWithSelectedPosition(shopList: ArrayList<String>, pos: Int) {
         val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, shopList)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        shopET.setAdapter(aa)
-        shopET.setSelection(pos)
+        shopET.adapter = aa
+        if (intent.getStringExtra("title") == resources.getString(R.string.title_update_Order)) {
+            for (i in 0 until shopList.size) {
+                if (shopList[i] == orderListData.shop) {
+                    shopET.setSelection(i)
+                }
+            }
+        } else {
+            shopET.setSelection(pos)
+        }
     }
 
 

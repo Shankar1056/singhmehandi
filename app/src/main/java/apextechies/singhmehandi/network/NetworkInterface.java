@@ -56,6 +56,9 @@ public interface NetworkInterface {
     @POST(BaseUrl.ADDSHOP)
     Observable<SaveShopResponse> addShop(@Body SaveShopDetailsRequest request);
 
+    @POST(BaseUrl.UPDATESHOP)
+    Observable<SaveShopResponse> updateShop(@Body SaveShopDetailsRequest request);
+
   /*  @POST(BaseUrl.RETAILERLIST_SHOP)
     Observable<ShopRetailerList> getRetailerList(@Body CommonRequestWithDate request);*/
 
@@ -73,6 +76,9 @@ public interface NetworkInterface {
 
     @POST(BaseUrl.GETSHOPORDER_VISITSHOP)
     Observable<SaveShopOrderResponse> visitOrGetShopOrder(@Body SaveShopOrder request);
+
+    @POST(BaseUrl.UPDATEORDER)
+    Observable<SaveShopOrderResponse> updateOrGetShopOrder(@Body SaveShopOrder request);
 
     @POST(BaseUrl.DELETE_SHOP)
     Observable<DeleteResponse> deleteShop(@Body DeleteShopRequest request);

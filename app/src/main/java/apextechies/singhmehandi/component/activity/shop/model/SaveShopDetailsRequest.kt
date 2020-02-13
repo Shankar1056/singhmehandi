@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 class SaveShopDetailsRequest (
 
+    @SerializedName("id")
+    var id: String? = null,
     @SerializedName("date")
     var date: String? = null,
     @SerializedName("areacode")
@@ -30,6 +32,10 @@ class SaveShopDetailsRequest (
     var address: String? = null,
     @SerializedName("narration")
     var narration: String? = null,
+    @SerializedName("latitude")
+    var latitude: String? = null,
+    @SerializedName("longitude")
+    var longitude: String? = null,
     @SerializedName("user")
     var user: String? = null,
     @SerializedName("db")

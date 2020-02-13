@@ -3,6 +3,8 @@ package apextechies.singhmehandi.component.activity.order.model
 import com.google.gson.annotations.SerializedName
 
  class SaveShopOrder {
+     @SerializedName("trnum")
+     var trnum: String? = null
      @SerializedName("date")
      var date: String? = null
      @SerializedName("route")

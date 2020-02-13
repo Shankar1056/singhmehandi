@@ -33,6 +33,7 @@ object AddShopPresenter {
     var pintin: String? = null
     var address: String? = null
     var note: String? = null
+    var shopId: String? = null
 
     fun AddShopPresenter(context: Context, shopView: AddShopView) {
         AddShopPresenter.context = context
@@ -178,7 +179,9 @@ object AddShopPresenter {
         shopType: String?,
         address: String,
         pintin: String,
-        note: String
+        note: String,
+        operatonName: String,
+        shopId : String
     ) {
         this.areaName = areaName
         this.areaCode = areaCode
@@ -192,6 +195,7 @@ object AddShopPresenter {
         this.address = address
         this.pintin = pintin
         this.note = note
+        this.shopId = note
         when {
             areaName == context?.resources?.getString(R.string.selectareaname) -> {
                 shopView!!.selectAreaName()
@@ -225,7 +229,11 @@ object AddShopPresenter {
                 shopView!!.emptyPinTinValue()
             } */
             else -> {
-                addShopObservable.subscribeWith(addShopaObserver)
+                if (operatonName == context?.resources?.getString(R.string.title_update)) {
+                    updateShopObservable.subscribeWith(updateShopaObserver)
+                } else {
+                    addShopObservable.subscribeWith(addShopaObserver)
+                }
             }
         }
     }
@@ -318,94 +326,14 @@ object AddShopPresenter {
         }
 
 
-    /* val getDistributorObservable: Observable<DistributorListResponse>
-         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-             .getDistributorList(
-                 CommonRequest(
-                     ClsGeneral.getPreferences(context, Constants.USER),
-                     ClsGeneral.getPreferences(context, Constants.DB),
-                     ClsGeneral.getPreferences(context, Constants.REGION),
-                     ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
-                     ClsGeneral.getPreferences(context, Constants.STATE),
-                     ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
-                     ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
-                 )
-             )
-             .subscribeOn(Schedulers.io())
-             .observeOn(AndroidSchedulers.mainThread())
 
 
-     val getDistributorObserver: DisposableObserver<DistributorListResponse>
-         get() = object : DisposableObserver<DistributorListResponse>() {
 
-             override fun onNext(@NonNull movieResponse: DistributorListResponse) {
-                 Log.d(TAG, "OnNext$movieResponse")
-                 if (movieResponse.status.equals(Constants.FAIL)) {
-                     shopView!!.noDataAvailable()
-                 } else {
-                     shopView!!.onDistributerResponse(movieResponse)
-                 }
-             }
-
-             override fun onError(@NonNull e: Throwable) {
-                 Log.d(TAG, "Error$e")
-                 e.printStackTrace()
-                 shopView!!.displayError("Error fetching Movie Data")
-             }
-
-             override fun onComplete() {
-                 Log.d(TAG, "Completed")
-                 shopView!!.hideProgress()
-             }
-         }
-
-
-     val getItemObservable: Observable<ItemListResponse>
-         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-             .getItemList(
-                 CommonRequest(
-                     ClsGeneral.getPreferences(context, Constants.USER),
-                     ClsGeneral.getPreferences(context, Constants.DB),
-                     ClsGeneral.getPreferences(context, Constants.REGION),
-                     ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
-                     ClsGeneral.getPreferences(context, Constants.STATE),
-                     ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
-                     ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
-                 )
-             )
-             .subscribeOn(Schedulers.io())
-             .observeOn(AndroidSchedulers.mainThread())
-
-
-     val getItemObserver: DisposableObserver<ItemListResponse>
-         get() = object : DisposableObserver<ItemListResponse>() {
-
-             override fun onNext(@NonNull movieResponse: ItemListResponse) {
-                 Log.d(TAG, "OnNext$movieResponse")
-                 if (movieResponse.status.equals(Constants.FAIL)) {
-                     shopView!!.noDataAvailable()
-                 } else {
-                     shopView!!.onItemResponse(movieResponse)
-                 }
-             }
-
-             override fun onError(@NonNull e: Throwable) {
-                 Log.d(TAG, "Error$e")
-                 e.printStackTrace()
-                 shopView!!.displayError("Error fetching Movie Data")
-             }
-
-             override fun onComplete() {
-                 Log.d(TAG, "Completed")
-                 shopView!!.hideProgress()
-             }
-         }*/
-
-
-    val addShopObservable: Observable<SaveShopResponse>
+    val updateShopObservable: Observable<SaveShopResponse>
         get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
-            .addShop(
+            .updateShop(
                 SaveShopDetailsRequest(
+                    shopId,
                     Utils.getCurrentDate(),
                     areaCode,
                     areaName,
@@ -419,6 +347,65 @@ object AddShopPresenter {
                     pintin,
                     address,
                     note,
+                    "",
+                    "",
+                    ClsGeneral.getPreferences(context, Constants.USER),
+                    ClsGeneral.getPreferences(context, Constants.DB),
+                    ClsGeneral.getPreferences(context, Constants.REGION),
+                    ClsGeneral.getPreferences(context, Constants.SUPERSTOCKIST),
+                    ClsGeneral.getPreferences(context, Constants.STATE),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEENAME),
+                    ClsGeneral.getPreferences(context, Constants.EMPLOYEEID)
+                )
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
+    val updateShopaObserver: DisposableObserver<SaveShopResponse>
+        get() = object : DisposableObserver<SaveShopResponse>() {
+
+            override fun onNext(@NonNull movieResponse: SaveShopResponse) {
+                Log.d(TAG, "OnNext$movieResponse")
+                if (movieResponse.status.equals(Constants.FAIL)) {
+                    movieResponse.message?.let { shopView!!.noDataAvailable(it) }
+                } else {
+                    shopView!!.displaySavedShopMessage(movieResponse)
+                }
+            }
+
+            override fun onError(@NonNull e: Throwable) {
+                Log.d(TAG, "Error$e")
+                e.printStackTrace()
+                shopView!!.displayError("Error fetching Movie Data")
+            }
+
+            override fun onComplete() {
+                Log.d(TAG, "Completed")
+                shopView!!.hideProgress()
+            }
+        }
+
+    val addShopObservable: Observable<SaveShopResponse>
+        get() = NetworkClient.getRetrofit().create(NetworkInterface::class.java)
+            .addShop(
+                SaveShopDetailsRequest(
+                    "",
+                    Utils.getCurrentDate(),
+                    areaCode,
+                    areaName,
+                    routeCode,
+                    routeName,
+                    shopName,
+                    place,
+                    phone,
+                    gestNo,
+                    shopType,
+                    pintin,
+                    address,
+                    note,
+                    "",
+                    "",
                     ClsGeneral.getPreferences(context, Constants.USER),
                     ClsGeneral.getPreferences(context, Constants.DB),
                     ClsGeneral.getPreferences(context, Constants.REGION),

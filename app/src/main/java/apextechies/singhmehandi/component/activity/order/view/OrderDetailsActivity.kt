@@ -49,10 +49,7 @@ class OrderDetailsActivity : AppCompatActivity(), OrderListView {
         edit.setOnClickListener {
             startActivity(
                 Intent(this@OrderDetailsActivity, AddOrderActivity::class.java)
-                    .putExtra("salesman",  orderListData.salesman)
-                    .putExtra("shop", orderListData.shop)
-                    .putExtra("trnum", orderListData.trnum)
-                    .putExtra("remarks", orderListData.remarks)
+                    .putExtra("list", orderListData)
                     .putExtra(
                         "title",
                         resources.getString(R.string.title_update_Order)

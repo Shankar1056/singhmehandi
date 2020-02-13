@@ -63,6 +63,7 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
         submit.setOnClickListener {
             val selectedId = radioGrp.checkedRadioButtonId
             radioSexButton = findViewById(selectedId)
+
             addShopPresenter.onSubmitClick(
                 areaName.selectedItem.toString(),
                 areaCode.selectedItem.toString(),
@@ -75,11 +76,14 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
                 radioSexButton!!.text.toString(),
                 addressET.text.toString(),
                 panTinET.text.toString(),
-                noteET.text.toString()
+                noteET.text.toString(),
+                submit.text.toString(),
+                listItem.id.toString()
             )
         }
 
         if (intent.getStringExtra("from") == "details") {
+            submit.text = resources.getString(R.string.title_update)
             setIntentData()
         }
 
@@ -87,21 +91,24 @@ class AddShopActivity : AppCompatActivity(), AddShopView, AdapterView.OnItemSele
     }
 
     private fun setIntentData() {
-        listItem
         shopNameET.setText(listItem.retailername)
         placeET.setText(listItem.place)
         mobileET.setText(listItem.phone)
-//        gstET.setText(listItem.g)
-        if (listItem.shoptype == resources.getString(R.string.title_retailer)) {
-            retailer.isChecked = true
-        } else if (listItem.shoptype == resources.getString(R.string.title_wholesale)) {
-            wholesale.isChecked = true
-        } else {
-            modernoutlet.isChecked = true
+        gstET.setText(listItem.gstno)
+        when (listItem.shoptype) {
+            resources.getString(R.string.title_retailer) -> {
+                retailer.isChecked = true
+            }
+            resources.getString(R.string.title_wholesale) -> {
+                wholesale.isChecked = true
+            }
+            else -> {
+                modernoutlet.isChecked = true
+            }
         }
-//        addressET.setText(listItem.)
+        addressET.setText(listItem.address)
         panTinET.setText(listItem.panno)
-//        noteET.setText(listItem.no)
+        noteET.setText(listItem.narration)
     }
 
 

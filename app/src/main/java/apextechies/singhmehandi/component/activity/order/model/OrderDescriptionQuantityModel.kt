@@ -5,13 +5,12 @@ class OrderDescriptionQuantityModel {
     var Quantity: String? = null
     var desc_id: String? = null
 
-    constructor(descriptionName: String, desc_id: String) {
+    constructor(descriptionName: String, desc_id: String, Quantity: String) {
         this.descriptionName = descriptionName
         this.desc_id = desc_id
-    }
-
-    constructor(Quantity: String) {
         this.Quantity = Quantity
     }
+
+
 
 }
